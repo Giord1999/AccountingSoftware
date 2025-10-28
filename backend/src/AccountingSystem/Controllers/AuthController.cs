@@ -23,14 +23,17 @@ public class AuthController : ControllerBase
 
     public record LoginRequest([Required] string Email, [Required] string Password);
     public record LoginResponse(string Token, string UserId, string UserName, IEnumerable<string> Roles);
+    public record LogoutResponse(string Message);
 
     [HttpPost("login")]
+    [ProducesResponseType(typeof(LoginResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> Login([FromBody] LoginRequest input)
     {
         var user = await _userMgr.FindByEmailAsync(input.Email);
         if (user == null) return Unauthorized("Credenziali non valide");
 
-        var result = await _signInMgr.PasswordSignInAsync(user.UserName, input.Password, isPersistent: false, lockoutOnFailure: false);
+        var result = await _signInMgr.PasswordSignInAsync(user.UserName!, input.Password, isPersistent: false, lockoutOnFailure: false);
         if (!result.Succeeded) return Unauthorized("Credenziali non valide");
 
         var roles = await _userMgr.GetRolesAsync(user);
@@ -40,9 +43,10 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("logout")]
+    [ProducesResponseType(typeof(LogoutResponse), StatusCodes.Status200OK)]
     public IActionResult Logout()
     {
         // With JWT stateless, logout is client-side (remove token). Optionally implement server-side blacklisting.
-        return Ok(new { message = "Logout effettuato (rimuovi token sul client)" });
+        return Ok(new LogoutResponse("Logout effettuato (rimuovi token sul client)"));
     }
 }

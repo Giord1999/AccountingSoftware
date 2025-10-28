@@ -86,18 +86,14 @@ public class BatchController : ControllerBase
             // Se non è Admin, verifica l'accesso a tutti i journal nel batch
             if (!isAdmin && user.CompanyId.HasValue)
             {
-                var journalsToValidate = new List<JournalEntry>();
                 var invalidJournals = new List<string>();
 
                 foreach (var id in validIds)
                 {
                     var journal = await _accounting.GetJournalByIdAsync(id);
-                    if (journal != null)
+                    if (journal != null && journal.CompanyId != user.CompanyId)
                     {
-                        if (journal.CompanyId != user.CompanyId)
-                        {
-                            invalidJournals.Add($"{id} (Company: {journal.CompanyId})");
-                        }
+                        invalidJournals.Add($"{id} (Company: {journal.CompanyId})");
                     }
                 }
 
