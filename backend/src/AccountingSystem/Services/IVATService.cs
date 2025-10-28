@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AccountingSystem.Models;
 
-namespace AccountingApp.Services
+namespace AccountingSystem.Services
 {
     public interface IVATService
     {
@@ -14,11 +14,11 @@ namespace AccountingApp.Services
         VATRate GetVATRateByRate(decimal rate);
     }
 
-    public class IVATService : IIVATService
+    public class VATService : IVATService
     {
         private readonly List<VATRate> _vatRates;
 
-        public IVATService()
+        public VATService()
         {
             // Aliquote IVA italiane standard
             _vatRates = new List<VATRate>
