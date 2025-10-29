@@ -12,6 +12,7 @@ namespace AccountingSystem.Services
         decimal CalculateAmountWithVAT(decimal amountWithoutVAT, decimal vatRate);
         IEnumerable<VATRate> GetAvailableVATRates();
         VATRate GetVATRateByRate(decimal rate);
+        Task ApplyVatToJournalAsync(JournalEntry journalEntry, Guid companyId, string userId);
     }
 
     public class VATService : IVATService

@@ -9,20 +9,20 @@ using System.Security.Claims;
 namespace AccountingSystem.Controllers;
 
 [ApiController]
-[Route("api/vat")]
+[Route("api/controller")]
 [Authorize]
-public class VATController : ControllerBase
+public class VatController : ControllerBase
 {
-    private readonly IVATService _vat;
+    private readonly IVATService _vatService;
     private readonly UserManager<ApplicationUser> _userManager;
-    private readonly ILogger<VATController> _logger;
+    private readonly ILogger<VatController> _logger;
 
-    public VATController(
-        IVATService vat,
+    public VatController(
+        IVATService vatService,
         UserManager<ApplicationUser> userManager,
-        ILogger<VATController> logger)
+        ILogger<VatController> logger)
     {
-        _vat = vat;
+        _vatService = vatService;
         _userManager = userManager;
         _logger = logger;
     }
@@ -95,10 +95,10 @@ public class VATController : ControllerBase
                 "Utente {UserId} sta applicando VAT per journal {JournalId} in company {CompanyId}",
                 userId, request.JournalEntry.Id, request.CompanyId);
 
-            var res = await _vat.ApplyVatToJournalAsync(request.JournalEntry, request.CompanyId, userId);
+            await _vatService.ApplyVatToJournalAsync(request.JournalEntry, request.CompanyId, userId);
 
-            _logger.LogInformation("VAT applicato con successo per journal {JournalId}", res.Id);
-            return Ok(res);
+            _logger.LogInformation("VAT applicato con successo per journal {JournalId}", request.JournalEntry.Id);
+            return Ok(request.JournalEntry);
         }
         catch (InvalidOperationException ex)
         {
