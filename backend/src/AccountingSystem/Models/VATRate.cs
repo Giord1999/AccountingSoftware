@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AccountingSystem.Models;
 
-public class VATRate
+public class VatRate
 {
     [Key]
     public Guid Id { get; set; } = Guid.NewGuid();

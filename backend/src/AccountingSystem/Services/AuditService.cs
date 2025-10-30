@@ -1,18 +1,12 @@
-
 using AccountingSystem.Data;
 using AccountingSystem.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace AccountingSystem.Services;
 
-public class AuditService : IAuditService
+public class AuditService(ApplicationDbContext ctx) : IAuditService
 {
-    private readonly ApplicationDbContext _ctx;
-
-    public AuditService(ApplicationDbContext ctx)
-    {
-        _ctx = ctx;
-    }
+    private readonly ApplicationDbContext _ctx = ctx;
 
     public async Task LogAsync(string userId, string action, string details)
     {

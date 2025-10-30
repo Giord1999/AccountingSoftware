@@ -4,16 +4,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AccountingSystem.Services;
 
-public class AccountingPeriodService : IAccountingPeriodService
+public class AccountingPeriodService(ApplicationDbContext ctx, IAuditService audit) : IAccountingPeriodService
 {
-    private readonly ApplicationDbContext _ctx;
-    private readonly IAuditService _audit;
-
-    public AccountingPeriodService(ApplicationDbContext ctx, IAuditService audit)
-    {
-        _ctx = ctx;
-        _audit = audit;
-    }
+    private readonly ApplicationDbContext _ctx = ctx;
+    private readonly IAuditService _audit = audit;
 
     public async Task<AccountingPeriod> CreatePeriodAsync(AccountingPeriod period, string userId)
     {
@@ -37,7 +31,7 @@ public class AccountingPeriodService : IAccountingPeriodService
             .Where(p => (p.Start <= period.End && p.End >= period.Start))
             .FirstOrDefaultAsync();
 
-        if (overlappingPeriod != null)
+        if (overlappingPeriod is not null)
         {
             throw new InvalidOperationException($"Period overlaps with existing period {overlappingPeriod.Id} ({overlappingPeriod.Start:yyyy-MM-dd} to {overlappingPeriod.End:yyyy-MM-dd})");
         }
@@ -94,7 +88,7 @@ public class AccountingPeriodService : IAccountingPeriodService
         try
         {
             var period = await _ctx.AccountingPeriods.FindAsync(new object[] { periodId }, cts.Token);
-            if (period == null)
+            if (period is null)
             {
                 throw new InvalidOperationException("Period not found");
             }
@@ -138,7 +132,7 @@ public class AccountingPeriodService : IAccountingPeriodService
         try
         {
             var period = await _ctx.AccountingPeriods.FindAsync(new object[] { periodId }, cts.Token);
-            if (period == null)
+            if (period is null)
             {
                 throw new InvalidOperationException("Period not found");
             }
@@ -183,7 +177,7 @@ public class AccountingPeriodService : IAccountingPeriodService
         try
         {
             var period = await _ctx.AccountingPeriods.FindAsync(new object[] { periodId }, cts.Token);
-            if (period == null)
+            if (period is null)
             {
                 throw new InvalidOperationException("Period not found");
             }

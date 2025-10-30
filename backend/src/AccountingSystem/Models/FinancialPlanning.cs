@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AccountingSystem.Models.FinancialPlanning;
+namespace AccountingSystem.Models;
 
 public enum FinancialPlanStatus
 {
@@ -50,7 +50,7 @@ public class FinancialPlan
     [Timestamp]
     public byte[]? RowVersion { get; set; }
 
-    public ICollection<FinancialPlanItem> Items { get; set; } = new List<FinancialPlanItem>();
+    public ICollection<FinancialPlanItem> Items { get; set; } = [];
 }
 
 public class FinancialPlanItem

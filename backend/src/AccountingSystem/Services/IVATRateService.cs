@@ -2,11 +2,11 @@ using AccountingSystem.Models;
 
 namespace AccountingSystem.Services;
 
-public interface IVATRateService
+public interface IVatRateService
 {
-    Task<VATRate> CreateVATRateAsync(VATRate vatRate, string userId);
-    Task<VATRate?> GetVATRateByIdAsync(Guid vatRateId);
-    Task<IEnumerable<VATRate>> GetAllVATRatesAsync();
-    Task<VATRate> UpdateVATRateAsync(Guid vatRateId, VATRate vatRate, string userId);
-    Task DeleteVATRateAsync(Guid vatRateId, string userId);
+    Task<VatRate> CreateVatRateAsync(VatRate vatRate, string userId);
+    Task<VatRate?> GetVatRateByIdAsync(Guid vatRateId);
+    Task<IEnumerable<VatRate>> GetAllVatRatesAsync();
+    Task<VatRate> UpdateVatRateAsync(Guid vatRateId, VatRate vatRate, string userId);
+    Task DeleteVatRateAsync(Guid vatRateId, string userId);
 }

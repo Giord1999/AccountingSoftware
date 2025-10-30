@@ -5,21 +5,14 @@ using Microsoft.Extensions.Logging;
 
 namespace AccountingSystem.Services
 {
-    public class AccountService : IAccountService
+    public class AccountService(ApplicationDbContext context, ILogger<AccountService> logger) : IAccountService
     {
-        private readonly ApplicationDbContext _context;
-        private readonly ILogger<AccountService> _logger;
-
-        public AccountService(ApplicationDbContext context, ILogger<AccountService> logger)
-        {
-            _context = context;
-            _logger = logger;
-        }
+        private readonly ApplicationDbContext _context = context;
+        private readonly ILogger<AccountService> _logger = logger;
 
         public async Task<Account> CreateAccountAsync(Account account, string userId)
         {
-            if (account == null)
-                throw new ArgumentNullException(nameof(account));
+            ArgumentNullException.ThrowIfNull(account);
 
             if (string.IsNullOrWhiteSpace(account.Code))
                 throw new ArgumentException("Account code is required.", nameof(account));

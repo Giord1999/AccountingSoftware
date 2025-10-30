@@ -24,4 +24,10 @@ public class Account
     public Account? ParentAccount { get; set; }
 
     public bool IsPostedRestricted { get; set; } = false; // system/config
+
+    // Audit properties
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public string CreatedBy { get; set; } = "system";
+    public DateTime? UpdatedAt { get; set; }
+    public string? UpdatedBy { get; set; }
 }

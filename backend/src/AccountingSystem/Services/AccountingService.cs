@@ -1,20 +1,13 @@
-
 using AccountingSystem.Data;
 using AccountingSystem.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace AccountingSystem.Services;
 
-public class AccountingService : IAccountingService
+public class AccountingService(ApplicationDbContext ctx, IAuditService audit) : IAccountingService
 {
-    private readonly ApplicationDbContext _ctx;
-    private readonly IAuditService _audit;
-
-    public AccountingService(ApplicationDbContext ctx, IAuditService audit)
-    {
-        _ctx = ctx;
-        _audit = audit;
-    }
+    private readonly ApplicationDbContext _ctx = ctx;
+    private readonly IAuditService _audit = audit;
 
     public async Task<JournalEntry> CreateJournalAsync(JournalEntry entry, string userId)
     {
@@ -35,7 +28,7 @@ public class AccountingService : IAccountingService
             .ToListAsync();
 
         var missingAccountIds = accountIds.Except(existingAccounts).ToList();
-        if (missingAccountIds.Any())
+        if (missingAccountIds.Count > 0)
         {
             throw new InvalidOperationException($"Account not found: {string.Join(", ", missingAccountIds)}");
         }
@@ -83,7 +76,7 @@ public class AccountingService : IAccountingService
         try
         {
             var je = await _ctx.JournalEntries.Include(j => j.Lines).FirstOrDefaultAsync(j => j.Id == journalId, cts.Token);
-            if (je == null) throw new InvalidOperationException("Journal not found");
+            if (je is null) throw new InvalidOperationException("Journal not found");
             if (je.Status == JournalStatus.Posted) throw new InvalidOperationException("Already posted");
 
             // validate again
@@ -112,7 +105,7 @@ public class AccountingService : IAccountingService
     {
         // aggregate posted journal lines within period
         var period = await _ctx.AccountingPeriods.FindAsync(periodId);
-        if (period == null) throw new InvalidOperationException("Period not found");
+        if (period is null) throw new InvalidOperationException("Period not found");
 
         // Aggregazione lato database con GROUP BY - evita di caricare tutte le righe in memoria
         var result = await (

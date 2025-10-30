@@ -8,19 +8,20 @@ using System.Security.Claims;
 
 namespace AccountingSystem.Controllers;
 
+// Rinominato da VatRateController a VatRateController per rispettare le regole PascalCase
 [ApiController]
-[Route("api/vatrates")]
+[Route("api/VatRates")]
 [Authorize]
-public class VATRateController : ControllerBase
+public class VatRateController : ControllerBase
 {
-    private readonly IVATRateService _vatRateService;
-    private readonly ILogger<VATRateController> _logger;
+    private readonly IVatRateService _VatRateService;
+    private readonly ILogger<VatRateController> _logger;
 
-    public VATRateController(
-        IVATRateService vatRateService,
-        ILogger<VATRateController> logger)
+    public VatRateController(
+        IVatRateService VatRateService,
+        ILogger<VatRateController> logger)
     {
-        _vatRateService = vatRateService;
+        _VatRateService = VatRateService;
         _logger = logger;
     }
 
@@ -29,14 +30,14 @@ public class VATRateController : ControllerBase
     /// </summary>
     [HttpPost]
     [Authorize(Roles = "Admin")]
-    [ProducesResponseType(typeof(VATRate), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(VatRate), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> CreateVATRate([FromBody] CreateVATRateRequest request)
+    public async Task<IActionResult> CreateVatRate([FromBody] CreateVatRateRequest request)
     {
         if (!ModelState.IsValid)
         {
-            _logger.LogWarning("Model validation failed per CreateVATRate");
+            _logger.LogWarning("Model validation failed per CreateVatRate");
             return BadRequest(ModelState);
         }
 
@@ -44,19 +45,19 @@ public class VATRateController : ControllerBase
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "system";
 
-            var vatRate = new VATRate
+            var VatRate = new VatRate
             {
                 Name = request.Name,
                 Rate = request.Rate
             };
 
             _logger.LogInformation("Admin {UserId} sta creando VAT rate {Name} ({Rate}%)",
-                userId, vatRate.Name, vatRate.Rate);
+                userId, VatRate.Name, VatRate.Rate);
 
-            var result = await _vatRateService.CreateVATRateAsync(vatRate, userId);
+            var result = await _VatRateService.CreateVatRateAsync(VatRate, userId);
 
-            _logger.LogInformation("VAT rate {VATRateId} creato con successo", result.Id);
-            return CreatedAtAction(nameof(GetVATRateById), new { id = result.Id }, result);
+            _logger.LogInformation("VAT rate {VatRateId} creato con successo", result.Id);
+            return CreatedAtAction(nameof(GetVatRateById), new { id = result.Id }, result);
         }
         catch (InvalidOperationException ex)
         {
@@ -75,14 +76,14 @@ public class VATRateController : ControllerBase
     /// Ottiene tutte le aliquote IVA
     /// </summary>
     [HttpGet]
-    [ProducesResponseType(typeof(IEnumerable<VATRate>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(IEnumerable<VatRate>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetAllVATRates()
+    public async Task<IActionResult> GetAllVatRates()
     {
         try
         {
-            var vatRates = await _vatRateService.GetAllVATRatesAsync();
-            return Ok(vatRates);
+            var VatRates = await _VatRateService.GetAllVatRatesAsync();
+            return Ok(VatRates);
         }
         catch (Exception ex)
         {
@@ -96,10 +97,10 @@ public class VATRateController : ControllerBase
     /// Ottiene un'aliquota IVA per ID
     /// </summary>
     [HttpGet("{id}")]
-    [ProducesResponseType(typeof(VATRate), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(VatRate), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetVATRateById(Guid id)
+    public async Task<IActionResult> GetVatRateById(Guid id)
     {
         if (id == Guid.Empty)
         {
@@ -108,19 +109,19 @@ public class VATRateController : ControllerBase
 
         try
         {
-            var vatRate = await _vatRateService.GetVATRateByIdAsync(id);
+            var VatRate = await _VatRateService.GetVatRateByIdAsync(id);
 
-            if (vatRate == null)
+            if (VatRate == null)
             {
-                _logger.LogWarning("VAT rate {VATRateId} non trovato", id);
+                _logger.LogWarning("VAT rate {VatRateId} non trovato", id);
                 return NotFound(new { error = $"VAT rate {id} non trovato" });
             }
 
-            return Ok(vatRate);
+            return Ok(VatRate);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Errore durante recupero VAT rate {VATRateId}", id);
+            _logger.LogError(ex, "Errore durante recupero VAT rate {VatRateId}", id);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 new { error = "Errore interno del server durante il recupero dell'aliquota IVA" });
         }
@@ -131,11 +132,11 @@ public class VATRateController : ControllerBase
     /// </summary>
     [HttpPut("{id}")]
     [Authorize(Roles = "Admin")]
-    [ProducesResponseType(typeof(VATRate), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(VatRate), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> UpdateVATRate(Guid id, [FromBody] UpdateVATRateRequest request)
+    public async Task<IActionResult> UpdateVatRate(Guid id, [FromBody] UpdateVatRateRequest request)
     {
         if (id == Guid.Empty)
         {
@@ -144,7 +145,7 @@ public class VATRateController : ControllerBase
 
         if (!ModelState.IsValid)
         {
-            _logger.LogWarning("Model validation failed per UpdateVATRate");
+            _logger.LogWarning("Model validation failed per UpdateVatRate");
             return BadRequest(ModelState);
         }
 
@@ -152,27 +153,27 @@ public class VATRateController : ControllerBase
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "system";
 
-            var vatRate = new VATRate
+            var VatRate = new VatRate
             {
                 Name = request.Name,
                 Rate = request.Rate
             };
 
-            _logger.LogInformation("Admin {UserId} sta aggiornando VAT rate {VATRateId}", userId, id);
+            _logger.LogInformation("Admin {UserId} sta aggiornando VAT rate {VatRateId}", userId, id);
 
-            var result = await _vatRateService.UpdateVATRateAsync(id, vatRate, userId);
+            var result = await _VatRateService.UpdateVatRateAsync(id, VatRate, userId);
 
-            _logger.LogInformation("VAT rate {VATRateId} aggiornato con successo", id);
+            _logger.LogInformation("VAT rate {VatRateId} aggiornato con successo", id);
             return Ok(result);
         }
         catch (InvalidOperationException ex)
         {
-            _logger.LogWarning(ex, "Errore durante aggiornamento VAT rate {VATRateId}", id);
+            _logger.LogWarning(ex, "Errore durante aggiornamento VAT rate {VatRateId}", id);
             return BadRequest(new { error = ex.Message });
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Errore critico durante aggiornamento VAT rate {VATRateId}", id);
+            _logger.LogError(ex, "Errore critico durante aggiornamento VAT rate {VatRateId}", id);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 new { error = "Errore interno del server durante l'aggiornamento dell'aliquota IVA" });
         }
@@ -187,7 +188,7 @@ public class VATRateController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> DeleteVATRate(Guid id)
+    public async Task<IActionResult> DeleteVatRate(Guid id)
     {
         if (id == Guid.Empty)
         {
@@ -197,32 +198,33 @@ public class VATRateController : ControllerBase
         try
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "system";
-            _logger.LogInformation("Admin {UserId} sta eliminando VAT rate {VATRateId}", userId, id);
+            _logger.LogInformation("Admin {UserId} sta eliminando VAT rate {VatRateId}", userId, id);
 
-            await _vatRateService.DeleteVATRateAsync(id, userId);
+            await _VatRateService.DeleteVatRateAsync(id, userId);
 
-            _logger.LogInformation("VAT rate {VATRateId} eliminato con successo", id);
+            _logger.LogInformation("VAT rate {VatRateId} eliminato con successo", id);
             return NoContent();
         }
         catch (InvalidOperationException ex)
         {
-            _logger.LogWarning(ex, "Errore durante eliminazione VAT rate {VATRateId}", id);
+            _logger.LogWarning(ex, "Errore durante eliminazione VAT rate {VatRateId}", id);
             return BadRequest(new { error = ex.Message });
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Errore critico durante eliminazione VAT rate {VATRateId}", id);
+            _logger.LogError(ex, "Errore critico durante eliminazione VAT rate {VatRateId}", id);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 new { error = "Errore interno del server durante l'eliminazione dell'aliquota IVA" });
         }
     }
 
-    public record CreateVATRateRequest(
+    public record CreateVatRateRequest(
         [Required][StringLength(100)] string Name,
         [Required][Range(0, 100)] decimal Rate
     );
 
-    public record UpdateVATRateRequest(
+    // Rinomina il record da UpdateVatRateRequest a UpdateVatRateRequest per rispettare le regole PascalCase
+    public record UpdateVatRateRequest(
         [Required][StringLength(100)] string Name,
         [Required][Range(0, 100)] decimal Rate
     );
