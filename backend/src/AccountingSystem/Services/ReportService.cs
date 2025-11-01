@@ -4,10 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AccountingSystem.Services;
 
-public class ReportService : IReportService
+public class ReportService(ApplicationDbContext ctx) : IReportService
 {
-    private readonly ApplicationDbContext _ctx;
-    public ReportService(ApplicationDbContext ctx) { _ctx = ctx; }
+    private readonly ApplicationDbContext _ctx = ctx;
 
     public async Task<IEnumerable<BalanceSheetLine>> GetBalanceSheetAsync(Guid companyId, Guid periodId)
     {

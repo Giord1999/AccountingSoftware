@@ -4,18 +4,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AccountingSystem.Services;
 
-public class VATRateService : IVATRateService
+public class VatRateService(ApplicationDbContext ctx, IAuditService audit) : IVatRateService
 {
-    private readonly ApplicationDbContext _ctx;
-    private readonly IAuditService _audit;
+    private readonly ApplicationDbContext _ctx = ctx;
+    private readonly IAuditService _audit = audit;
 
-    public VATRateService(ApplicationDbContext ctx, IAuditService audit)
-    {
-        _ctx = ctx;
-        _audit = audit;
-    }
-
-    public async Task<VATRate> CreateVATRateAsync(VATRate vatRate, string userId)
+    public async Task<VatRate> CreateVatRateAsync(VatRate vatRate, string userId)
     {
         // Validazione: rate deve essere tra 0 e 100
         if (vatRate.Rate < 0 || vatRate.Rate > 100)
@@ -24,9 +18,9 @@ public class VATRateService : IVATRateService
         }
 
         // Validazione: verifica che il nome non sia duplicato
-        var existingRate = await _ctx.VATRates
+        var existingRate = await _ctx.VatRates
             .AsNoTracking()
-            .FirstOrDefaultAsync(v => v.Name.ToLower() == vatRate.Name.ToLower());
+            .FirstOrDefaultAsync(v => string.Equals(v.Name, vatRate.Name, StringComparison.OrdinalIgnoreCase));
 
         if (existingRate != null)
         {
@@ -38,10 +32,10 @@ public class VATRateService : IVATRateService
 
         try
         {
-            _ctx.VATRates.Add(vatRate);
+            _ctx.VatRates.Add(vatRate);
             await _ctx.SaveChangesAsync(cts.Token);
 
-            await _audit.LogAsync(userId, "CreateVATRate",
+            await _audit.LogAsync(userId, "CreateVatRate",
                 $"VAT rate {vatRate.Id} ({vatRate.Name} - {vatRate.Rate}%) created");
 
             await tx.CommitAsync(cts.Token);
@@ -54,22 +48,22 @@ public class VATRateService : IVATRateService
         }
     }
 
-    public async Task<VATRate?> GetVATRateByIdAsync(Guid vatRateId)
+    public async Task<VatRate?> GetVatRateByIdAsync(Guid vatRateId)
     {
-        return await _ctx.VATRates
+        return await _ctx.VatRates
             .AsNoTracking()
             .FirstOrDefaultAsync(v => v.Id == vatRateId);
     }
 
-    public async Task<IEnumerable<VATRate>> GetAllVATRatesAsync()
+    public async Task<IEnumerable<VatRate>> GetAllVatRatesAsync()
     {
-        return await _ctx.VATRates
+        return await _ctx.VatRates
             .AsNoTracking()
             .OrderBy(v => v.Rate)
             .ToListAsync();
     }
 
-    public async Task<VATRate> UpdateVATRateAsync(Guid vatRateId, VATRate vatRate, string userId)
+    public async Task<VatRate> UpdateVatRateAsync(Guid vatRateId, VatRate vatRate, string userId)
     {
         if (vatRate.Rate < 0 || vatRate.Rate > 100)
         {
@@ -81,16 +75,16 @@ public class VATRateService : IVATRateService
 
         try
         {
-            var existingRate = await _ctx.VATRates.FindAsync(new object[] { vatRateId }, cts.Token);
+            var existingRate = await _ctx.VatRates.FindAsync(new object[] { vatRateId }, cts.Token);
             if (existingRate == null)
             {
                 throw new InvalidOperationException("VAT rate not found");
             }
 
             // Verifica nome duplicato (escluso rate corrente)
-            var duplicateName = await _ctx.VATRates
+            var duplicateName = await _ctx.VatRates
                 .AsNoTracking()
-                .AnyAsync(v => v.Id != vatRateId && v.Name.ToLower() == vatRate.Name.ToLower(), cts.Token);
+                .AnyAsync(v => v.Id != vatRateId && string.Equals(v.Name, vatRate.Name, StringComparison.OrdinalIgnoreCase), cts.Token);
 
             if (duplicateName)
             {
@@ -100,10 +94,10 @@ public class VATRateService : IVATRateService
             existingRate.Name = vatRate.Name;
             existingRate.Rate = vatRate.Rate;
 
-            _ctx.VATRates.Update(existingRate);
+            _ctx.VatRates.Update(existingRate);
             await _ctx.SaveChangesAsync(cts.Token);
 
-            await _audit.LogAsync(userId, "UpdateVATRate",
+            await _audit.LogAsync(userId, "UpdateVatRate",
                 $"VAT rate {vatRateId} updated to {vatRate.Name} - {vatRate.Rate}%");
 
             await tx.CommitAsync(cts.Token);
@@ -116,26 +110,26 @@ public class VATRateService : IVATRateService
         }
     }
 
-    public async Task DeleteVATRateAsync(Guid vatRateId, string userId)
+    public async Task DeleteVatRateAsync(Guid vatRateId, string userId)
     {
         using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
         using var tx = await _ctx.Database.BeginTransactionAsync(System.Data.IsolationLevel.ReadCommitted, cts.Token);
 
         try
         {
-            var vatRate = await _ctx.VATRates.FindAsync(new object[] { vatRateId }, cts.Token);
+            var vatRate = await _ctx.VatRates.FindAsync(new object[] { vatRateId }, cts.Token);
             if (vatRate == null)
             {
                 throw new InvalidOperationException("VAT rate not found");
             }
 
             // Per sicurezza: verifica che non sia in uso
-            // (richiederebbe campo VATRateId in JournalLine - al momento non c'è)
+            // (richiederebbe campo VatRateId in JournalLine - al momento non c'è)
 
-            _ctx.VATRates.Remove(vatRate);
+            _ctx.VatRates.Remove(vatRate);
             await _ctx.SaveChangesAsync(cts.Token);
 
-            await _audit.LogAsync(userId, "DeleteVATRate",
+            await _audit.LogAsync(userId, "DeleteVatRate",
                 $"VAT rate {vatRateId} ({vatRate.Name} - {vatRate.Rate}%) deleted");
 
             await tx.CommitAsync(cts.Token);

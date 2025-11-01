@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AccountingSystem.Models;
+namespace AccountingSystem.Models.FinancialPlanning;
 
 public enum FinancialPlanStatus
 {
@@ -100,4 +100,47 @@ public class Forecast
     public string? GeneratedBy { get; set; }
 
     public DateTime GeneratedAt { get; set; } = DateTime.UtcNow;
+}
+
+public class CreateFinancialPlanInput
+{
+    [Required, StringLength(200)]
+    public string Name { get; set; } = string.Empty;
+
+    [StringLength(1000)]
+    public string? Description { get; set; }
+
+    [Required]
+    public DateTime StartDate { get; set; }
+
+    [Required]
+    public DateTime EndDate { get; set; }
+
+    public Guid? CurrencyId { get; set; }
+
+    [Column(TypeName = "decimal(18,2)")]
+    public decimal TotalAmount { get; set; }
+}
+
+public class UpdateFinancialPlanInput
+{
+    [Required]
+    public Guid Id { get; set; }
+
+    [Required, StringLength(200)]
+    public string Name { get; set; } = string.Empty;
+
+    [StringLength(1000)]
+    public string? Description { get; set; }
+
+    [Required]
+    public DateTime StartDate { get; set; }
+
+    [Required]
+    public DateTime EndDate { get; set; }
+
+    public Guid? CurrencyId { get; set; }
+
+    [Column(TypeName = "decimal(18,2)")]
+    public decimal TotalAmount { get; set; }
 }

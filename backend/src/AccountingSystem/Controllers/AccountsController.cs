@@ -11,16 +11,10 @@ namespace AccountingSystem.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize(Policy = "RequireContabileOrAdmin")]
-    public class AccountsController : ControllerBase
+    public class AccountsController(IAccountService accountService, ILogger<AccountsController> logger) : ControllerBase
     {
-        private readonly IAccountService _accountService;
-        private readonly ILogger<AccountsController> _logger;
-
-        public AccountsController(IAccountService accountService, ILogger<AccountsController> logger)
-        {
-            _accountService = accountService;
-            _logger = logger;
-        }
+        private readonly IAccountService _accountService = accountService;
+        private readonly ILogger<AccountsController> _logger = logger;
 
         /// <summary>
         /// Restituisce tutti i conti associati a una specifica azienda.

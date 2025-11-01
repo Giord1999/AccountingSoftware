@@ -7,10 +7,9 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace AccountingSystem.Services;
 
-public class TokenService : ITokenService
+public class TokenService(IConfiguration config) : ITokenService
 {
-    private readonly IConfiguration _config;
-    public TokenService(IConfiguration config) => _config = config;
+    private readonly IConfiguration _config = config;
 
     public Task<string> CreateTokenAsync(ApplicationUser user, IList<string> roles)
     {
@@ -21,9 +20,9 @@ public class TokenService : ITokenService
 
         var claims = new List<Claim>
         {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Id),
-            new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName ?? ""),
-            new Claim("displayName", user.DisplayName ?? "")
+            new(JwtRegisteredClaimNames.Sub, user.Id),
+            new(JwtRegisteredClaimNames.UniqueName, user.UserName ?? ""),
+            new("displayName", user.DisplayName ?? "")
         };
 
         // add roles

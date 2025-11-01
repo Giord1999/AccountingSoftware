@@ -1,4 +1,3 @@
-// File: src/AccountingSystem/Program.cs
 using AccountingSystem.Data;
 using AccountingSystem.Models;
 using AccountingSystem.Services;
@@ -10,6 +9,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Diagnostics;
 using System.Text;
 using System.Threading.RateLimiting;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -77,15 +78,16 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IAccountingService, AccountingService>();
 builder.Services.AddScoped<IAuditService, AuditService>();
 builder.Services.AddScoped<IReportService, ReportService>();
-builder.Services.AddScoped<IVATService, VATService>();
+builder.Services.AddScoped<IVatService, VatService>();
 builder.Services.AddScoped<IBatchService, BatchService>();
 builder.Services.AddScoped<IFXService, FXService>();
 builder.Services.AddScoped<IReconciliationService, ReconciliationService>();
 // Servizi CRUD per entità master
 builder.Services.AddScoped<ICompanyService, CompanyService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
-builder.Services.AddScoped<IVATRateService, VATRateService>();
+builder.Services.AddScoped<IVatRateService, VatRateService>();
 builder.Services.AddScoped<IAccountingPeriodService, AccountingPeriodService>();
+builder.Services.AddScoped<IInventoryService, InventoryService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -132,7 +134,6 @@ if (!app.Environment.IsDevelopment())
 // Endpoint per gestione errori
 app.MapGet("/error", (HttpContext context) =>
 {
-    var error = context.Features.Get<IExceptionHandlerFeature>()?.Error;
     return Results.Problem(
         title: "Si è verificato un errore",
         statusCode: StatusCodes.Status500InternalServerError
@@ -154,15 +155,18 @@ app.MapHealthChecks("/health");
 // Seed roles and admin (solo in development)
 if (app.Environment.IsDevelopment())
 {
-    using (var scope = app.Services.CreateScope())
+    await Task.Run(async () =>
     {
-        var services = scope.ServiceProvider;
-        var ctx = services.GetRequiredService<ApplicationDbContext>();
-        ctx.Database.Migrate();
-        var roleMgr = services.GetRequiredService<RoleManager<IdentityRole>>();
-        var userMgr = services.GetRequiredService<UserManager<ApplicationUser>>();
-        await DataSeeder.SeedAsync(ctx, roleMgr, userMgr);
-    }
+        using (var scope = app.Services.CreateScope())
+        {
+            var services = scope.ServiceProvider;
+            var ctx = services.GetRequiredService<ApplicationDbContext>();
+            await ctx.Database.MigrateAsync();
+            var roleMgr = services.GetRequiredService<RoleManager<IdentityRole>>();
+            var userMgr = services.GetRequiredService<UserManager<ApplicationUser>>();
+            await DataSeeder.SeedAsync(ctx, roleMgr, userMgr);
+        }
+    });
 }
 
-app.Run();
+await app.RunAsync();
