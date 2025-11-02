@@ -26,16 +26,22 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<FinancialPlanItem> FinancialPlanItems => Set<FinancialPlanItem>();
     public DbSet<Forecast> Forecasts => Set<Forecast>();
 
-    // ✅ NUOVI DbSet per Inventory Management
+    // Inventory Management
     public DbSet<Inventory> Inventories => Set<Inventory>();
     public DbSet<InventoryMovement> InventoryMovements => Set<InventoryMovement>();
     public DbSet<Invoice> Invoices => Set<Invoice>();
     public DbSet<InvoiceLine> InvoiceLines => Set<InvoiceLine>();
 
-    // Aggiungi queste proprietà al tuo ApplicationDbContext esistente
-
+    // Sales Management
     public DbSet<Sale> Sales => Set<Sale>();
     public DbSet<SalesAccountConfiguration> SalesAccountConfigurations => Set<SalesAccountConfiguration>();
+
+    // Purchase Management
+    public DbSet<Purchase> Purchases => Set<Purchase>();
+    public DbSet<PurchaseAccountConfiguration> PurchaseAccountConfigurations => Set<PurchaseAccountConfiguration>();
+
+    // Analysis Centers
+    public DbSet<AnalysisCenter> AnalysisCenters { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -59,6 +65,18 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
             .WithMany()
             .HasForeignKey(l => l.AccountId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        // JournalLine: relazione con AnalysisCenter (Restrict per integrità referenziale)
+        builder.Entity<JournalLine>()
+            .HasOne(l => l.AnalysisCenter)
+            .WithMany()
+            .HasForeignKey(l => l.AnalysisCenterId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // JournalLine: indice per query analitiche per centro
+        builder.Entity<JournalLine>()
+            .HasIndex(l => l.AnalysisCenterId)
+            .HasFilter("[AnalysisCenterId] IS NOT NULL");
 
         // AuditLog: indici per query su UserId e Timestamp
         builder.Entity<AuditLog>()
@@ -152,7 +170,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
             .HasForeignKey(f => f.FinancialPlanId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // ========== ✅ INVENTORY CONFIGURATION ==========
+        // ========== INVENTORY CONFIGURATION ==========
 
         // Inventory: indice unico per Company + ItemCode
         builder.Entity<Inventory>()
@@ -180,6 +198,23 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
             .HasForeignKey(i => i.CostOfSalesAccountId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        // Inventory: relazione con AnalysisCenter predefinito (Restrict per integrità referenziale)
+        builder.Entity<Inventory>()
+            .HasOne(i => i.DefaultAnalysisCenter)
+            .WithMany()
+            .HasForeignKey(i => i.DefaultAnalysisCenterId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // Inventory: indice per query analitiche per articolo con centro predefinito
+        builder.Entity<Inventory>()
+            .HasIndex(i => i.DefaultAnalysisCenterId)
+            .HasFilter("[DefaultAnalysisCenterId] IS NOT NULL");
+
+        // Inventory: indice composito per reporting per company + centro
+        builder.Entity<Inventory>()
+            .HasIndex(i => new { i.CompanyId, i.DefaultAnalysisCenterId })
+            .HasFilter("[DefaultAnalysisCenterId] IS NOT NULL");
+
         // InventoryMovement: relazione con Inventory (Restrict per evitare eliminazioni accidentali)
         builder.Entity<InventoryMovement>()
             .HasOne(m => m.Inventory)
@@ -193,6 +228,24 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
             .WithMany()
             .HasForeignKey(m => m.JournalEntryId)
             .OnDelete(DeleteBehavior.SetNull);
+
+        // InventoryMovement: relazione con AnalysisCenter (Restrict per integrità referenziale)
+        builder.Entity<InventoryMovement>()
+            .HasOne(m => m.AnalysisCenter)
+            .WithMany()
+            .HasForeignKey(m => m.AnalysisCenterId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // InventoryMovement: indice per query analitiche per movimento
+        builder.Entity<InventoryMovement>()
+            .HasIndex(m => m.AnalysisCenterId)
+            .HasFilter("[AnalysisCenterId] IS NOT NULL");
+
+        // InventoryMovement: indice composito per reporting per articolo + centro + data
+        builder.Entity<InventoryMovement>()
+            .HasIndex(m => new { m.InventoryId, m.AnalysisCenterId, m.MovementDate })
+            .IsDescending(false, false, true)
+            .HasFilter("[AnalysisCenterId] IS NOT NULL");
 
         // InventoryMovement: indici per query su Company, Inventory e Date
         builder.Entity<InventoryMovement>()
@@ -208,5 +261,228 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
         builder.Entity<InventoryMovement>()
             .HasIndex(m => m.JournalEntryId)
             .HasFilter("[JournalEntryId] IS NOT NULL");
+
+        // ========== INVOICE CONFIGURATION ==========
+
+        // Invoice: indice unico per Company + InvoiceNumber
+        builder.Entity<Invoice>()
+            .HasIndex(i => new { i.CompanyId, i.InvoiceNumber })
+            .IsUnique();
+
+        // Invoice: indici per performance su query comuni
+        builder.Entity<Invoice>()
+            .HasIndex(i => new { i.CompanyId, i.Status, i.IssueDate });
+
+        builder.Entity<Invoice>()
+            .HasIndex(i => new { i.Type, i.Status, i.IssueDate });
+
+        builder.Entity<Invoice>()
+            .HasIndex(i => new { i.CompanyId, i.DueDate })
+            .HasFilter("[DueDate] IS NOT NULL");
+
+        // Invoice: relazione con JournalEntry (opzionale, generata al posting)
+        builder.Entity<Invoice>()
+            .HasOne(i => i.JournalEntry)
+            .WithMany()
+            .HasForeignKey(i => i.JournalEntryId)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        // Invoice: relazione con AccountingPeriod
+        builder.Entity<Invoice>()
+            .HasOne(i => i.Period)
+            .WithMany()
+            .HasForeignKey(i => i.PeriodId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // InvoiceLine: relazione con Invoice (Cascade per eliminare lines con invoice)
+        builder.Entity<InvoiceLine>()
+            .HasOne(il => il.Invoice)
+            .WithMany(i => i.Lines)
+            .HasForeignKey(il => il.InvoiceId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // InvoiceLine: relazione con Inventory (opzionale)
+        builder.Entity<InvoiceLine>()
+            .HasOne(il => il.Inventory)
+            .WithMany()
+            .HasForeignKey(il => il.InventoryId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // InvoiceLine: relazione con Account (opzionale)
+        builder.Entity<InvoiceLine>()
+            .HasOne(il => il.Account)
+            .WithMany()
+            .HasForeignKey(il => il.AccountId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // InvoiceLine: relazione con VatRate (opzionale)
+        builder.Entity<InvoiceLine>()
+            .HasOne(il => il.VatRate)
+            .WithMany()
+            .HasForeignKey(il => il.VatRateId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // InvoiceLine: relazione con AnalysisCenter (Restrict per integrità referenziale)
+        builder.Entity<InvoiceLine>()
+            .HasOne(il => il.AnalysisCenter)
+            .WithMany()
+            .HasForeignKey(il => il.AnalysisCenterId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // InvoiceLine: indice per query analitiche per centro
+        builder.Entity<InvoiceLine>()
+            .HasIndex(il => il.AnalysisCenterId)
+            .HasFilter("[AnalysisCenterId] IS NOT NULL");
+
+        // InvoiceLine: indice composito per reporting per fattura + centro
+        builder.Entity<InvoiceLine>()
+            .HasIndex(il => new { il.InvoiceId, il.AnalysisCenterId })
+            .HasFilter("[AnalysisCenterId] IS NOT NULL");
+
+        // InvoiceLine: indici per performance
+        builder.Entity<InvoiceLine>()
+            .HasIndex(il => new { il.InvoiceId, il.LineNumber });
+
+        builder.Entity<InvoiceLine>()
+            .HasIndex(il => il.InventoryId)
+            .HasFilter("[InventoryId] IS NOT NULL");
+
+        builder.Entity<InvoiceLine>()
+            .HasIndex(il => il.AccountId)
+            .HasFilter("[AccountId] IS NOT NULL");
+
+        // ========== SALES CONFIGURATION ==========
+
+        // Sale: relazione con Invoice
+        builder.Entity<Sale>()
+            .HasOne(s => s.Invoice)
+            .WithMany()
+            .HasForeignKey(s => s.InvoiceId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // Sale: relazione con JournalEntry
+        builder.Entity<Sale>()
+            .HasOne(s => s.JournalEntry)
+            .WithMany()
+            .HasForeignKey(s => s.JournalEntryId)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        // Sale: relazione con AccountingPeriod
+        builder.Entity<Sale>()
+            .HasOne(s => s.Period)
+            .WithMany()
+            .HasForeignKey(s => s.PeriodId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // Sale: indici per performance
+        builder.Entity<Sale>()
+            .HasIndex(s => new { s.CompanyId, s.Status, s.SaleDate });
+
+        builder.Entity<Sale>()
+            .HasIndex(s => new { s.CompanyId, s.SaleDate })
+            .IsDescending(false, true);
+
+        // SalesAccountConfiguration: indice unico per Company (solo una configurazione default per company)
+        builder.Entity<SalesAccountConfiguration>()
+            .HasIndex(sac => new { sac.CompanyId, sac.IsDefault })
+            .IsUnique()
+            .HasFilter("[IsDefault] = 1");
+
+        // SalesAccountConfiguration: relazioni con Account
+        builder.Entity<SalesAccountConfiguration>()
+            .HasOne(sac => sac.ReceivablesAccount)
+            .WithMany()
+            .HasForeignKey(sac => sac.ReceivablesAccountId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<SalesAccountConfiguration>()
+            .HasOne(sac => sac.RevenueAccount)
+            .WithMany()
+            .HasForeignKey(sac => sac.RevenueAccountId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<SalesAccountConfiguration>()
+            .HasOne(sac => sac.VatPayableAccount)
+            .WithMany()
+            .HasForeignKey(sac => sac.VatPayableAccountId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // ========== PURCHASE CONFIGURATION ==========
+
+        // Purchase: relazione con Invoice
+        builder.Entity<Purchase>()
+            .HasOne(p => p.Invoice)
+            .WithMany()
+            .HasForeignKey(p => p.InvoiceId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // Purchase: relazione con JournalEntry
+        builder.Entity<Purchase>()
+            .HasOne(p => p.JournalEntry)
+            .WithMany()
+            .HasForeignKey(p => p.JournalEntryId)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        // Purchase: relazione con AccountingPeriod
+        builder.Entity<Purchase>()
+            .HasOne(p => p.Period)
+            .WithMany()
+            .HasForeignKey(p => p.PeriodId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // Purchase: indici per performance
+        builder.Entity<Purchase>()
+            .HasIndex(p => new { p.CompanyId, p.Status, p.PurchaseDate });
+
+        builder.Entity<Purchase>()
+            .HasIndex(p => new { p.CompanyId, p.PurchaseDate })
+            .IsDescending(false, true);
+
+        // PurchaseAccountConfiguration: indice unico per Company (solo una configurazione default per company)
+        builder.Entity<PurchaseAccountConfiguration>()
+            .HasIndex(pac => new { pac.CompanyId, pac.IsDefault })
+            .IsUnique()
+            .HasFilter("[IsDefault] = 1");
+
+        // PurchaseAccountConfiguration: relazioni con Account
+        builder.Entity<PurchaseAccountConfiguration>()
+            .HasOne(pac => pac.PayablesAccount)
+            .WithMany()
+            .HasForeignKey(pac => pac.PayablesAccountId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<PurchaseAccountConfiguration>()
+            .HasOne(pac => pac.ExpenseAccount)
+            .WithMany()
+            .HasForeignKey(pac => pac.ExpenseAccountId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<PurchaseAccountConfiguration>()
+            .HasOne(pac => pac.VatReceivableAccount)
+            .WithMany()
+            .HasForeignKey(pac => pac.VatReceivableAccountId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // ========== ANALYSIS CENTER CONFIGURATION ==========
+
+        // AnalysisCenter: indice unico per Company + Code
+        builder.Entity<AnalysisCenter>()
+            .HasIndex(ac => new { ac.CompanyId, ac.Code })
+            .IsUnique();
+
+        // AnalysisCenter: indici per performance
+        builder.Entity<AnalysisCenter>()
+            .HasIndex(ac => new { ac.CompanyId, ac.IsActive, ac.Type });
+
+        builder.Entity<AnalysisCenter>()
+            .HasIndex(ac => new { ac.CompanyId, ac.Type })
+            .HasFilter("[IsActive] = 1");
+
+        // AnalysisCenter: relazione con Company
+        builder.Entity<AnalysisCenter>()
+            .HasOne(ac => ac.Company)
+            .WithMany()
+            .HasForeignKey(ac => ac.CompanyId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

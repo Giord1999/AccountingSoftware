@@ -102,6 +102,12 @@ public class Inventory
     public Guid? CostOfSalesAccountId { get; set; }
 
     /// <summary>
+    /// Centro di analisi predefinito per questo articolo (opzionale)
+    /// Permette di associare automaticamente gli articoli a centri di costo/ricavo
+    /// </summary>
+    public Guid? DefaultAnalysisCenterId { get; set; }
+
+    /// <summary>
     /// Indica se l'articolo è attivo
     /// </summary>
     public bool IsActive { get; set; } = true;
@@ -118,6 +124,12 @@ public class Inventory
     // Navigation properties
     public Account? InventoryAccount { get; set; }
     public Account? CostOfSalesAccount { get; set; }
+
+    /// <summary>
+    /// Centro di analisi predefinito per contabilità analitica
+    /// </summary>
+    [ForeignKey("DefaultAnalysisCenterId")]
+    public AnalysisCenter? DefaultAnalysisCenter { get; set; }
 }
 
 /// <summary>
@@ -175,6 +187,18 @@ public class InventoryMovement
 
     [ForeignKey("JournalEntryId")]
     public JournalEntry? JournalEntry { get; set; }
+
+    /// <summary>
+    /// Centro di analisi specifico per questo movimento
+    /// Se non specificato, viene utilizzato il DefaultAnalysisCenterId dell'articolo
+    /// </summary>
+    public Guid? AnalysisCenterId { get; set; }
+
+    /// <summary>
+    /// Centro di analisi per contabilità analitica
+    /// </summary>
+    [ForeignKey("AnalysisCenterId")]
+    public AnalysisCenter? AnalysisCenter { get; set; }
 
     // Audit
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

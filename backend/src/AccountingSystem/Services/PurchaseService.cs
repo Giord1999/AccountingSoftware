@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace AccountingSystem.Services;
 
-public class SalesService : ISalesService
+public class PurchaseService : IPurchaseService
 {
     private readonly ApplicationDbContext _context;
     private readonly IInvoiceService _invoiceService;
@@ -13,16 +13,16 @@ public class SalesService : ISalesService
     private readonly IInventoryService _inventoryService;
     private readonly IVatRateService _vatRateService;
     private readonly IAccountService _accountService;
-    private readonly ILogger<SalesService> _logger;
+    private readonly ILogger<PurchaseService> _logger;
 
-    public SalesService(
+    public PurchaseService(
         ApplicationDbContext context,
         IInvoiceService invoiceService,
         IAccountingService accountingService,
         IInventoryService inventoryService,
         IVatRateService vatRateService,
         IAccountService accountService,
-        ILogger<SalesService> logger)
+        ILogger<PurchaseService> logger)
     {
         _context = context;
         _invoiceService = invoiceService;
@@ -33,18 +33,18 @@ public class SalesService : ISalesService
         _logger = logger;
     }
 
-    public async Task<Sale> CreateSaleAsync(
+    public async Task<Purchase> CreatePurchaseAsync(
         Guid companyId,
         Guid periodId,
         Guid inventoryId,
         Guid vatRateId,
         decimal quantity,
         decimal unitPrice,
-        string customerName,
-        string? customerVatNumber,
-        Guid? clientiAccountId,
-        Guid? venditeAccountId,
-        Guid? ivaDebitoAccountId,
+        string supplierName,
+        string? supplierVatNumber,
+        Guid? fornitoriAccountId,
+        Guid? acquistiAccountId,
+        Guid? ivaCreditoAccountId,
         string userId)
     {
         using var transaction = await _context.Database.BeginTransactionAsync();
@@ -66,24 +66,21 @@ public class SalesService : ISalesService
             if (inventoryItem == null)
                 throw new InvalidOperationException("Articolo di magazzino non trovato");
 
-            if (inventoryItem.QuantityOnHand < quantity)
-                throw new InvalidOperationException($"Quantità insufficiente. Disponibile: {inventoryItem.QuantityOnHand}, Richiesta: {quantity}");
-
             // 4. Determina gli AccountId
-            var (receivablesId, revenueId, vatPayableId) = await ResolveAccountIdsAsync(
-                companyId, clientiAccountId, venditeAccountId, ivaDebitoAccountId);
+            var (payablesId, expenseId, vatReceivableId) = await ResolveAccountIdsAsync(
+                companyId, fornitoriAccountId, acquistiAccountId, ivaCreditoAccountId);
 
             // 5. Crea fattura
             var invoice = new Invoice
             {
                 CompanyId = companyId,
                 InvoiceNumber = await GenerateInvoiceNumberAsync(companyId),
-                Type = InvoiceType.Sales,
+                Type = InvoiceType.Purchase,
                 Status = InvoiceStatus.Draft,
                 IssueDate = DateTime.UtcNow,
                 DueDate = DateTime.UtcNow.AddDays(30),
-                CustomerName = customerName,
-                CustomerVatNumber = customerVatNumber,
+                CustomerName = supplierName,
+                CustomerVatNumber = supplierVatNumber,
                 Currency = "EUR",
                 SubTotal = subTotal,
                 TotalVat = vatAmount,
@@ -112,7 +109,7 @@ public class SalesService : ISalesService
             {
                 CompanyId = companyId,
                 PeriodId = periodId,
-                Description = $"Vendita merci - Fattura {savedInvoice.InvoiceNumber}",
+                Description = $"Acquisto merci - Fattura {savedInvoice.InvoiceNumber}",
                 Date = DateTime.UtcNow,
                 Currency = "EUR",
                 Reference = savedInvoice.InvoiceNumber,
@@ -120,24 +117,24 @@ public class SalesService : ISalesService
                 {
                     new JournalLine
                     {
-                        AccountId = receivablesId,
-                        Debit = totalAmount,
+                        AccountId = expenseId,
+                        Debit = subTotal,
                         Credit = 0,
-                        Narrative = $"Credito cliente {customerName}"
+                        Narrative = "Costi da acquisto merci"
                     },
                     new JournalLine
                     {
-                        AccountId = revenueId,
-                        Debit = 0,
-                        Credit = subTotal,
-                        Narrative = "Ricavi da vendita merci"
-                    },
-                    new JournalLine
-                    {
-                        AccountId = vatPayableId,
-                        Debit = 0,
-                        Credit = vatAmount,
+                        AccountId = vatReceivableId,
+                        Debit = vatAmount,
+                        Credit = 0,
                         Narrative = $"IVA {vatRate.Rate}%"
+                    },
+                    new JournalLine
+                    {
+                        AccountId = payablesId,
+                        Debit = 0,
+                        Credit = totalAmount,
+                        Narrative = $"Debito fornitore {supplierName}"
                     }
                 }
             };
@@ -148,39 +145,39 @@ public class SalesService : ISalesService
             savedInvoice.JournalEntryId = savedJournal.Id;
             await _invoiceService.UpdateInvoiceAsync(savedInvoice.Id, savedInvoice, userId);
 
-            // 8. Movimentazione magazzino
-            inventoryItem.QuantityOnHand -= quantity;
+            // 8. Movimentazione magazzino: aumenta QuantityOnHand
+            inventoryItem.QuantityOnHand += quantity;
             await _inventoryService.UpdateInventoryItemAsync(inventoryItem.Id, inventoryItem, userId);
 
-            // 9. Crea record Sale
-            var sale = new Sale
+            // 9. Crea record Purchase
+            var purchase = new Purchase
             {
                 CompanyId = companyId,
                 PeriodId = periodId,
                 InvoiceId = savedInvoice.Id,
                 JournalEntryId = savedJournal.Id,
-                CustomerName = customerName,
-                CustomerVatNumber = customerVatNumber,
+                SupplierName = supplierName,
+                SupplierVatNumber = supplierVatNumber,
                 TotalAmount = totalAmount,
                 SubTotal = subTotal,
                 TotalVat = vatAmount,
                 Currency = "EUR",
-                SaleDate = DateTime.UtcNow,
-                Status = SaleStatus.Confirmed,
+                PurchaseDate = DateTime.UtcNow,
+                Status = PurchaseStatus.Confirmed,
                 CreatedBy = userId,
                 CreatedAt = DateTime.UtcNow
             };
 
-            _context.Sales.Add(sale);
+            _context.Purchases.Add(purchase);
             await _context.SaveChangesAsync();
 
             await transaction.CommitAsync();
 
             _logger.LogInformation(
-                "Vendita {SaleId} creata con successo. Fattura: {InvoiceId}, Journal: {JournalId}",
-                sale.Id, savedInvoice.Id, savedJournal.Id);
+                "Acquisto {PurchaseId} creato con successo. Fattura: {InvoiceId}, Journal: {JournalId}",
+                purchase.Id, savedInvoice.Id, savedJournal.Id);
 
-            return sale;
+            return purchase;
         }
         catch (Exception)
         {
@@ -189,90 +186,90 @@ public class SalesService : ISalesService
         }
     }
 
-    public async Task<Sale?> GetSaleByIdAsync(Guid saleId, Guid? companyId = null)
+    public async Task<Purchase?> GetPurchaseByIdAsync(Guid purchaseId, Guid? companyId = null)
     {
-        var query = _context.Sales
-            .Include(s => s.Invoice)
-            .Include(s => s.JournalEntry)
-            .Include(s => s.Period)
+        var query = _context.Purchases
+            .Include(p => p.Invoice)
+            .Include(p => p.JournalEntry)
+            .Include(p => p.Period)
             .AsNoTracking()
-            .Where(s => s.Id == saleId);
+            .Where(p => p.Id == purchaseId);
 
         if (companyId.HasValue)
-            query = query.Where(s => s.CompanyId == companyId.Value);
+            query = query.Where(p => p.CompanyId == companyId.Value);
 
         return await query.FirstOrDefaultAsync();
     }
 
-    public async Task<IEnumerable<Sale>> GetSalesByCompanyAsync(Guid companyId, DateTime? from = null, DateTime? to = null)
+    public async Task<IEnumerable<Purchase>> GetPurchasesByCompanyAsync(Guid companyId, DateTime? from = null, DateTime? to = null)
     {
-        var query = _context.Sales
-            .Include(s => s.Invoice)
-            .Include(s => s.JournalEntry)
+        var query = _context.Purchases
+            .Include(p => p.Invoice)
+            .Include(p => p.JournalEntry)
             .AsNoTracking()
-            .Where(s => s.CompanyId == companyId);
+            .Where(p => p.CompanyId == companyId);
 
         if (from.HasValue)
-            query = query.Where(s => s.SaleDate >= from.Value);
+            query = query.Where(p => p.PurchaseDate >= from.Value);
 
         if (to.HasValue)
-            query = query.Where(s => s.SaleDate <= to.Value);
+            query = query.Where(p => p.PurchaseDate <= to.Value);
 
-        return await query.OrderByDescending(s => s.SaleDate).ToListAsync();
+        return await query.OrderByDescending(p => p.PurchaseDate).ToListAsync();
     }
 
-    public async Task<Sale> UpdateSaleStatusAsync(Guid saleId, SaleStatus status, string userId)
+    public async Task<Purchase> UpdatePurchaseStatusAsync(Guid purchaseId, PurchaseStatus status, string userId)
     {
-        var sale = await _context.Sales.FindAsync(saleId);
-        if (sale == null)
-            throw new InvalidOperationException("Vendita non trovata");
+        var purchase = await _context.Purchases.FindAsync(purchaseId);
+        if (purchase == null)
+            throw new InvalidOperationException("Acquisto non trovato");
 
-        sale.Status = status;
-        sale.UpdatedBy = userId;
-        sale.UpdatedAt = DateTime.UtcNow;
+        purchase.Status = status;
+        purchase.UpdatedBy = userId;
+        purchase.UpdatedAt = DateTime.UtcNow;
 
-        _context.Sales.Update(sale);
+        _context.Purchases.Update(purchase);
         await _context.SaveChangesAsync();
 
-        _logger.LogInformation("Stato vendita {SaleId} aggiornato a {Status} da {UserId}", saleId, status, userId);
+        _logger.LogInformation("Stato acquisto {PurchaseId} aggiornato a {Status} da {UserId}", purchaseId, status, userId);
 
-        return sale;
+        return purchase;
     }
 
-    public async Task<Sale> CancelSaleAsync(Guid saleId, string reason, string userId)
+    public async Task<Purchase> CancelPurchaseAsync(Guid purchaseId, string reason, string userId)
     {
-        var sale = await _context.Sales
-            .Include(s => s.Invoice)
-            .FirstOrDefaultAsync(s => s.Id == saleId);
+        var purchase = await _context.Purchases
+            .Include(p => p.Invoice)
+            .FirstOrDefaultAsync(p => p.Id == purchaseId);
 
-        if (sale == null)
-            throw new InvalidOperationException("Vendita non trovata");
+        if (purchase == null)
+            throw new InvalidOperationException("Acquisto non trovato");
 
-        if (sale.Status == SaleStatus.Cancelled)
-            throw new InvalidOperationException("La vendita è già stata annullata");
+        if (purchase.Status == PurchaseStatus.Cancelled)
+            throw new InvalidOperationException("L'acquisto è già stato annullato");
 
         using var transaction = await _context.Database.BeginTransactionAsync();
 
         try
         {
             // Annulla fattura
-            if (sale.InvoiceId != Guid.Empty)
-                await _invoiceService.CancelInvoiceAsync(sale.InvoiceId, reason, userId);
+            if (purchase.InvoiceId != Guid.Empty)
+                await _invoiceService.CancelInvoiceAsync(purchase.InvoiceId, reason, userId);
 
             // Aggiorna stato
-            sale.Status = SaleStatus.Cancelled;
-            sale.Notes = $"Annullata: {reason}";
-            sale.UpdatedBy = userId;
-            sale.UpdatedAt = DateTime.UtcNow;
+            purchase.Status = PurchaseStatus.Cancelled;
+            purchase.Notes = $"Annullata: {reason}";
+            purchase.UpdatedBy = userId;
+            purchase.UpdatedAt = DateTime.UtcNow;
 
-            _context.Sales.Update(sale);
+            _context.Purchases.Update(purchase);
             await _context.SaveChangesAsync();
 
             await transaction.CommitAsync();
 
-            _logger.LogWarning("Vendita {SaleId} annullata da {UserId}. Motivo: {Reason}", saleId, userId, reason);
+            _logger.LogWarning("Acquisto {PurchaseId} annullato da {UserId}. Motivo: {Reason}", purchaseId, userId, reason);
 
-            return sale;
+            return purchase;
         }
         catch (Exception)
         {
@@ -281,107 +278,107 @@ public class SalesService : ISalesService
         }
     }
 
-    public async Task<SalesAccountConfiguration?> GetSalesAccountConfigurationAsync(Guid companyId)
+    public async Task<PurchaseAccountConfiguration?> GetPurchaseAccountConfigurationAsync(Guid companyId)
     {
-        return await _context.SalesAccountConfigurations
-            .Include(c => c.ReceivablesAccount)
-            .Include(c => c.RevenueAccount)
-            .Include(c => c.VatPayableAccount)
+        return await _context.PurchaseAccountConfigurations
+            .Include(c => c.PayablesAccount)
+            .Include(c => c.ExpenseAccount)
+            .Include(c => c.VatReceivableAccount)
             .AsNoTracking()
             .FirstOrDefaultAsync(c => c.CompanyId == companyId && c.IsDefault);
     }
 
-    public async Task<SalesAccountConfiguration> UpsertSalesAccountConfigurationAsync(
+    public async Task<PurchaseAccountConfiguration> UpsertPurchaseAccountConfigurationAsync(
         Guid companyId,
-        Guid receivablesAccountId,
-        Guid revenueAccountId,
-        Guid vatPayableAccountId,
+        Guid payablesAccountId,
+        Guid expenseAccountId,
+        Guid vatReceivableAccountId,
         string userId)
     {
-        var existing = await _context.SalesAccountConfigurations
+        var existing = await _context.PurchaseAccountConfigurations
             .FirstOrDefaultAsync(c => c.CompanyId == companyId && c.IsDefault);
 
         if (existing != null)
         {
-            existing.ReceivablesAccountId = receivablesAccountId;
-            existing.RevenueAccountId = revenueAccountId;
-            existing.VatPayableAccountId = vatPayableAccountId;
+            existing.PayablesAccountId = payablesAccountId;
+            existing.ExpenseAccountId = expenseAccountId;
+            existing.VatReceivableAccountId = vatReceivableAccountId;
             existing.UpdatedBy = userId;
             existing.UpdatedAt = DateTime.UtcNow;
 
-            _context.SalesAccountConfigurations.Update(existing);
+            _context.PurchaseAccountConfigurations.Update(existing);
         }
         else
         {
-            existing = new SalesAccountConfiguration
+            existing = new PurchaseAccountConfiguration
             {
                 CompanyId = companyId,
-                ReceivablesAccountId = receivablesAccountId,
-                RevenueAccountId = revenueAccountId,
-                VatPayableAccountId = vatPayableAccountId,
+                PayablesAccountId = payablesAccountId,
+                ExpenseAccountId = expenseAccountId,
+                VatReceivableAccountId = vatReceivableAccountId,
                 IsDefault = true,
                 CreatedBy = userId
             };
 
-            _context.SalesAccountConfigurations.Add(existing);
+            _context.PurchaseAccountConfigurations.Add(existing);
         }
 
         await _context.SaveChangesAsync();
 
-        _logger.LogInformation("Configurazione conti vendite aggiornata per company {CompanyId}", companyId);
+        _logger.LogInformation("Configurazione conti acquisti aggiornata per company {CompanyId}", companyId);
 
         return existing;
     }
 
     // ========== METODI PRIVATI ==========
 
-    private async Task<(Guid receivables, Guid revenue, Guid vatPayable)> ResolveAccountIdsAsync(
+    private async Task<(Guid payables, Guid expense, Guid vatReceivable)> ResolveAccountIdsAsync(
         Guid companyId,
-        Guid? clientiAccountId,
-        Guid? venditeAccountId,
-        Guid? ivaDebitoAccountId)
+        Guid? fornitoriAccountId,
+        Guid? acquistiAccountId,
+        Guid? ivaCreditoAccountId)
     {
         // Se tutti gli ID sono forniti, validali e usali
-        if (clientiAccountId.HasValue && venditeAccountId.HasValue && ivaDebitoAccountId.HasValue)
+        if (fornitoriAccountId.HasValue && acquistiAccountId.HasValue && ivaCreditoAccountId.HasValue)
         {
-            var clienti = await _accountService.GetAccountByIdAsync(clientiAccountId.Value, companyId);
-            var vendite = await _accountService.GetAccountByIdAsync(venditeAccountId.Value, companyId);
-            var iva = await _accountService.GetAccountByIdAsync(ivaDebitoAccountId.Value, companyId);
+            var fornitori = await _accountService.GetAccountByIdAsync(fornitoriAccountId.Value, companyId);
+            var acquisti = await _accountService.GetAccountByIdAsync(acquistiAccountId.Value, companyId);
+            var iva = await _accountService.GetAccountByIdAsync(ivaCreditoAccountId.Value, companyId);
 
-            if (clienti == null || vendite == null || iva == null)
+            if (fornitori == null || acquisti == null || iva == null)
                 throw new InvalidOperationException("Uno o più conti forniti non sono validi");
 
-            return (clienti.Id, vendite.Id, iva.Id);
+            return (fornitori.Id, acquisti.Id, iva.Id);
         }
 
         // Altrimenti cerca la configurazione predefinita
-        var config = await GetSalesAccountConfigurationAsync(companyId);
+        var config = await GetPurchaseAccountConfigurationAsync(companyId);
         if (config != null)
         {
-            return (config.ReceivablesAccountId, config.RevenueAccountId, config.VatPayableAccountId);
+            return (config.PayablesAccountId, config.ExpenseAccountId, config.VatReceivableAccountId);
         }
 
         // Fallback: cerca per codice
         var accounts = await _accountService.GetAccountsByCompanyAsync(companyId);
         var accountsList = accounts.ToList();
 
-        var clientiAccount = accountsList.FirstOrDefault(a => a.Code == "140000");
-        var venditeAccount = accountsList.FirstOrDefault(a => a.Code == "500000");
-        var ivaDebitoAccount = accountsList.FirstOrDefault(a => a.Code == "260000");
+        var fornitoriAccount = accountsList.FirstOrDefault(a => a.Code == "210000");
+        var acquistiAccount = accountsList.FirstOrDefault(a => a.Code == "600000");
+        var ivaCreditoAccount = accountsList.FirstOrDefault(a => a.Code == "150000");
 
-        if (clientiAccount == null || venditeAccount == null || ivaDebitoAccount == null)
+        if (fornitoriAccount == null || acquistiAccount == null || ivaCreditoAccount == null)
         {
             throw new InvalidOperationException(
                 "Piano dei conti non configurato. Configurare i conti standard o fornire gli AccountId nella richiesta.");
         }
 
-        return (clientiAccount.Id, venditeAccount.Id, ivaDebitoAccount.Id);
+        return (fornitoriAccount.Id, acquistiAccount.Id, ivaCreditoAccount.Id);
     }
 
     private async Task<string> GenerateInvoiceNumberAsync(Guid companyId)
     {
         var date = DateTime.UtcNow;
-        var prefix = $"INV-{date:yyyyMMdd}";
+        var prefix = $"PUR-{date:yyyyMMdd}";
 
         var lastInvoice = await _context.Invoices
             .Where(i => i.CompanyId == companyId && i.InvoiceNumber.StartsWith(prefix))

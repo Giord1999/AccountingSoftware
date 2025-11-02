@@ -91,6 +91,8 @@ builder.Services.AddScoped<IInventoryService, InventoryService>();
 // Aggiungi questa riga insieme agli altri servizi
 builder.Services.AddScoped<ISalesService, SalesService>();
 
+builder.Services.AddScoped<IAnalysisCenterService, AnalysisCenterService>();
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

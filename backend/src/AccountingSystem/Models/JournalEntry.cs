@@ -31,7 +31,6 @@ public class JournalEntry
 
     public decimal ExchangeRate { get; set; } = 1m; // to company base currency
 
-    // ✅ AGGIUNGI QUESTA PROPRIETÀ
     [MaxLength(100)]
     public string? Reference { get; set; }
 
@@ -62,4 +61,10 @@ public class JournalLine
 
     [MaxLength(1000)]
     public string? Narrative { get; set; }
+
+    // Contabilità analitica: centro di analisi opzionale per ogni riga
+    public Guid? AnalysisCenterId { get; set; }
+
+    [ForeignKey("AnalysisCenterId")]
+    public AnalysisCenter? AnalysisCenter { get; set; }
 }

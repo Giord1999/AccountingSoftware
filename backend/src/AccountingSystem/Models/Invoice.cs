@@ -184,6 +184,14 @@ public class InvoiceLine
     [ForeignKey("AccountId")]
     public Account? Account { get; set; }
 
+    /// <summary>
+    /// Centro di analisi per contabilità analitica (es. Reparto, Progetto, Commessa)
+    /// </summary>
+    public Guid? AnalysisCenterId { get; set; }
+
+    [ForeignKey("AnalysisCenterId")]
+    public AnalysisCenter? AnalysisCenter { get; set; }
+
     [StringLength(500)]
     public string? Notes { get; set; }
 
