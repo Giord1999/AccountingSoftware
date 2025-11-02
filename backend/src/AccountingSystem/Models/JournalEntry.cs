@@ -31,6 +31,10 @@ public class JournalEntry
 
     public decimal ExchangeRate { get; set; } = 1m; // to company base currency
 
+    // ✅ AGGIUNGI QUESTA PROPRIETÀ
+    [MaxLength(100)]
+    public string? Reference { get; set; }
+
     public ICollection<JournalLine> Lines { get; set; } = new List<JournalLine>();
 }
 

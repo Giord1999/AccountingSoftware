@@ -29,6 +29,13 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     // ✅ NUOVI DbSet per Inventory Management
     public DbSet<Inventory> Inventories => Set<Inventory>();
     public DbSet<InventoryMovement> InventoryMovements => Set<InventoryMovement>();
+    public DbSet<Invoice> Invoices => Set<Invoice>();
+    public DbSet<InvoiceLine> InvoiceLines => Set<InvoiceLine>();
+
+    // Aggiungi queste proprietà al tuo ApplicationDbContext esistente
+
+    public DbSet<Sale> Sales => Set<Sale>();
+    public DbSet<SalesAccountConfiguration> SalesAccountConfigurations => Set<SalesAccountConfiguration>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

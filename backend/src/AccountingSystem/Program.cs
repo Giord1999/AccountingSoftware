@@ -88,6 +88,8 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IVatRateService, VatRateService>();
 builder.Services.AddScoped<IAccountingPeriodService, AccountingPeriodService>();
 builder.Services.AddScoped<IInventoryService, InventoryService>();
+// Aggiungi questa riga insieme agli altri servizi
+builder.Services.AddScoped<ISalesService, SalesService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
