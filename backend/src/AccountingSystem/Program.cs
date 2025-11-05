@@ -92,17 +92,17 @@ builder.Services.AddScoped<IInventoryService, InventoryService>();
 builder.Services.AddScoped<ISalesService, SalesService>();
 
 builder.Services.AddScoped<IAnalysisCenterService, AnalysisCenterService>();
+// Aggiungi registrazione per BI Service
+builder.Services.AddScoped<IBIService, BIService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Authorization policies
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("RequireContabileOrAdmin", policy => policy.RequireRole("Contabile", "Admin"));
-    options.AddPolicy("RequireAuditorOrAdmin", policy => policy.RequireRole("Auditor", "Admin"));
-});
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("RequireContabileOrAdmin", policy => policy.RequireRole("Contabile", "Admin"))
+    .AddPolicy("RequireAuditorOrAdmin", policy => policy.RequireRole("Auditor", "Admin"));
 
 // Rate Limiting
 builder.Services.AddRateLimiter(options =>

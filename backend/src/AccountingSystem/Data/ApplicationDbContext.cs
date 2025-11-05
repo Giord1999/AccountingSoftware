@@ -7,7 +7,6 @@ namespace AccountingSystem.Data;
 
 public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 {
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
     public DbSet<Company> Companies => Set<Company>();
     public DbSet<Account> Accounts => Set<Account>();
@@ -42,6 +41,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 
     // Analysis Centers
     public DbSet<AnalysisCenter> AnalysisCenters { get; set; }
+
+    public DbSet<BISnapshot> BISnapshots => Set<BISnapshot>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -484,5 +485,16 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
             .WithMany()
             .HasForeignKey(ac => ac.CompanyId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        // ========== BI CONFIGURATION ==========
+
+        // BISnapshot: indice composito per query su Company e SnapshotDate (ordinato per data discendente)
+        builder.Entity<BISnapshot>()
+            .HasIndex(s => new { s.CompanyId, s.SnapshotDate })
+            .IsDescending(false, true);
+
+        // BISnapshot: indice per query su GeneratedBy
+        builder.Entity<BISnapshot>()
+            .HasIndex(s => s.GeneratedBy);
     }
 }
