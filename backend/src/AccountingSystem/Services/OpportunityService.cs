@@ -5,16 +5,10 @@ using Microsoft.Extensions.Logging;
 
 namespace AccountingSystem.Services;
 
-public class OpportunityService : IOpportunityService
+public class OpportunityService(ApplicationDbContext context, ILogger<OpportunityService> logger) : IOpportunityService
 {
-    private readonly ApplicationDbContext _context;
-    private readonly ILogger<OpportunityService> _logger;
-
-    public OpportunityService(ApplicationDbContext context, ILogger<OpportunityService> logger)
-    {
-        _context = context;
-        _logger = logger;
-    }
+    private readonly ApplicationDbContext _context = context;
+    private readonly ILogger<OpportunityService> _logger = logger;
 
     public async Task<Opportunity> CreateOpportunityAsync(Opportunity opportunity, string userId)
     {

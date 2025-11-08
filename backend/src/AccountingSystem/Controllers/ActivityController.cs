@@ -57,7 +57,7 @@ public class ActivityController : ControllerBase
     public async Task<IActionResult> GetActivities([FromQuery] DateTime? from = null, [FromQuery] DateTime? to = null)
     {
         var user = await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "system");
-        if (!user?.CompanyId.HasValue ?? true) return BadRequest("User not associated with company");
+        if (user == null || !user.CompanyId.HasValue) return BadRequest("User not associated with company");
 
         var activities = await _activityService.GetActivitiesByCompanyAsync(user.CompanyId.Value, from, to);
         return Ok(activities);

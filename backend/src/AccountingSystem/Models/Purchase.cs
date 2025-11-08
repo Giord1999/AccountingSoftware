@@ -44,6 +44,8 @@ public class Purchase
     [StringLength(50)]
     public string? SupplierVatNumber { get; set; }
 
+    public Guid? SupplierId { get; set; } // <--- AGGIUNTO PER RISOLVERE CS1061
+
     /// <summary>
     /// Importo totale dell'acquisto (inclusa IVA)
     /// </summary>

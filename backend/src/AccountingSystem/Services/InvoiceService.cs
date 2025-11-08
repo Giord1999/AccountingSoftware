@@ -506,7 +506,7 @@ public class InvoiceService : IInvoiceService
                 }
             }
 
-            line.VatAmount = Math.Round(line.LineAmount * line.VatPercentage / 100, 2);
+            line.VatAmount = _vatService.CalculateVAT(line.LineAmount, line.VatPercentage);
             line.TotalAmount = line.LineAmount + line.VatAmount;
 
             subTotal += line.LineAmount;

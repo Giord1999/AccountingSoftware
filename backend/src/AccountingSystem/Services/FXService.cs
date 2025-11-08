@@ -28,28 +28,29 @@ public class FXService : IFXService
 
     public async Task RevaluateAccountsAsync(Guid companyId, DateTime asOfDate, string userId)
     {
-        // Simplified example: for all accounts in foreign currency, compute balance -> convert to base and create revaluation journals
         var company = await _ctx.Companies.FindAsync(companyId);
         if (company == null) throw new InvalidOperationException("Company not found");
 
-        // Calculate balances per account (posted entries)
         var postedLines = await (from je in _ctx.JournalEntries
                                  where je.CompanyId == companyId && je.Status == JournalStatus.Posted
                                  && je.Date <= asOfDate
                                  from l in je.Lines
                                  select new { l.AccountId, l.Debit, l.Credit, je.Currency }).ToListAsync();
 
-        var grouped = postedLines.GroupBy(x => x.AccountId)
+        var grouped = postedLines
+            .Where(x => !string.IsNullOrEmpty(x.Currency))
+            .GroupBy(x => x.AccountId)
             .Select(g => new { AccountId = g.Key, Balance = g.Sum(x => x.Debit - x.Credit), Currency = g.Select(x => x.Currency).FirstOrDefault() })
-            .Where(x => !string.Equals(x.Currency, company.BaseCurrency, StringComparison.OrdinalIgnoreCase));
+            .Where(x => !string.IsNullOrEmpty(x.Currency) && !string.Equals(x.Currency, company.BaseCurrency, StringComparison.OrdinalIgnoreCase));
 
         foreach (var item in grouped)
         {
             var acc = await _ctx.Accounts.FindAsync(item.AccountId);
             if (acc == null) continue;
-            var converted = await ConvertAsync(item.Currency, company.BaseCurrency, item.Balance, asOfDate);
-            // Create revaluation journal: simple approach pushes difference to P&L account 9999 (FX Reval)
-            var glDiff = converted - item.Balance; // careful: currencies different; this is illustrative
+            // Fix: garantisce che item.Currency non sia null
+            var fromCurrency = item.Currency ?? company.BaseCurrency;
+            var converted = await ConvertAsync(fromCurrency, company.BaseCurrency, item.Balance, asOfDate);
+            var glDiff = converted - item.Balance;
             var revalJe = new JournalEntry
             {
                 CompanyId = companyId,
@@ -71,7 +72,7 @@ public class FXService : IFXService
 
             if (glDiff > 0)
             {
-                revalJe.Lines.Add(new JournalLine { AccountId = acc.Id, Credit = (decimal)Math.Abs(glDiff) }); // reduce asset
+                revalJe.Lines.Add(new JournalLine { AccountId = acc.Id, Credit = (decimal)Math.Abs(glDiff) });
                 revalJe.Lines.Add(new JournalLine { AccountId = revalAccount.Id, Debit = (decimal)Math.Abs(glDiff) });
             }
             else if (glDiff < 0)
@@ -80,7 +81,6 @@ public class FXService : IFXService
                 revalJe.Lines.Add(new JournalLine { AccountId = revalAccount.Id, Credit = (decimal)Math.Abs(glDiff) });
             }
 
-            // Validate and post as draft then posted automatically
             if (revalJe.Lines.Sum(l => l.Debit) == revalJe.Lines.Sum(l => l.Credit) && revalJe.Lines.Any())
             {
                 _ctx.JournalEntries.Add(revalJe);

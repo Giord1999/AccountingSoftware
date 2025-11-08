@@ -5,33 +5,24 @@ using Microsoft.Extensions.Logging;
 
 namespace AccountingSystem.Services;
 
-public class SalesService : ISalesService
+public class SalesService(
+    ApplicationDbContext context,
+    IInvoiceService invoiceService,
+    IAccountingService accountingService,
+    IInventoryService inventoryService,
+    IVatRateService vatRateService,
+    IAccountService accountService,
+    ICustomerService customerService,
+    ILogger<SalesService> logger) : ISalesService
 {
-    private readonly ApplicationDbContext _context;
-    private readonly IInvoiceService _invoiceService;
-    private readonly IAccountingService _accountingService;
-    private readonly IInventoryService _inventoryService;
-    private readonly IVatRateService _vatRateService;
-    private readonly IAccountService _accountService;
-    private readonly ILogger<SalesService> _logger;
-
-    public SalesService(
-        ApplicationDbContext context,
-        IInvoiceService invoiceService,
-        IAccountingService accountingService,
-        IInventoryService inventoryService,
-        IVatRateService vatRateService,
-        IAccountService accountService,
-        ILogger<SalesService> logger)
-    {
-        _context = context;
-        _invoiceService = invoiceService;
-        _accountingService = accountingService;
-        _inventoryService = inventoryService;
-        _vatRateService = vatRateService;
-        _accountService = accountService;
-        _logger = logger;
-    }
+    private readonly ApplicationDbContext _context = context;
+    private readonly IInvoiceService _invoiceService = invoiceService;
+    private readonly IAccountingService _accountingService = accountingService;
+    private readonly IInventoryService _inventoryService = inventoryService;
+    private readonly IVatRateService _vatRateService = vatRateService;
+    private readonly IAccountService _accountService = accountService;
+    private readonly ICustomerService _customerService = customerService;
+    private readonly ILogger<SalesService> _logger = logger;
 
     public async Task<Sale> CreateSaleAsync(
         Guid companyId,
@@ -53,7 +44,7 @@ public class SalesService : ISalesService
         {
             // 1. Recupera tasso IVA
             var vatRate = await _vatRateService.GetVatRateByIdAsync(vatRateId);
-            if (vatRate == null)
+            if (vatRate is null)
                 throw new InvalidOperationException("Tasso IVA non trovato");
 
             // 2. Calcoli
@@ -63,7 +54,7 @@ public class SalesService : ISalesService
 
             // 3. Recupera articolo inventario
             var inventoryItem = await _inventoryService.GetInventoryItemByIdAsync(inventoryId, companyId);
-            if (inventoryItem == null)
+            if (inventoryItem is null)
                 throw new InvalidOperationException("Articolo di magazzino non trovato");
 
             if (inventoryItem.QuantityOnHand < quantity)
@@ -73,7 +64,10 @@ public class SalesService : ISalesService
             var (receivablesId, revenueId, vatPayableId) = await ResolveAccountIdsAsync(
                 companyId, clientiAccountId, venditeAccountId, ivaDebitoAccountId);
 
-            // 5. Crea fattura
+            // 5. Gestisci cliente
+            var customerId = await ResolveOrCreateCustomerAsync(companyId, customerName, customerVatNumber, userId);
+
+            // 6. Crea fattura
             var invoice = new Invoice
             {
                 CompanyId = companyId,
@@ -107,7 +101,7 @@ public class SalesService : ISalesService
 
             var savedInvoice = await _invoiceService.CreateInvoiceAsync(invoice, userId);
 
-            // 6. Crea scrittura contabile
+            // 7. Crea scrittura contabile
             var journalEntry = new JournalEntry
             {
                 CompanyId = companyId,
@@ -144,21 +138,22 @@ public class SalesService : ISalesService
 
             var savedJournal = await _accountingService.CreateJournalAsync(journalEntry, userId);
 
-            // 7. Aggiorna fattura con riferimento journal
+            // 8. Aggiorna fattura con riferimento journal
             savedInvoice.JournalEntryId = savedJournal.Id;
             await _invoiceService.UpdateInvoiceAsync(savedInvoice.Id, savedInvoice, userId);
 
-            // 8. Movimentazione magazzino
+            // 9. Movimentazione magazzino
             inventoryItem.QuantityOnHand -= quantity;
             await _inventoryService.UpdateInventoryItemAsync(inventoryItem.Id, inventoryItem, userId);
 
-            // 9. Crea record Sale
+            // 10. Crea record Sale
             var sale = new Sale
             {
                 CompanyId = companyId,
                 PeriodId = periodId,
                 InvoiceId = savedInvoice.Id,
                 JournalEntryId = savedJournal.Id,
+                CustomerId = customerId,
                 CustomerName = customerName,
                 CustomerVatNumber = customerVatNumber,
                 TotalAmount = totalAmount,
@@ -224,7 +219,7 @@ public class SalesService : ISalesService
     public async Task<Sale> UpdateSaleStatusAsync(Guid saleId, SaleStatus status, string userId)
     {
         var sale = await _context.Sales.FindAsync(saleId);
-        if (sale == null)
+        if (sale is null)
             throw new InvalidOperationException("Vendita non trovata");
 
         sale.Status = status;
@@ -245,7 +240,7 @@ public class SalesService : ISalesService
             .Include(s => s.Invoice)
             .FirstOrDefaultAsync(s => s.Id == saleId);
 
-        if (sale == null)
+        if (sale is null)
             throw new InvalidOperationException("Vendita non trovata");
 
         if (sale.Status == SaleStatus.Cancelled)
@@ -348,7 +343,7 @@ public class SalesService : ISalesService
             var vendite = await _accountService.GetAccountByIdAsync(venditeAccountId.Value, companyId);
             var iva = await _accountService.GetAccountByIdAsync(ivaDebitoAccountId.Value, companyId);
 
-            if (clienti == null || vendite == null || iva == null)
+            if (clienti is null || vendite is null || iva is null)
                 throw new InvalidOperationException("Uno o più conti forniti non sono validi");
 
             return (clienti.Id, vendite.Id, iva.Id);
@@ -369,13 +364,37 @@ public class SalesService : ISalesService
         var venditeAccount = accountsList.FirstOrDefault(a => a.Code == "500000");
         var ivaDebitoAccount = accountsList.FirstOrDefault(a => a.Code == "260000");
 
-        if (clientiAccount == null || venditeAccount == null || ivaDebitoAccount == null)
+        if (clientiAccount is null || venditeAccount is null || ivaDebitoAccount is null)
         {
             throw new InvalidOperationException(
                 "Piano dei conti non configurato. Configurare i conti standard o fornire gli AccountId nella richiesta.");
         }
 
         return (clientiAccount.Id, venditeAccount.Id, ivaDebitoAccount.Id);
+    }
+
+    private async Task<Guid> ResolveOrCreateCustomerAsync(Guid companyId, string customerName, string? customerVatNumber, string userId)
+    {
+        // Cerca cliente esistente
+        var existingCustomer = await _customerService.GetCustomersByCompanyAsync(companyId)
+            .ContinueWith(t => t.Result.FirstOrDefault(c => c.Name == customerName && c.VatNumber == customerVatNumber));
+
+        if (existingCustomer != null)
+        {
+            return existingCustomer.Id;
+        }
+
+        // Crea nuovo cliente
+        var newCustomer = new Customer
+        {
+            CompanyId = companyId,
+            Name = customerName,
+            VatNumber = customerVatNumber,
+            IsActive = true
+        };
+
+        var createdCustomer = await _customerService.CreateCustomerAsync(newCustomer, userId);
+        return createdCustomer.Id;
     }
 
     private async Task<string> GenerateInvoiceNumberAsync(Guid companyId)

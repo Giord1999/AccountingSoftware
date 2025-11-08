@@ -5,16 +5,10 @@ using Microsoft.Extensions.Logging;
 
 namespace AccountingSystem.Services;
 
-public class ActivityService : IActivityService
+public class ActivityService(ApplicationDbContext context, ILogger<ActivityService> logger) : IActivityService
 {
-    private readonly ApplicationDbContext _context;
-    private readonly ILogger<ActivityService> _logger;
-
-    public ActivityService(ApplicationDbContext context, ILogger<ActivityService> logger)
-    {
-        _context = context;
-        _logger = logger;
-    }
+    private readonly ApplicationDbContext _context = context;
+    private readonly ILogger<ActivityService> _logger = logger;
 
     public async Task<Activity> CreateActivityAsync(Activity activity, string userId)
     {

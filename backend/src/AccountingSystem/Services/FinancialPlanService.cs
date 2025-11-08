@@ -1,9 +1,10 @@
 ﻿using AccountingSystem.Data;
 using AccountingSystem.Models.FinancialPlanning;
+using AccountingSystem.Services.FinancialPlanning;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace AccountingSystem.Services.FinancialPlanning
+namespace AccountingSystem.Services
 {
     public class FinancialPlanService(ApplicationDbContext context, ILogger<FinancialPlanService> logger) : IFinancialPlanService
     {

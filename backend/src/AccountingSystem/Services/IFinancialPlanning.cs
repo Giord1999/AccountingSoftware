@@ -1,6 +1,6 @@
 ﻿using AccountingSystem.Models.FinancialPlanning;
 
-namespace AccountingSystem.Services.FinancialPlanning
+namespace AccountingSystem.Services
 {
     public interface IFinancialPlanService
     {

@@ -11,93 +11,107 @@ namespace AccountingSystem.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 [Authorize(Policy = "RequireContabileOrAdmin")]
-public class LeadController : ControllerBase
+public class OpportunityController : ControllerBase
 {
-    private readonly ILeadService _leadService;
+    private readonly IOpportunityService _opportunityService;
     private readonly UserManager<ApplicationUser> _userManager;
-    private readonly ILogger<LeadController> _logger;
+    private readonly ILogger<OpportunityController> _logger;
 
-    public LeadController(
-        ILeadService leadService,
+    public OpportunityController(
+        IOpportunityService opportunityService,
         UserManager<ApplicationUser> userManager,
-        ILogger<LeadController> logger)
+        ILogger<OpportunityController> logger)
     {
-        _leadService = leadService;
+        _opportunityService = opportunityService;
         _userManager = userManager;
         _logger = logger;
     }
 
     [HttpPost]
-    [ProducesResponseType(typeof(Lead), StatusCodes.Status201Created)]
-    public async Task<IActionResult> CreateLead([FromBody] Lead lead)
+    [ProducesResponseType(typeof(Opportunity), StatusCodes.Status201Created)]
+    public async Task<IActionResult> CreateOpportunity([FromBody] Opportunity opportunity)
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
 
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "system";
         var user = await _userManager.FindByIdAsync(userId);
-        lead.CompanyId = user?.CompanyId ?? Guid.Empty;
+        opportunity.CompanyId = user?.CompanyId ?? Guid.Empty;
 
-        var created = await _leadService.CreateLeadAsync(lead, userId);
-        return CreatedAtAction(nameof(GetLead), new { id = created.Id }, created);
+        var created = await _opportunityService.CreateOpportunityAsync(opportunity, userId);
+        _logger.LogInformation("Opportunity created with ID {OpportunityId} by user {UserId}", created.Id, userId);
+        return CreatedAtAction(nameof(GetOpportunity), new { id = created.Id }, created);
     }
 
     [HttpGet("{id:guid}")]
-    [ProducesResponseType(typeof(Lead), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetLead(Guid id)
+    [ProducesResponseType(typeof(Opportunity), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetOpportunity(Guid id)
     {
         var user = await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "system");
-        var lead = await _leadService.GetLeadByIdAsync(id, user?.CompanyId);
+        var opportunity = await _opportunityService.GetOpportunityByIdAsync(id, user?.CompanyId);
 
-        if (lead == null) return NotFound();
-        return Ok(lead);
+        if (opportunity == null)
+        {
+            _logger.LogWarning("Opportunity with ID {OpportunityId} not found for user {UserId}", id, user?.Id ?? "unknown");
+            return NotFound();
+        }
+        return Ok(opportunity);
     }
 
     [HttpGet]
-    [ProducesResponseType(typeof(IEnumerable<Lead>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetLeads([FromQuery] LeadStatus? status = null)
+    [ProducesResponseType(typeof(IEnumerable<Opportunity>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetOpportunities([FromQuery] OpportunityStage? stage = null)
     {
         var user = await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "system");
-        if (!user?.CompanyId.HasValue ?? true) return BadRequest("User not associated with company");
+        if (user == null || !user.CompanyId.HasValue)
+        {
+            _logger.LogWarning("User not associated with company or user not found");
+            return BadRequest("User not associated with company");
+        }
 
-        var leads = await _leadService.GetLeadsByCompanyAsync(user.CompanyId.Value, status);
-        return Ok(leads);
+        var opportunities = await _opportunityService.GetOpportunitiesByCompanyAsync(user.CompanyId.Value, stage);
+        _logger.LogInformation("Retrieved {OpportunityCount} opportunities for company {CompanyId}", opportunities.Count(), user.CompanyId.Value);
+        return Ok(opportunities);
     }
 
     [HttpPut("{id:guid}")]
-    [ProducesResponseType(typeof(Lead), StatusCodes.Status200OK)]
-    public async Task<IActionResult> UpdateLead(Guid id, [FromBody] Lead lead)
+    [ProducesResponseType(typeof(Opportunity), StatusCodes.Status200OK)]
+    public async Task<IActionResult> UpdateOpportunity(Guid id, [FromBody] Opportunity opportunity)
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
 
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "system";
-        var updated = await _leadService.UpdateLeadAsync(id, lead, userId);
+        var updated = await _opportunityService.UpdateOpportunityAsync(id, opportunity, userId);
+        _logger.LogInformation("Opportunity with ID {OpportunityId} updated by user {UserId}", id, userId);
         return Ok(updated);
     }
 
     [HttpDelete("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    public async Task<IActionResult> DeleteLead(Guid id)
+    public async Task<IActionResult> DeleteOpportunity(Guid id)
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "system";
-        await _leadService.DeleteLeadAsync(id, userId);
+        await _opportunityService.DeleteOpportunityAsync(id, userId);
+        _logger.LogInformation("Opportunity with ID {OpportunityId} deleted by user {UserId}", id, userId);
         return NoContent();
     }
 
-    [HttpPost("{id:guid}/qualify")]
-    [ProducesResponseType(typeof(Lead), StatusCodes.Status200OK)]
-    public async Task<IActionResult> QualifyLead(Guid id)
+    [HttpPost("{id:guid}/updatestage")]
+    [ProducesResponseType(typeof(Opportunity), StatusCodes.Status200OK)]
+    public async Task<IActionResult> UpdateStage(Guid id, [FromBody] OpportunityStage stage)
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "system";
-        var lead = await _leadService.QualifyLeadAsync(id, userId);
-        return Ok(lead);
+        var opportunity = await _opportunityService.UpdateStageAsync(id, stage, userId);
+        _logger.LogInformation("Stage updated for opportunity with ID {OpportunityId} by user {UserId}", id, userId);
+        return Ok(opportunity);
     }
 
-    [HttpPost("{id:guid}/convert")]
-    [ProducesResponseType(typeof(Lead), StatusCodes.Status200OK)]
-    public async Task<IActionResult> ConvertLeadToCustomer(Guid id)
+    [HttpPost("{id:guid}/close")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> CloseOpportunity(Guid id, [FromBody] bool won)
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "system";
-        var lead = await _leadService.ConvertLeadToCustomerAsync(id, userId);
-        return Ok(lead);
+        await _opportunityService.CloseOpportunityAsync(id, won, userId);
+        _logger.LogInformation("Opportunity with ID {OpportunityId} closed (won: {Won}) by user {UserId}", id, won, userId);
+        return NoContent();
     }
 }

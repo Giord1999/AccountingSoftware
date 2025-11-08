@@ -5,16 +5,10 @@ using Microsoft.Extensions.Logging;
 
 namespace AccountingSystem.Services;
 
-public class SupplierService : ISupplierService
+public class SupplierService(ApplicationDbContext context, ILogger<SupplierService> logger) : ISupplierService
 {
-    private readonly ApplicationDbContext _context;
-    private readonly ILogger<SupplierService> _logger;
-
-    public SupplierService(ApplicationDbContext context, ILogger<SupplierService> logger)
-    {
-        _context = context;
-        _logger = logger;
-    }
+    private readonly ApplicationDbContext _context = context;
+    private readonly ILogger<SupplierService> _logger = logger;
 
     public async Task<Supplier> CreateSupplierAsync(Supplier supplier, string userId)
     {
@@ -41,7 +35,9 @@ public class SupplierService : ISupplierService
 
         if (!string.IsNullOrWhiteSpace(search))
         {
-            query = query.Where(s => s.Name.Contains(search) || s.Email.Contains(search) || s.VatNumber.Contains(search));
+            query = query.Where(s => s.Name.Contains(search) ||
+                                     (s.Email != null && s.Email.Contains(search)) ||
+                                     (s.VatNumber != null && s.VatNumber.Contains(search)));
         }
 
         return await query.OrderBy(s => s.Name).ToListAsync();
@@ -94,7 +90,9 @@ public class SupplierService : ISupplierService
         return await _context.Suppliers
             .AsNoTracking()
             .Where(s => s.CompanyId == companyId && s.IsActive &&
-                       (s.Name.Contains(query) || s.Email.Contains(query) || s.VatNumber.Contains(query)))
+                       (s.Name.Contains(query) ||
+                        (s.Email != null && s.Email.Contains(query)) ||
+                        (s.VatNumber != null && s.VatNumber.Contains(query))))
             .OrderBy(s => s.Name)
             .ToListAsync();
     }
@@ -125,8 +123,8 @@ public class SupplierService : ISupplierService
                 await _context.SaveChangesAsync();
 
                 // Update purchase with SupplierId (assuming Purchase model has SupplierId)
-                // purchase.SupplierId = supplier.Id;
-                // _context.Purchases.Update(purchase);
+                purchase.SupplierId = supplier.Id;
+                _context.Purchases.Update(purchase);
             }
         }
 

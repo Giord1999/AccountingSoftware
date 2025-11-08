@@ -5,16 +5,12 @@ using Microsoft.Extensions.Logging;
 
 namespace AccountingSystem.Services;
 
-public class CustomerService : ICustomerService
+public class CustomerService(
+    ApplicationDbContext context,
+    ILogger<CustomerService> logger) : ICustomerService
 {
-    private readonly ApplicationDbContext _context;
-    private readonly ILogger<CustomerService> _logger;
-
-    public CustomerService(ApplicationDbContext context, ILogger<CustomerService> logger)
-    {
-        _context = context;
-        _logger = logger;
-    }
+    private readonly ApplicationDbContext _context = context;
+    private readonly ILogger<CustomerService> _logger = logger;
 
     public async Task<Customer> CreateCustomerAsync(Customer customer, string userId)
     {
@@ -41,7 +37,7 @@ public class CustomerService : ICustomerService
 
         if (!string.IsNullOrWhiteSpace(search))
         {
-            query = query.Where(c => c.Name.Contains(search) || c.Email.Contains(search) || c.VatNumber.Contains(search));
+            query = query.Where(c => c.Name.Contains(search) || (c.Email != null && c.Email.Contains(search)) || (c.VatNumber != null && c.VatNumber.Contains(search)));
         }
 
         return await query.OrderBy(c => c.Name).ToListAsync();
@@ -49,8 +45,7 @@ public class CustomerService : ICustomerService
 
     public async Task<Customer> UpdateCustomerAsync(Guid customerId, Customer customer, string userId)
     {
-        var existing = await _context.Customers.FirstOrDefaultAsync(c => c.Id == customerId);
-        if (existing == null) throw new InvalidOperationException("Customer not found");
+        Customer existing = await _context.Customers.FirstOrDefaultAsync(c => c.Id == customerId) ?? throw new InvalidOperationException("Customer not found");
 
         existing.Name = customer.Name;
         existing.Email = customer.Email;
@@ -76,8 +71,7 @@ public class CustomerService : ICustomerService
 
     public async Task DeleteCustomerAsync(Guid customerId, string userId)
     {
-        var customer = await _context.Customers.FirstOrDefaultAsync(c => c.Id == customerId);
-        if (customer == null) throw new InvalidOperationException("Customer not found");
+        Customer customer = await _context.Customers.FirstOrDefaultAsync(c => c.Id == customerId) ?? throw new InvalidOperationException("Customer not found");
 
         customer.IsActive = false;
         customer.UpdatedBy = userId;
@@ -94,7 +88,7 @@ public class CustomerService : ICustomerService
         return await _context.Customers
             .AsNoTracking()
             .Where(c => c.CompanyId == companyId && c.IsActive &&
-                       (c.Name.Contains(query) || c.Email.Contains(query) || c.VatNumber.Contains(query)))
+                       (c.Name.Contains(query) || (c.Email != null && c.Email.Contains(query)) || (c.VatNumber != null && c.VatNumber.Contains(query))))
             .OrderBy(c => c.Name)
             .ToListAsync();
     }
@@ -124,9 +118,16 @@ public class CustomerService : ICustomerService
                 _context.Customers.Add(customer);
                 await _context.SaveChangesAsync();
 
-                // Update sale with CustomerId (assuming Sale model has CustomerId)
-                // sale.CustomerId = customer.Id;
-                // _context.Sales.Update(sale);
+                sale.CustomerId = customer.Id;
+                _context.Sales.Update(sale);
+            }
+            else
+            {
+                if (sale.CustomerId == Guid.Empty)
+                {
+                    sale.CustomerId = existingCustomer.Id;
+                    _context.Sales.Update(sale);
+                }
             }
         }
 
@@ -136,10 +137,8 @@ public class CustomerService : ICustomerService
 
     public async Task<Customer> DeduplicateCustomerAsync(Guid customerId, Guid duplicateId, string userId)
     {
-        var primary = await _context.Customers.FirstOrDefaultAsync(c => c.Id == customerId);
-        var duplicate = await _context.Customers.FirstOrDefaultAsync(c => c.Id == duplicateId);
-
-        if (primary == null || duplicate == null) throw new InvalidOperationException("Customer not found");
+        Customer primary = await _context.Customers.FirstOrDefaultAsync(c => c.Id == customerId) ?? throw new InvalidOperationException("Primary customer not found");
+        Customer duplicate = await _context.Customers.FirstOrDefaultAsync(c => c.Id == duplicateId) ?? throw new InvalidOperationException("Duplicate customer not found");
 
         // Merge data (simple implementation)
         if (string.IsNullOrWhiteSpace(primary.Email) && !string.IsNullOrWhiteSpace(duplicate.Email))

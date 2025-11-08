@@ -3,7 +3,6 @@ using AccountingSystem.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System.Security.Claims;
 
 namespace AccountingSystem.Controllers;
@@ -11,21 +10,12 @@ namespace AccountingSystem.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 [Authorize(Policy = "RequireContabileOrAdmin")]
-public class CustomerController : ControllerBase
+public class CustomerController(
+    ICustomerService customerService,
+    UserManager<ApplicationUser> userManager) : ControllerBase
 {
-    private readonly ICustomerService _customerService;
-    private readonly UserManager<ApplicationUser> _userManager;
-    private readonly ILogger<CustomerController> _logger;
-
-    public CustomerController(
-        ICustomerService customerService,
-        UserManager<ApplicationUser> userManager,
-        ILogger<CustomerController> logger)
-    {
-        _customerService = customerService;
-        _userManager = userManager;
-        _logger = logger;
-    }
+    private readonly ICustomerService _customerService = customerService;
+    private readonly UserManager<ApplicationUser> _userManager = userManager;
 
     [HttpPost]
     [ProducesResponseType(typeof(Customer), StatusCodes.Status201Created)]
@@ -57,7 +47,7 @@ public class CustomerController : ControllerBase
     public async Task<IActionResult> GetCustomers([FromQuery] string? search = null)
     {
         var user = await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "system");
-        if (!user?.CompanyId.HasValue ?? true) return BadRequest("User not associated with company");
+        if (user == null || user.CompanyId == null) return BadRequest("User not associated with company");
 
         var customers = await _customerService.GetCustomersByCompanyAsync(user.CompanyId.Value, search);
         return Ok(customers);
@@ -89,7 +79,7 @@ public class CustomerController : ControllerBase
     public async Task<IActionResult> MigrateSalesData()
     {
         var user = await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "system");
-        if (!user?.CompanyId.HasValue ?? true) return BadRequest("User not associated with company");
+        if (user == null || user.CompanyId == null) return BadRequest("User not associated with company");
 
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "system";
         await _customerService.MigrateExistingSalesDataAsync(user.CompanyId.Value, userId);

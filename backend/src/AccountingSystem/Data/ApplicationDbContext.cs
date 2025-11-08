@@ -44,6 +44,13 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 
     public DbSet<BISnapshot> BISnapshots => Set<BISnapshot>();
 
+    // CRM
+    public DbSet<Customer> Customers => Set<Customer>();
+    public DbSet<Activity> Activities => Set<Activity>();
+    public DbSet<Lead> Leads => Set<Lead>();
+    public DbSet<Opportunity> Opportunities => Set<Opportunity>();
+    public DbSet<Supplier> Suppliers => Set<Supplier>();
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -375,6 +382,13 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
             .HasForeignKey(s => s.PeriodId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        // Sale: relazione con Customer
+        builder.Entity<Sale>()
+            .HasOne(s => s.Customer)
+            .WithMany(c => c.Sales)
+            .HasForeignKey(s => s.CustomerId)
+            .OnDelete(DeleteBehavior.Restrict);
+
         // Sale: indici per performance
         builder.Entity<Sale>()
             .HasIndex(s => new { s.CompanyId, s.Status, s.SaleDate });
@@ -496,5 +510,150 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
         // BISnapshot: indice per query su GeneratedBy
         builder.Entity<BISnapshot>()
             .HasIndex(s => s.GeneratedBy);
+
+        // ========== CUSTOMER CONFIGURATION ==========
+
+        // Customer: indice unico per Company + VatNumber (se presente)
+        builder.Entity<Customer>()
+            .HasIndex(c => new { c.CompanyId, c.VatNumber })
+            .IsUnique()
+            .HasFilter("[VatNumber] IS NOT NULL");
+
+        // Customer: indici per performance
+        builder.Entity<Customer>()
+            .HasIndex(c => new { c.CompanyId, c.IsActive });
+
+        builder.Entity<Customer>()
+            .HasIndex(c => new { c.CompanyId, c.Name });
+
+        builder.Entity<Customer>()
+            .HasIndex(c => c.Email)
+            .HasFilter("[Email] IS NOT NULL");
+
+        // Customer: relazione con Company
+        builder.Entity<Customer>()
+            .HasOne(c => c.Company)
+            .WithMany()
+            .HasForeignKey(c => c.CompanyId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // ========== ACTIVITY CONFIGURATION ==========
+
+        // Activity: indici per performance
+        builder.Entity<Activity>()
+            .HasIndex(a => new { a.CompanyId, a.Status, a.ScheduledDate });
+
+        builder.Entity<Activity>()
+            .HasIndex(a => new { a.AssignedTo, a.Status });
+
+        builder.Entity<Activity>()
+            .HasIndex(a => a.CustomerId)
+            .HasFilter("[CustomerId] IS NOT NULL");
+
+        builder.Entity<Activity>()
+            .HasIndex(a => a.LeadId)
+            .HasFilter("[LeadId] IS NOT NULL");
+
+        // Activity: relazioni
+        builder.Entity<Activity>()
+            .HasOne(a => a.Company)
+            .WithMany()
+            .HasForeignKey(a => a.CompanyId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<Activity>()
+            .HasOne(a => a.Customer)
+            .WithMany()
+            .HasForeignKey(a => a.CustomerId)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        builder.Entity<Activity>()
+            .HasOne(a => a.Lead)
+            .WithMany()
+            .HasForeignKey(a => a.LeadId)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        // ========== OPPORTUNITY CONFIGURATION ==========
+
+        // Opportunity: indici per performance
+        builder.Entity<Opportunity>()
+            .HasIndex(o => new { o.CompanyId, o.Stage });
+
+        builder.Entity<Opportunity>()
+            .HasIndex(o => o.CreatedAt);
+
+        // Opportunity: relazioni
+        builder.Entity<Opportunity>()
+            .HasOne(o => o.Company)
+            .WithMany()
+            .HasForeignKey(o => o.CompanyId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<Opportunity>()
+            .HasOne(o => o.Customer)
+            .WithMany()
+            .HasForeignKey(o => o.CustomerId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<Opportunity>()
+            .HasOne(o => o.Lead)
+            .WithMany()
+            .HasForeignKey(o => o.LeadId)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        // Activity: relazione con Opportunity
+        builder.Entity<Activity>()
+            .HasOne(a => a.Opportunity)
+            .WithMany(o => o.Activities)
+            .HasForeignKey(a => a.OpportunityId)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        // Activity: indice per Opportunity
+        builder.Entity<Activity>()
+            .HasIndex(a => a.OpportunityId)
+            .HasFilter("[OpportunityId] IS NOT NULL");
+
+        // ========== LEAD CONFIGURATION ==========
+
+        // Lead: indici per performance
+        builder.Entity<Lead>()
+            .HasIndex(l => new { l.CompanyId, l.Status });
+
+        builder.Entity<Lead>()
+            .HasIndex(l => l.Email)
+            .HasFilter("[Email] IS NOT NULL");
+
+        // Lead: relazione con Company
+        builder.Entity<Lead>()
+            .HasOne(l => l.Company)
+            .WithMany()
+            .HasForeignKey(l => l.CompanyId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // ========== SUPPLIER CONFIGURATION ==========
+
+        // Supplier: indice unico per Company + VatNumber (se presente)
+        builder.Entity<Supplier>()
+            .HasIndex(s => new { s.CompanyId, s.VatNumber })
+            .IsUnique()
+            .HasFilter("[VatNumber] IS NOT NULL");
+
+        // Supplier: indici per performance
+        builder.Entity<Supplier>()
+            .HasIndex(s => new { s.CompanyId, s.IsActive });
+
+        builder.Entity<Supplier>()
+            .HasIndex(s => new { s.CompanyId, s.Name });
+
+        builder.Entity<Supplier>()
+            .HasIndex(s => s.Email)
+            .HasFilter("[Email] IS NOT NULL");
+
+        // Supplier: relazione con Company
+        builder.Entity<Supplier>()
+            .HasOne(s => s.Company)
+            .WithMany()
+            .HasForeignKey(s => s.CompanyId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

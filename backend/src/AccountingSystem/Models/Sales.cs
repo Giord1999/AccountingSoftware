@@ -35,6 +35,15 @@ public class Sale
     public JournalEntry? JournalEntry { get; set; }
 
     /// <summary>
+    /// Riferimento al cliente
+    /// </summary>
+    [Required]
+    public Guid CustomerId { get; set; }
+
+    [ForeignKey("CustomerId")]
+    public Customer? Customer { get; set; }
+
+    /// <summary>
     /// Cliente
     /// </summary>
     [Required]
