@@ -95,6 +95,13 @@ builder.Services.AddScoped<IAnalysisCenterService, AnalysisCenterService>();
 // Aggiungi registrazione per BI Service
 builder.Services.AddScoped<IBIService, BIService>();
 
+// CRM Services
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<ISupplierService, SupplierService>();
+builder.Services.AddScoped<ILeadService, LeadService>();
+builder.Services.AddScoped<IOpportunityService, OpportunityService>();
+builder.Services.AddScoped<IActivityService, ActivityService>();
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
