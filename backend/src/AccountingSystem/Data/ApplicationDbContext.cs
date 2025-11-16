@@ -7,6 +7,10 @@ namespace AccountingSystem.Data;
 
 public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 {
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        : base(options)
+    {
+    }
 
     public DbSet<Company> Companies => Set<Company>();
     public DbSet<Account> Accounts => Set<Account>();
