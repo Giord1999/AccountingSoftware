@@ -13,12 +13,12 @@ namespace AccountingSystem.Controllers;
 [Authorize]
 public class VatController : ControllerBase
 {
-    private readonly IVATService _vatService;
+    private readonly IVatService _vatService;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly ILogger<VatController> _logger;
 
     public VatController(
-        IVATService vatService,
+        IVatService vatService,
         UserManager<ApplicationUser> userManager,
         ILogger<VatController> logger)
     {

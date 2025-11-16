@@ -1,5 +1,5 @@
 using AccountingSystem.Models.FinancialPlanning;
-using AccountingSystem.Services.FinancialPlanning;
+using AccountingSystem.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

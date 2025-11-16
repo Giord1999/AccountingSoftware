@@ -1,6 +1,6 @@
 ﻿using AccountingSystem.Data;
 using AccountingSystem.Models.FinancialPlanning;
-using AccountingSystem.Services.FinancialPlanning;
+using AccountingSystem.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -69,8 +69,6 @@ namespace AccountingSystem.Services
             existing.ModifiedBy = userId;
             existing.ModifiedAt = DateTime.UtcNow;
 
-            // Handle concurrency with RowVersion if needed, but omitted for simplicity
-
             await _context.SaveChangesAsync(ct);
 
             _logger.LogInformation("FinancialPlan {Id} updated by {UserId}", input.Id, userId);
@@ -126,7 +124,6 @@ namespace AccountingSystem.Services
             if (plan == null)
                 throw new InvalidOperationException("FinancialPlan not found.");
 
-            // Get historical data from FinancialPlanItems
             var historicalEnd = DateTime.UtcNow;
             var historicalStart = historicalEnd.AddMonths(-historicalMonths);
 
@@ -148,7 +145,7 @@ namespace AccountingSystem.Services
             {
                 var period = currentDate.AddMonths(i);
                 var projectedAmount = averageMonthly * (decimal)Math.Pow(growthFactor, i);
-                var confidence = Math.Max(0.1, 1.0 - (i * 0.1)); // Decreasing confidence
+                var confidence = Math.Max(0.1, 1.0 - (i * 0.1));
 
                 var forecast = new Forecast
                 {
