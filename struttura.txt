@@ -1,0 +1,511 @@
+Elenco del percorso delle cartelle per il volume Windows
+Numero di serie del volume: B4CC-AFF2
+C:.
+¦   .gitignore
+¦   AccountingSystem.sln
+¦   struttura.txt
+¦   
++---.github
+¦   +---workflows
++---.vs
+¦   ¦   slnx.sqlite
+¦   ¦   VSWorkspaceState.json
+¦   ¦   
+¦   +---AccountingSoftware
+¦   ¦   +---CopilotIndices
+¦   ¦       +---18.0.925.419
+¦   ¦               CodeChunks.db
+¦   ¦               SemanticSymbols.db
+¦   ¦               
+¦   +---AccountingSoftware.slnx
+¦   ¦   +---copilot-chat
+¦   ¦   ¦   +---4e0146c8
+¦   ¦   ¦       +---sessions
+¦   ¦   ¦               59e53b1c-aabb-44e5-9777-0f972affeb2f
+¦   ¦   ¦               
+¦   ¦   +---FileContentIndex
+¦   ¦   ¦       9ff3d05c-41ae-4147-889f-15d818b6efcb.vsidx
+¦   ¦   ¦       fa80fc49-e6c4-4e02-a2a5-2f21b42f04ab.vsidx
+¦   ¦   ¦       
+¦   ¦   +---v18
+¦   ¦           DocumentLayout.backup.json
+¦   ¦           DocumentLayout.json
+¦   ¦           
+¦   +---AccountingSystem
+¦   ¦   +---copilot-chat
+¦   ¦   ¦   +---4e0146c8
+¦   ¦   ¦       +---sessions
+¦   ¦   +---CopilotIndices
+¦   ¦   ¦   +---18.0.925.419
+¦   ¦   ¦   ¦       CodeChunks.db
+¦   ¦   ¦   ¦       SemanticSymbols.db
+¦   ¦   ¦   ¦       
+¦   ¦   ¦   +---18.3.95.3864
+¦   ¦   ¦           CodeChunks.db
+¦   ¦   ¦           SemanticSymbols.db
+¦   ¦   ¦           
+¦   ¦   +---DesignTimeBuild
+¦   ¦   ¦       .dtbcache.v2
+¦   ¦   ¦       
+¦   ¦   +---FileContentIndex
+¦   ¦   ¦       6b7efae2-eb40-4950-8813-9136dff19ce8.vsidx
+¦   ¦   ¦       
+¦   ¦   +---v18
+¦   ¦           .futdcache.v2
+¦   ¦           DocumentLayout.backup.json
+¦   ¦           DocumentLayout.json
+¦   ¦           
+¦   +---ProjectEvaluation
++---backend
+    +---src
+        +---AccountingSystem
+            ¦   AccountingSystem.csproj
+            ¦   appsettings.json
+            ¦   contabilita_workflow.png
+            ¦   global.json
+            ¦   Program.cs
+            ¦   README.md
+            ¦   
+            +---bin
+            ¦   +---Debug
+            ¦   ¦   +---net9.0
+            ¦   ¦       ¦   AccountingSystem.deps.json
+            ¦   ¦       ¦   AccountingSystem.dll
+            ¦   ¦       ¦   AccountingSystem.exe
+            ¦   ¦       ¦   AccountingSystem.pdb
+            ¦   ¦       ¦   AccountingSystem.runtimeconfig.json
+            ¦   ¦       ¦   AccountingSystem.staticwebassets.endpoints.json
+            ¦   ¦       ¦   appsettings.json
+            ¦   ¦       ¦   Azure.Core.dll
+            ¦   ¦       ¦   Azure.Identity.dll
+            ¦   ¦       ¦   FatturaElettronica.dll
+            ¦   ¦       ¦   FinancialFormulas.dll
+            ¦   ¦       ¦   FluentValidation.dll
+            ¦   ¦       ¦   global.json
+            ¦   ¦       ¦   Humanizer.dll
+            ¦   ¦       ¦   Microsoft.AspNetCore.Authentication.JwtBearer.dll
+            ¦   ¦       ¦   Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+            ¦   ¦       ¦   Microsoft.Bcl.AsyncInterfaces.dll
+            ¦   ¦       ¦   Microsoft.Build.Locator.dll
+            ¦   ¦       ¦   Microsoft.CodeAnalysis.CSharp.dll
+            ¦   ¦       ¦   Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+            ¦   ¦       ¦   Microsoft.CodeAnalysis.dll
+            ¦   ¦       ¦   Microsoft.CodeAnalysis.Workspaces.dll
+            ¦   ¦       ¦   Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll
+            ¦   ¦       ¦   Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
+            ¦   ¦       ¦   Microsoft.Data.SqlClient.dll
+            ¦   ¦       ¦   Microsoft.EntityFrameworkCore.Abstractions.dll
+            ¦   ¦       ¦   Microsoft.EntityFrameworkCore.Design.dll
+            ¦   ¦       ¦   Microsoft.EntityFrameworkCore.dll
+            ¦   ¦       ¦   Microsoft.EntityFrameworkCore.Relational.dll
+            ¦   ¦       ¦   Microsoft.EntityFrameworkCore.SqlServer.dll
+            ¦   ¦       ¦   Microsoft.Extensions.Caching.Abstractions.dll
+            ¦   ¦       ¦   Microsoft.Extensions.Caching.Memory.dll
+            ¦   ¦       ¦   Microsoft.Extensions.Configuration.Abstractions.dll
+            ¦   ¦       ¦   Microsoft.Extensions.DependencyInjection.Abstractions.dll
+            ¦   ¦       ¦   Microsoft.Extensions.DependencyInjection.dll
+            ¦   ¦       ¦   Microsoft.Extensions.DependencyModel.dll
+            ¦   ¦       ¦   Microsoft.Extensions.Diagnostics.Abstractions.dll
+            ¦   ¦       ¦   Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions.dll
+            ¦   ¦       ¦   Microsoft.Extensions.Diagnostics.HealthChecks.dll
+            ¦   ¦       ¦   Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore.dll
+            ¦   ¦       ¦   Microsoft.Extensions.FileProviders.Abstractions.dll
+            ¦   ¦       ¦   Microsoft.Extensions.Hosting.Abstractions.dll
+            ¦   ¦       ¦   Microsoft.Extensions.Logging.Abstractions.dll
+            ¦   ¦       ¦   Microsoft.Extensions.Logging.dll
+            ¦   ¦       ¦   Microsoft.Extensions.Options.dll
+            ¦   ¦       ¦   Microsoft.Extensions.Primitives.dll
+            ¦   ¦       ¦   Microsoft.Identity.Client.dll
+            ¦   ¦       ¦   Microsoft.Identity.Client.Extensions.Msal.dll
+            ¦   ¦       ¦   Microsoft.IdentityModel.Abstractions.dll
+            ¦   ¦       ¦   Microsoft.IdentityModel.JsonWebTokens.dll
+            ¦   ¦       ¦   Microsoft.IdentityModel.Logging.dll
+            ¦   ¦       ¦   Microsoft.IdentityModel.Protocols.dll
+            ¦   ¦       ¦   Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+            ¦   ¦       ¦   Microsoft.IdentityModel.Tokens.dll
+            ¦   ¦       ¦   Microsoft.ML.Core.dll
+            ¦   ¦       ¦   Microsoft.ML.CpuMath.dll
+            ¦   ¦       ¦   Microsoft.ML.Data.dll
+            ¦   ¦       ¦   Microsoft.ML.DataView.dll
+            ¦   ¦       ¦   Microsoft.ML.FastTree.dll
+            ¦   ¦       ¦   Microsoft.ML.KMeansClustering.dll
+            ¦   ¦       ¦   Microsoft.ML.PCA.dll
+            ¦   ¦       ¦   Microsoft.ML.StandardTrainers.dll
+            ¦   ¦       ¦   Microsoft.ML.Transforms.dll
+            ¦   ¦       ¦   Microsoft.OpenApi.dll
+            ¦   ¦       ¦   Microsoft.SqlServer.Server.dll
+            ¦   ¦       ¦   Microsoft.Win32.SystemEvents.dll
+            ¦   ¦       ¦   Mono.TextTemplating.dll
+            ¦   ¦       ¦   Newtonsoft.Json.dll
+            ¦   ¦       ¦   Serilog.AspNetCore.dll
+            ¦   ¦       ¦   Serilog.dll
+            ¦   ¦       ¦   Serilog.Extensions.Hosting.dll
+            ¦   ¦       ¦   Serilog.Extensions.Logging.dll
+            ¦   ¦       ¦   Serilog.Formatting.Compact.dll
+            ¦   ¦       ¦   Serilog.Settings.Configuration.dll
+            ¦   ¦       ¦   Serilog.Sinks.Console.dll
+            ¦   ¦       ¦   Serilog.Sinks.Debug.dll
+            ¦   ¦       ¦   Serilog.Sinks.File.dll
+            ¦   ¦       ¦   Swashbuckle.AspNetCore.Swagger.dll
+            ¦   ¦       ¦   Swashbuckle.AspNetCore.SwaggerGen.dll
+            ¦   ¦       ¦   Swashbuckle.AspNetCore.SwaggerUI.dll
+            ¦   ¦       ¦   System.ClientModel.dll
+            ¦   ¦       ¦   System.CodeDom.dll
+            ¦   ¦       ¦   System.Composition.AttributedModel.dll
+            ¦   ¦       ¦   System.Composition.Convention.dll
+            ¦   ¦       ¦   System.Composition.Hosting.dll
+            ¦   ¦       ¦   System.Composition.Runtime.dll
+            ¦   ¦       ¦   System.Composition.TypedParts.dll
+            ¦   ¦       ¦   System.Configuration.ConfigurationManager.dll
+            ¦   ¦       ¦   System.Drawing.Common.dll
+            ¦   ¦       ¦   System.IdentityModel.Tokens.Jwt.dll
+            ¦   ¦       ¦   System.Memory.Data.dll
+            ¦   ¦       ¦   System.Numerics.Tensors.dll
+            ¦   ¦       ¦   System.Runtime.Caching.dll
+            ¦   ¦       ¦   System.Security.Cryptography.ProtectedData.dll
+            ¦   ¦       ¦   System.Security.Permissions.dll
+            ¦   ¦       ¦   System.Windows.Extensions.dll
+            ¦   ¦       ¦   
+            ¦   ¦       +---cs
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.CSharp.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.Workspaces.resources.dll
+            ¦   ¦       ¦       
+            ¦   ¦       +---de
+            ¦   ¦       ¦       FatturaElettronica.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.CSharp.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.Workspaces.resources.dll
+            ¦   ¦       ¦       
+            ¦   ¦       +---en
+            ¦   ¦       ¦       FatturaElettronica.resources.dll
+            ¦   ¦       ¦       
+            ¦   ¦       +---es
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.CSharp.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.Workspaces.resources.dll
+            ¦   ¦       ¦       
+            ¦   ¦       +---fr
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.CSharp.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.Workspaces.resources.dll
+            ¦   ¦       ¦       
+            ¦   ¦       +---it
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.CSharp.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.Workspaces.resources.dll
+            ¦   ¦       ¦       
+            ¦   ¦       +---ja
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.CSharp.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.Workspaces.resources.dll
+            ¦   ¦       ¦       
+            ¦   ¦       +---ko
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.CSharp.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.Workspaces.resources.dll
+            ¦   ¦       ¦       
+            ¦   ¦       +---pl
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.CSharp.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.Workspaces.resources.dll
+            ¦   ¦       ¦       
+            ¦   ¦       +---pt-BR
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.CSharp.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.Workspaces.resources.dll
+            ¦   ¦       ¦       
+            ¦   ¦       +---ru
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.CSharp.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.Workspaces.resources.dll
+            ¦   ¦       ¦       
+            ¦   ¦       +---runtimes
+            ¦   ¦       ¦   +---linux-arm
+            ¦   ¦       ¦   ¦   +---native
+            ¦   ¦       ¦   ¦           libLdaNative.so
+            ¦   ¦       ¦   ¦           libLdaNative.so.dbg
+            ¦   ¦       ¦   ¦           
+            ¦   ¦       ¦   +---linux-arm64
+            ¦   ¦       ¦   ¦   +---native
+            ¦   ¦       ¦   ¦           libLdaNative.so
+            ¦   ¦       ¦   ¦           libLdaNative.so.dbg
+            ¦   ¦       ¦   ¦           
+            ¦   ¦       ¦   +---linux-x64
+            ¦   ¦       ¦   ¦   +---native
+            ¦   ¦       ¦   ¦           libFastTreeNative.so
+            ¦   ¦       ¦   ¦           libFastTreeNative.so.dbg
+            ¦   ¦       ¦   ¦           libLdaNative.so
+            ¦   ¦       ¦   ¦           libLdaNative.so.dbg
+            ¦   ¦       ¦   ¦           
+            ¦   ¦       ¦   +---osx-arm64
+            ¦   ¦       ¦   ¦   +---native
+            ¦   ¦       ¦   ¦           libLdaNative.dylib
+            ¦   ¦       ¦   ¦           libLdaNative.dylib.dwarf
+            ¦   ¦       ¦   ¦           
+            ¦   ¦       ¦   +---osx-x64
+            ¦   ¦       ¦   ¦   +---native
+            ¦   ¦       ¦   ¦           libFastTreeNative.dylib
+            ¦   ¦       ¦   ¦           libFastTreeNative.dylib.dwarf
+            ¦   ¦       ¦   ¦           libLdaNative.dylib
+            ¦   ¦       ¦   ¦           libLdaNative.dylib.dwarf
+            ¦   ¦       ¦   ¦           
+            ¦   ¦       ¦   +---unix
+            ¦   ¦       ¦   ¦   +---lib
+            ¦   ¦       ¦   ¦       +---net6.0
+            ¦   ¦       ¦   ¦               Microsoft.Data.SqlClient.dll
+            ¦   ¦       ¦   ¦               System.Drawing.Common.dll
+            ¦   ¦       ¦   ¦               
+            ¦   ¦       ¦   +---win
+            ¦   ¦       ¦   ¦   +---lib
+            ¦   ¦       ¦   ¦       +---net6.0
+            ¦   ¦       ¦   ¦               Microsoft.Data.SqlClient.dll
+            ¦   ¦       ¦   ¦               Microsoft.Win32.SystemEvents.dll
+            ¦   ¦       ¦   ¦               System.Drawing.Common.dll
+            ¦   ¦       ¦   ¦               System.Runtime.Caching.dll
+            ¦   ¦       ¦   ¦               System.Security.Cryptography.ProtectedData.dll
+            ¦   ¦       ¦   ¦               System.Windows.Extensions.dll
+            ¦   ¦       ¦   ¦               
+            ¦   ¦       ¦   +---win-arm
+            ¦   ¦       ¦   ¦   +---native
+            ¦   ¦       ¦   ¦           Microsoft.Data.SqlClient.SNI.dll
+            ¦   ¦       ¦   ¦           
+            ¦   ¦       ¦   +---win-arm64
+            ¦   ¦       ¦   ¦   +---native
+            ¦   ¦       ¦   ¦           LdaNative.dll
+            ¦   ¦       ¦   ¦           Microsoft.Data.SqlClient.SNI.dll
+            ¦   ¦       ¦   ¦           
+            ¦   ¦       ¦   +---win-x64
+            ¦   ¦       ¦   ¦   +---native
+            ¦   ¦       ¦   ¦           FastTreeNative.dll
+            ¦   ¦       ¦   ¦           LdaNative.dll
+            ¦   ¦       ¦   ¦           Microsoft.Data.SqlClient.SNI.dll
+            ¦   ¦       ¦   ¦           
+            ¦   ¦       ¦   +---win-x86
+            ¦   ¦       ¦       +---native
+            ¦   ¦       ¦               FastTreeNative.dll
+            ¦   ¦       ¦               LdaNative.dll
+            ¦   ¦       ¦               Microsoft.Data.SqlClient.SNI.dll
+            ¦   ¦       ¦               
+            ¦   ¦       +---tr
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.CSharp.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.Workspaces.resources.dll
+            ¦   ¦       ¦       
+            ¦   ¦       +---zh-Hans
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.CSharp.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+            ¦   ¦       ¦       Microsoft.CodeAnalysis.Workspaces.resources.dll
+            ¦   ¦       ¦       
+            ¦   ¦       +---zh-Hant
+            ¦   ¦               Microsoft.CodeAnalysis.CSharp.resources.dll
+            ¦   ¦               Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+            ¦   ¦               Microsoft.CodeAnalysis.resources.dll
+            ¦   ¦               Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+            ¦   ¦               Microsoft.CodeAnalysis.Workspaces.resources.dll
+            ¦   ¦               
+            ¦   +---Release
+            ¦       +---net9.0
+            +---Controllers
+            ¦       AccountingController.cs
+            ¦       AccountingPeriodController.cs
+            ¦       AccountsController.cs
+            ¦       ActivityController.cs
+            ¦       AnalysisCentersController.cs
+            ¦       AuditController.cs
+            ¦       AuthController.cs
+            ¦       BatchController.cs
+            ¦       BIController.cs
+            ¦       CompanyController.cs
+            ¦       CustomerController.cs
+            ¦       FinancialPlansController.cs
+            ¦       FxController.cs
+            ¦       InventoryController.cs
+            ¦       InvoiceController.cs
+            ¦       JournalController.cs
+            ¦       LeadController.cs
+            ¦       OpportunityController.cs
+            ¦       PurchaseController.cs
+            ¦       ReconciliationController.cs
+            ¦       ReportsAdvancedController.cs
+            ¦       ReportsController.cs
+            ¦       SalesController.cs
+            ¦       SupplierController.cs
+            ¦       VATController.cs
+            ¦       VATRateController.cs
+            ¦       
+            +---Data
+            ¦       ApplicationDbContext.cs
+            ¦       DataSeeder.cs
+            ¦       DesigniTimeDbContextFactory.cs
+            ¦       
+            +---logs
+            ¦       log-20251116.txt
+            ¦       log-20251117.txt
+            ¦       
+            +---Migrations
+            ¦       20251117072201_InitialCreate.cs
+            ¦       20251117072201_InitialCreate.Designer.cs
+            ¦       ApplicationDbContextModelSnapshot.cs
+            ¦       
+            +---Models
+            ¦       Account.cs
+            ¦       AccountingPeriod.cs
+            ¦       Activity.cs
+            ¦       AnalysisCenter.cs
+            ¦       ApplicationUser.cs
+            ¦       AuditLog.cs
+            ¦       Batch.cs
+            ¦       BIModels.cs
+            ¦       Company.cs
+            ¦       Currency.cs
+            ¦       Customer.cs
+            ¦       FinancialPlanning.cs
+            ¦       Inventory.cs
+            ¦       Invoice.cs
+            ¦       JournalEntry.cs
+            ¦       Lead.cs
+            ¦       Opportunity.cs
+            ¦       Purchase.cs
+            ¦       Reconciliation.cs
+            ¦       Report.cs
+            ¦       Sales.cs
+            ¦       Supplier.cs
+            ¦       VATRate.cs
+            ¦       
+            +---obj
+            ¦   ¦   AccountingSystem.csproj.EntityFrameworkCore.targets
+            ¦   ¦   AccountingSystem.csproj.nuget.dgspec.json
+            ¦   ¦   AccountingSystem.csproj.nuget.g.props
+            ¦   ¦   AccountingSystem.csproj.nuget.g.targets
+            ¦   ¦   project.assets.json
+            ¦   ¦   project.nuget.cache
+            ¦   ¦   
+            ¦   +---Debug
+            ¦   ¦   +---net10.0.100
+            ¦   ¦   ¦       AccountingSystem.assets.cache
+            ¦   ¦   ¦       AccountingSystem.GlobalUsings.g.cs
+            ¦   ¦   ¦       
+            ¦   ¦   +---net9.0
+            ¦   ¦       ¦   .NETCoreApp,Version=v9.0.AssemblyAttributes.cs
+            ¦   ¦       ¦   Accounti.6BF7103E.Up2Date
+            ¦   ¦       ¦   AccountingSystem.AssemblyInfo.cs
+            ¦   ¦       ¦   AccountingSystem.AssemblyInfoInputs.cache
+            ¦   ¦       ¦   AccountingSystem.assets.cache
+            ¦   ¦       ¦   AccountingSystem.csproj.AssemblyReference.cache
+            ¦   ¦       ¦   AccountingSystem.csproj.CoreCompileInputs.cache
+            ¦   ¦       ¦   AccountingSystem.csproj.FileListAbsolute.txt
+            ¦   ¦       ¦   AccountingSystem.dll
+            ¦   ¦       ¦   AccountingSystem.GeneratedMSBuildEditorConfig.editorconfig
+            ¦   ¦       ¦   AccountingSystem.genruntimeconfig.cache
+            ¦   ¦       ¦   AccountingSystem.GlobalUsings.g.cs
+            ¦   ¦       ¦   AccountingSystem.MvcApplicationPartsAssemblyInfo.cache
+            ¦   ¦       ¦   AccountingSystem.MvcApplicationPartsAssemblyInfo.cs
+            ¦   ¦       ¦   AccountingSystem.pdb
+            ¦   ¦       ¦   AccountingSystem.sourcelink.json
+            ¦   ¦       ¦   apphost.exe
+            ¦   ¦       ¦   rjsmcshtml.dswa.cache.json
+            ¦   ¦       ¦   rjsmrazor.dswa.cache.json
+            ¦   ¦       ¦   rpswa.dswa.cache.json
+            ¦   ¦       ¦   staticwebassets.build.endpoints.json
+            ¦   ¦       ¦   staticwebassets.build.json
+            ¦   ¦       ¦   staticwebassets.build.json.cache
+            ¦   ¦       ¦   staticwebassets.removed.txt
+            ¦   ¦       ¦   swae.build.ex.cache
+            ¦   ¦       ¦   
+            ¦   ¦       +---ref
+            ¦   ¦       ¦       AccountingSystem.dll
+            ¦   ¦       ¦       
+            ¦   ¦       +---refint
+            ¦   ¦       ¦       AccountingSystem.dll
+            ¦   ¦       ¦       
+            ¦   ¦       +---staticwebassets
+            ¦   +---Release
+            ¦       +---net9.0
+            ¦           ¦   .NETCoreApp,Version=v9.0.AssemblyAttributes.cs
+            ¦           ¦   AccountingSystem.AssemblyInfo.cs
+            ¦           ¦   AccountingSystem.AssemblyInfoInputs.cache
+            ¦           ¦   AccountingSystem.assets.cache
+            ¦           ¦   AccountingSystem.csproj.AssemblyReference.cache
+            ¦           ¦   AccountingSystem.GeneratedMSBuildEditorConfig.editorconfig
+            ¦           ¦   AccountingSystem.GlobalUsings.g.cs
+            ¦           ¦   
+            ¦           +---ref
+            ¦           +---refint
+            +---Properties
+            ¦       launchSettings.json
+            ¦       
+            +---Services
+                    AccountingPeriodService.cs
+                    AccountingService.cs
+                    AccountService.cs
+                    ActivityService.cs
+                    AnalysisCenterService.cs
+                    AuditService.cs
+                    BatchService.cs
+                    BIService.cs
+                    CompanyService.cs
+                    CustomerService.cs
+                    FinancialPlanService.cs
+                    FXService.cs
+                    IAccountingPeriodService.cs
+                    IAccountingService.cs
+                    IAccountService.cs
+                    IActivityService.cs
+                    IAnalysisCenterService.cs
+                    IAuditService.cs
+                    IBatchService.cs
+                    IBIService.cs
+                    ICompanyService.cs
+                    ICustomerService.cs
+                    IFinancialPlanning.cs
+                    IFXService.cs
+                    IInventoryService.cs
+                    IInvoiceService.cs
+                    ILeadService.cs
+                    InventoryService.cs
+                    InvoiceService.cs
+                    IOpportunityService.cs
+                    IPurchaseService.cs
+                    IReconciliationService.cs
+                    IReportService.cs
+                    ISalesService.cs
+                    ISupplierService.cs
+                    ITokenService.cs
+                    IVATRateService.cs
+                    IVATService.cs
+                    LeadService.cs
+                    OpportunityService.cs
+                    PurchaseService.cs
+                    ReconciliationService.cs
+                    ReportService.cs
+                    SalesService.cs
+                    SupplierService.cs
+                    TokenService.cs
+                    VATRateService.cs
+                    VATService.cs
+                    
