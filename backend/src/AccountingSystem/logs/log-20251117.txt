@@ -659,3 +659,95 @@ Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
 2025-11-17 20:19:12.716 +01:00 [DBG] Hosting stopping
 2025-11-17 20:19:12.724 +01:00 [DBG] Hosting stopped
 2025-11-17 20:19:12.728 +01:00 [INF] 🛑 Chiusura logging...
+2025-11-17 21:40:22.529 +01:00 [INF] ========================================
+2025-11-17 21:40:22.618 +01:00 [INF] 🚀 Avvio dell'applicazione Accounting System
+2025-11-17 21:40:22.620 +01:00 [INF] ========================================
+2025-11-17 21:40:22.623 +01:00 [INF] 📋 Step 1: Configurazione connection string...
+2025-11-17 21:40:22.625 +01:00 [INF] ✅ Connection string configurato
+2025-11-17 21:40:22.627 +01:00 [INF] 📋 Step 2: Registrazione DbContext...
+2025-11-17 21:40:22.633 +01:00 [INF] ✅ DbContext registrato
+2025-11-17 21:40:22.635 +01:00 [INF] 📋 Step 3: Configurazione Identity...
+2025-11-17 21:40:22.657 +01:00 [INF] ✅ Identity configurato
+2025-11-17 21:40:22.660 +01:00 [INF] 📋 Step 4: Configurazione JWT Authentication...
+2025-11-17 21:40:22.662 +01:00 [INF] ✅ JWT Secret trovato (lunghezza: 72 caratteri)
+2025-11-17 21:40:22.669 +01:00 [INF] ✅ JWT Issuer: AccountingApp, Audience: AccountingAppClient
+2025-11-17 21:40:22.672 +01:00 [INF] ✅ JWT Authentication configurato
+2025-11-17 21:40:22.674 +01:00 [INF] 📋 Step 5: Configurazione CORS...
+2025-11-17 21:40:22.683 +01:00 [INF] ✅ CORS configurato per 2 origins
+2025-11-17 21:40:22.685 +01:00 [INF] ========================================
+2025-11-17 21:40:22.687 +01:00 [INF] 📦 Step 6: Registrazione servizi applicativi...
+2025-11-17 21:40:22.689 +01:00 [INF] ========================================
+2025-11-17 21:40:22.691 +01:00 [DBG] Registering ITokenService → TokenService
+2025-11-17 21:40:22.692 +01:00 [DBG] Registering IAccountingService → AccountingService
+2025-11-17 21:40:22.694 +01:00 [DBG] Registering IAuditService → AuditService
+2025-11-17 21:40:22.696 +01:00 [DBG] Registering IReportService → ReportService
+2025-11-17 21:40:22.697 +01:00 [DBG] Registering IVatService → VatService
+2025-11-17 21:40:22.699 +01:00 [DBG] Registering IBatchService → BatchService
+2025-11-17 21:40:22.700 +01:00 [DBG] Registering IFXService → FXService
+2025-11-17 21:40:22.702 +01:00 [DBG] Registering IReconciliationService → ReconciliationService
+2025-11-17 21:40:22.704 +01:00 [DBG] Registering ICompanyService → CompanyService
+2025-11-17 21:40:22.705 +01:00 [DBG] Registering IAccountService → AccountService
+2025-11-17 21:40:22.706 +01:00 [DBG] Registering IVatRateService → VatRateService
+2025-11-17 21:40:22.708 +01:00 [DBG] Registering IAccountingPeriodService → AccountingPeriodService
+2025-11-17 21:40:22.710 +01:00 [DBG] Registering IInventoryService → InventoryService
+2025-11-17 21:40:22.712 +01:00 [DBG] Registering ISalesService → SalesService
+2025-11-17 21:40:22.714 +01:00 [DBG] Registering IPurchaseService → PurchaseService
+2025-11-17 21:40:22.715 +01:00 [DBG] Registering IInvoiceService → InvoiceService
+2025-11-17 21:40:22.717 +01:00 [DBG] Registering IAnalysisCenterService → AnalysisCenterService
+2025-11-17 21:40:22.718 +01:00 [DBG] Registering IBIService → BIService
+2025-11-17 21:40:22.720 +01:00 [DBG] Registering ICustomerService → CustomerService
+2025-11-17 21:40:22.721 +01:00 [DBG] Registering ISupplierService → SupplierService
+2025-11-17 21:40:22.723 +01:00 [DBG] Registering ILeadService → LeadService
+2025-11-17 21:40:22.725 +01:00 [DBG] Registering IOpportunityService → OpportunityService
+2025-11-17 21:40:22.727 +01:00 [DBG] Registering IActivityService → ActivityService
+2025-11-17 21:40:22.728 +01:00 [INF] ✅ Tutti i 23 servizi applicativi registrati con successo!
+2025-11-17 21:40:22.729 +01:00 [INF] 📋 Step 7: Registrazione Controllers e Swagger...
+2025-11-17 21:40:22.750 +01:00 [INF] ✅ Controllers e Swagger registrati
+2025-11-17 21:40:22.752 +01:00 [INF] 📋 Step 8: Configurazione Authorization policies...
+2025-11-17 21:40:22.754 +01:00 [INF] ✅ Authorization policies configurate
+2025-11-17 21:40:22.755 +01:00 [INF] 📋 Step 9: Configurazione Rate Limiting...
+2025-11-17 21:40:22.757 +01:00 [INF] ✅ Rate Limiting configurato
+2025-11-17 21:40:22.759 +01:00 [INF] 📋 Step 10: Configurazione Health Checks...
+2025-11-17 21:40:22.762 +01:00 [INF] ✅ Health Checks configurati
+2025-11-17 21:40:22.764 +01:00 [INF] ========================================
+2025-11-17 21:40:22.766 +01:00 [INF] 🏗️ Step 11: BUILD dell'applicazione...
+2025-11-17 21:40:22.768 +01:00 [INF] ========================================
+2025-11-17 21:40:22.825 +01:00 [INF] ✅✅✅ BUILD COMPLETATO CON SUCCESSO! ✅✅✅
+2025-11-17 21:40:22.827 +01:00 [INF] ========================================
+2025-11-17 21:40:22.829 +01:00 [INF] ⚙️ Step 12: Configurazione middleware...
+2025-11-17 21:40:22.831 +01:00 [INF] ========================================
+2025-11-17 21:40:22.833 +01:00 [INF] 🔧 Ambiente: Development
+2025-11-17 21:40:22.854 +01:00 [INF] Configurazione middleware pipeline...
+2025-11-17 21:40:22.857 +01:00 [INF] Configurazione endpoints...
+2025-11-17 21:40:22.908 +01:00 [DBG] Registered model binder providers, in the following order: ["Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BinderTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ServicesModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.HeaderModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FloatingPointTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.EnumTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DateTimeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.TryParseModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CancellationTokenModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ByteArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormFileModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormCollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.KeyValuePairModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DictionaryModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ComplexObjectModelBinderProvider"]
+2025-11-17 21:40:23.073 +01:00 [INF] ✅ Middleware e endpoints configurati
+2025-11-17 21:40:23.075 +01:00 [INF] ========================================
+2025-11-17 21:40:23.077 +01:00 [INF] 🎉 APPLICAZIONE PRONTA!
+2025-11-17 21:40:23.080 +01:00 [INF] 🌐 Avvio del server...
+2025-11-17 21:40:23.081 +01:00 [INF] ========================================
+2025-11-17 21:40:23.087 +01:00 [DBG] Hosting starting
+2025-11-17 21:40:23.111 +01:00 [INF] User profile is available. Using 'C:\Users\User\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-11-17 21:40:23.123 +01:00 [DBG] Reading data from file 'C:\Users\User\AppData\Local\ASP.NET\DataProtection-Keys\key-fe079deb-6c63-43ca-bf9a-2df63a225089.xml'.
+2025-11-17 21:40:23.135 +01:00 [DBG] Found key {fe079deb-6c63-43ca-bf9a-2df63a225089}.
+2025-11-17 21:40:23.152 +01:00 [DBG] Considering key {fe079deb-6c63-43ca-bf9a-2df63a225089} with expiration date 2026-02-07 10:20:24Z as default key.
+2025-11-17 21:40:23.159 +01:00 [DBG] Forwarded activator type request from Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Version=9.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+2025-11-17 21:40:23.164 +01:00 [DBG] Decrypting secret element using Windows DPAPI.
+2025-11-17 21:40:23.167 +01:00 [DBG] Forwarded activator type request from Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=9.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+2025-11-17 21:40:23.175 +01:00 [DBG] Opening CNG algorithm 'AES' from provider 'null' with chaining mode CBC.
+2025-11-17 21:40:23.179 +01:00 [DBG] Opening CNG algorithm 'SHA256' from provider 'null' with HMAC.
+2025-11-17 21:40:23.183 +01:00 [DBG] Using key {fe079deb-6c63-43ca-bf9a-2df63a225089} as the default key.
+2025-11-17 21:40:23.187 +01:00 [DBG] Key ring with default key {fe079deb-6c63-43ca-bf9a-2df63a225089} was loaded during application startup.
+2025-11-17 21:40:23.260 +01:00 [WRN] The WebRootPath was not found: C:\Users\User\Desktop\APP MIA\AccountingSoftware\backend\src\AccountingSystem\wwwroot. Static files may be unavailable.
+2025-11-17 21:40:23.273 +01:00 [DBG] Middleware configuration started with options: {AllowedHosts = *, AllowEmptyHosts = True, IncludeFailureMessage = True}
+2025-11-17 21:40:23.277 +01:00 [DBG] Wildcard detected, all requests with hosts will be allowed.
+2025-11-17 21:40:23.362 +01:00 [INF] Now listening on: https://localhost:52291
+2025-11-17 21:40:23.364 +01:00 [INF] Now listening on: http://localhost:52292
+2025-11-17 21:40:23.366 +01:00 [DBG] Loaded hosting startup assembly AccountingSystem
+2025-11-17 21:40:23.368 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-17 21:40:23.370 +01:00 [INF] Hosting environment: Development
+2025-11-17 21:40:23.372 +01:00 [INF] Content root path: C:\Users\User\Desktop\APP MIA\AccountingSoftware\backend\src\AccountingSystem
+2025-11-17 21:40:23.374 +01:00 [DBG] Hosting started
+2025-11-17 21:40:34.722 +01:00 [INF] Application is shutting down...
+2025-11-17 21:40:34.723 +01:00 [DBG] Hosting stopping
+2025-11-17 21:40:34.734 +01:00 [DBG] Hosting stopped
+2025-11-17 21:40:34.738 +01:00 [INF] 🛑 Chiusura logging...
