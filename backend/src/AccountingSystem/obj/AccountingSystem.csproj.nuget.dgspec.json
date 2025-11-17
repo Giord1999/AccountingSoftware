@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\Desktop\\APP MIA\\AccountingApp\\backend\\src\\AccountingSystem\\AccountingSystem.csproj": {}
+    "C:\\Users\\User\\Desktop\\APP MIA\\AccountingSoftware\\backend\\src\\AccountingSystem\\AccountingSystem.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\Desktop\\APP MIA\\AccountingApp\\backend\\src\\AccountingSystem\\AccountingSystem.csproj": {
+    "C:\\Users\\User\\Desktop\\APP MIA\\AccountingSoftware\\backend\\src\\AccountingSystem\\AccountingSystem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\Desktop\\APP MIA\\AccountingApp\\backend\\src\\AccountingSystem\\AccountingSystem.csproj",
+        "projectUniqueName": "C:\\Users\\User\\Desktop\\APP MIA\\AccountingSoftware\\backend\\src\\AccountingSystem\\AccountingSystem.csproj",
         "projectName": "AccountingSystem",
-        "projectPath": "C:\\Users\\User\\Desktop\\APP MIA\\AccountingApp\\backend\\src\\AccountingSystem\\AccountingSystem.csproj",
+        "projectPath": "C:\\Users\\User\\Desktop\\APP MIA\\AccountingSoftware\\backend\\src\\AccountingSystem\\AccountingSystem.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\Desktop\\APP MIA\\AccountingApp\\backend\\src\\AccountingSystem\\obj\\",
+        "outputPath": "C:\\Users\\User\\Desktop\\APP MIA\\AccountingSoftware\\backend\\src\\AccountingSystem\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -64,16 +64,21 @@
             },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[8.0.0, )"
+              "version": "[9.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.10, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[8.0.0, )"
+              "version": "[9.0.10, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[8.0.0, )"
+              "version": "[9.0.10, )"
             },
             "Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore": {
               "target": "Package",

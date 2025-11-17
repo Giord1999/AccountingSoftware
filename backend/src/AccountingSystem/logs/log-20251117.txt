@@ -1,0 +1,215 @@
+2025-11-17 07:39:55.657 +01:00 [INF] Avvio dell'applicazione Accounting System
+2025-11-17 07:39:55.827 +01:00 [FTL] L'applicazione è terminata inaspettatamente
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in C:\Users\User\Desktop\APP MIA\AccountingSoftware\backend\src\AccountingSystem\Program.cs:line 142
+2025-11-17 07:40:47.754 +01:00 [INF] Avvio dell'applicazione Accounting System
+2025-11-17 07:40:47.899 +01:00 [FTL] L'applicazione è terminata inaspettatamente
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in C:\Users\User\Desktop\APP MIA\AccountingSoftware\backend\src\AccountingSystem\Program.cs:line 142
+2025-11-17 07:51:32.345 +01:00 [INF] Avvio dell'applicazione Accounting System
+2025-11-17 07:51:32.489 +01:00 [FTL] L'applicazione è terminata inaspettatamente
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in C:\Users\User\Desktop\APP MIA\AccountingSoftware\backend\src\AccountingSystem\Program.cs:line 142
+2025-11-17 07:51:56.683 +01:00 [INF] Avvio dell'applicazione Accounting System
+2025-11-17 07:51:56.825 +01:00 [FTL] L'applicazione è terminata inaspettatamente
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in C:\Users\User\Desktop\APP MIA\AccountingSoftware\backend\src\AccountingSystem\Program.cs:line 142
+2025-11-17 07:57:40.903 +01:00 [INF] Avvio dell'applicazione Accounting System
+2025-11-17 07:57:41.049 +01:00 [FTL] L'applicazione è terminata inaspettatamente
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in C:\Users\User\Desktop\APP MIA\AccountingSoftware\backend\src\AccountingSystem\Program.cs:line 142
+2025-11-17 07:59:05.841 +01:00 [INF] Avvio dell'applicazione Accounting System
+2025-11-17 07:59:05.980 +01:00 [FTL] L'applicazione è terminata inaspettatamente
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in C:\Users\User\Desktop\APP MIA\AccountingSoftware\backend\src\AccountingSystem\Program.cs:line 142
+2025-11-17 08:16:13.059 +01:00 [INF] ========================================
+2025-11-17 08:16:13.122 +01:00 [INF] 🚀 Avvio dell'applicazione Accounting System
+2025-11-17 08:16:13.125 +01:00 [INF] ========================================
+2025-11-17 08:16:13.127 +01:00 [INF] 📋 Step 1: Configurazione connection string...
+2025-11-17 08:16:13.128 +01:00 [INF] ✅ Connection string configurato
+2025-11-17 08:16:13.130 +01:00 [INF] 📋 Step 2: Registrazione DbContext...
+2025-11-17 08:16:13.135 +01:00 [INF] ✅ DbContext registrato
+2025-11-17 08:16:13.137 +01:00 [INF] 📋 Step 3: Configurazione Identity...
+2025-11-17 08:16:13.160 +01:00 [INF] ✅ Identity configurato
+2025-11-17 08:16:13.162 +01:00 [INF] 📋 Step 4: Configurazione JWT Authentication...
+2025-11-17 08:16:13.165 +01:00 [INF] ✅ JWT Secret trovato (lunghezza: 72 caratteri)
+2025-11-17 08:16:13.173 +01:00 [INF] ✅ JWT Issuer: AccountingApp, Audience: AccountingAppClient
+2025-11-17 08:16:13.177 +01:00 [INF] ✅ JWT Authentication configurato
+2025-11-17 08:16:13.179 +01:00 [INF] 📋 Step 5: Configurazione CORS...
+2025-11-17 08:16:13.188 +01:00 [INF] ✅ CORS configurato per 2 origins
+2025-11-17 08:16:13.190 +01:00 [INF] ========================================
+2025-11-17 08:16:13.192 +01:00 [INF] 📦 Step 6: Registrazione servizi applicativi...
+2025-11-17 08:16:13.193 +01:00 [INF] ========================================
+2025-11-17 08:16:13.194 +01:00 [DBG] Registering ITokenService → TokenService
+2025-11-17 08:16:13.196 +01:00 [DBG] Registering IAccountingService → AccountingService
+2025-11-17 08:16:13.197 +01:00 [DBG] Registering IAuditService → AuditService
+2025-11-17 08:16:13.200 +01:00 [DBG] Registering IReportService → ReportService
+2025-11-17 08:16:13.202 +01:00 [DBG] Registering IVatService → VatService
+2025-11-17 08:16:13.203 +01:00 [DBG] Registering IBatchService → BatchService
+2025-11-17 08:16:13.205 +01:00 [DBG] Registering IFXService → FXService
+2025-11-17 08:16:13.206 +01:00 [DBG] Registering IReconciliationService → ReconciliationService
+2025-11-17 08:16:13.207 +01:00 [DBG] Registering ICompanyService → CompanyService
+2025-11-17 08:16:13.209 +01:00 [DBG] Registering IAccountService → AccountService
+2025-11-17 08:16:13.210 +01:00 [DBG] Registering IVatRateService → VatRateService
+2025-11-17 08:16:13.212 +01:00 [DBG] Registering IAccountingPeriodService → AccountingPeriodService
+2025-11-17 08:16:13.215 +01:00 [DBG] Registering IInventoryService → InventoryService
+2025-11-17 08:16:13.217 +01:00 [DBG] Registering ISalesService → SalesService
+2025-11-17 08:16:13.219 +01:00 [DBG] Registering IPurchaseService → PurchaseService
+2025-11-17 08:16:13.221 +01:00 [DBG] Registering IInvoiceService → InvoiceService
+2025-11-17 08:16:13.223 +01:00 [DBG] Registering IAnalysisCenterService → AnalysisCenterService
+2025-11-17 08:16:13.225 +01:00 [DBG] Registering IBIService → BIService
+2025-11-17 08:16:13.227 +01:00 [DBG] Registering ICustomerService → CustomerService
+2025-11-17 08:16:13.229 +01:00 [DBG] Registering ISupplierService → SupplierService
+2025-11-17 08:16:13.231 +01:00 [DBG] Registering ILeadService → LeadService
+2025-11-17 08:16:13.233 +01:00 [DBG] Registering IOpportunityService → OpportunityService
+2025-11-17 08:16:13.235 +01:00 [DBG] Registering IActivityService → ActivityService
+2025-11-17 08:16:13.237 +01:00 [INF] ✅ Tutti i 23 servizi applicativi registrati con successo!
+2025-11-17 08:16:13.238 +01:00 [INF] 📋 Step 7: Registrazione Controllers e Swagger...
+2025-11-17 08:16:13.252 +01:00 [INF] ✅ Controllers e Swagger registrati
+2025-11-17 08:16:13.253 +01:00 [INF] 📋 Step 8: Configurazione Authorization policies...
+2025-11-17 08:16:13.255 +01:00 [INF] ✅ Authorization policies configurate
+2025-11-17 08:16:13.256 +01:00 [INF] 📋 Step 9: Configurazione Rate Limiting...
+2025-11-17 08:16:13.258 +01:00 [INF] ✅ Rate Limiting configurato
+2025-11-17 08:16:13.259 +01:00 [INF] 📋 Step 10: Configurazione Health Checks...
+2025-11-17 08:16:13.262 +01:00 [INF] ✅ Health Checks configurati
+2025-11-17 08:16:13.263 +01:00 [INF] ========================================
+2025-11-17 08:16:13.265 +01:00 [INF] 🏗️ Step 11: BUILD dell'applicazione...
+2025-11-17 08:16:13.267 +01:00 [INF] ========================================
+2025-11-17 08:16:13.317 +01:00 [FTL] ❌ HOST ABORTED EXCEPTION - L'host è stato interrotto durante l'avvio
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in C:\Users\User\Desktop\APP MIA\AccountingSoftware\backend\src\AccountingSystem\Program.cs:line 224
+2025-11-17 08:16:13.340 +01:00 [INF] 🛑 Chiusura logging...
+2025-11-17 08:22:47.145 +01:00 [INF] ========================================
+2025-11-17 08:22:47.217 +01:00 [INF] 🚀 Avvio dell'applicazione Accounting System
+2025-11-17 08:22:47.219 +01:00 [INF] ========================================
+2025-11-17 08:22:47.221 +01:00 [INF] 📋 Step 1: Configurazione connection string...
+2025-11-17 08:22:47.222 +01:00 [INF] ✅ Connection string configurato
+2025-11-17 08:22:47.223 +01:00 [INF] 📋 Step 2: Registrazione DbContext...
+2025-11-17 08:22:47.228 +01:00 [INF] ✅ DbContext registrato
+2025-11-17 08:22:47.229 +01:00 [INF] 📋 Step 3: Configurazione Identity...
+2025-11-17 08:22:47.249 +01:00 [INF] ✅ Identity configurato
+2025-11-17 08:22:47.252 +01:00 [INF] 📋 Step 4: Configurazione JWT Authentication...
+2025-11-17 08:22:47.253 +01:00 [INF] ✅ JWT Secret trovato (lunghezza: 72 caratteri)
+2025-11-17 08:22:47.260 +01:00 [INF] ✅ JWT Issuer: AccountingApp, Audience: AccountingAppClient
+2025-11-17 08:22:47.262 +01:00 [INF] ✅ JWT Authentication configurato
+2025-11-17 08:22:47.263 +01:00 [INF] 📋 Step 5: Configurazione CORS...
+2025-11-17 08:22:47.285 +01:00 [INF] ✅ CORS configurato per 2 origins
+2025-11-17 08:22:47.287 +01:00 [INF] ========================================
+2025-11-17 08:22:47.288 +01:00 [INF] 📦 Step 6: Registrazione servizi applicativi...
+2025-11-17 08:22:47.290 +01:00 [INF] ========================================
+2025-11-17 08:22:47.291 +01:00 [DBG] Registering ITokenService → TokenService
+2025-11-17 08:22:47.292 +01:00 [DBG] Registering IAccountingService → AccountingService
+2025-11-17 08:22:47.293 +01:00 [DBG] Registering IAuditService → AuditService
+2025-11-17 08:22:47.295 +01:00 [DBG] Registering IReportService → ReportService
+2025-11-17 08:22:47.296 +01:00 [DBG] Registering IVatService → VatService
+2025-11-17 08:22:47.297 +01:00 [DBG] Registering IBatchService → BatchService
+2025-11-17 08:22:47.298 +01:00 [DBG] Registering IFXService → FXService
+2025-11-17 08:22:47.299 +01:00 [DBG] Registering IReconciliationService → ReconciliationService
+2025-11-17 08:22:47.300 +01:00 [DBG] Registering ICompanyService → CompanyService
+2025-11-17 08:22:47.301 +01:00 [DBG] Registering IAccountService → AccountService
+2025-11-17 08:22:47.303 +01:00 [DBG] Registering IVatRateService → VatRateService
+2025-11-17 08:22:47.304 +01:00 [DBG] Registering IAccountingPeriodService → AccountingPeriodService
+2025-11-17 08:22:47.305 +01:00 [DBG] Registering IInventoryService → InventoryService
+2025-11-17 08:22:47.306 +01:00 [DBG] Registering ISalesService → SalesService
+2025-11-17 08:22:47.308 +01:00 [DBG] Registering IPurchaseService → PurchaseService
+2025-11-17 08:22:47.309 +01:00 [DBG] Registering IInvoiceService → InvoiceService
+2025-11-17 08:22:47.310 +01:00 [DBG] Registering IAnalysisCenterService → AnalysisCenterService
+2025-11-17 08:22:47.311 +01:00 [DBG] Registering IBIService → BIService
+2025-11-17 08:22:47.312 +01:00 [DBG] Registering ICustomerService → CustomerService
+2025-11-17 08:22:47.313 +01:00 [DBG] Registering ISupplierService → SupplierService
+2025-11-17 08:22:47.315 +01:00 [DBG] Registering ILeadService → LeadService
+2025-11-17 08:22:47.316 +01:00 [DBG] Registering IOpportunityService → OpportunityService
+2025-11-17 08:22:47.317 +01:00 [DBG] Registering IActivityService → ActivityService
+2025-11-17 08:22:47.318 +01:00 [INF] ✅ Tutti i 23 servizi applicativi registrati con successo!
+2025-11-17 08:22:47.319 +01:00 [INF] 📋 Step 7: Registrazione Controllers e Swagger...
+2025-11-17 08:22:47.338 +01:00 [INF] ✅ Controllers e Swagger registrati
+2025-11-17 08:22:47.340 +01:00 [INF] 📋 Step 8: Configurazione Authorization policies...
+2025-11-17 08:22:47.341 +01:00 [INF] ✅ Authorization policies configurate
+2025-11-17 08:22:47.342 +01:00 [INF] 📋 Step 9: Configurazione Rate Limiting...
+2025-11-17 08:22:47.344 +01:00 [INF] ✅ Rate Limiting configurato
+2025-11-17 08:22:47.345 +01:00 [INF] 📋 Step 10: Configurazione Health Checks...
+2025-11-17 08:22:47.348 +01:00 [INF] ✅ Health Checks configurati
+2025-11-17 08:22:47.349 +01:00 [INF] ========================================
+2025-11-17 08:22:47.350 +01:00 [INF] 🏗️ Step 11: BUILD dell'applicazione...
+2025-11-17 08:22:47.351 +01:00 [INF] ========================================
+2025-11-17 08:22:47.438 +01:00 [INF] ✅✅✅ BUILD COMPLETATO CON SUCCESSO! ✅✅✅
+2025-11-17 08:22:47.440 +01:00 [INF] ========================================
+2025-11-17 08:22:47.442 +01:00 [INF] ⚙️ Step 12: Configurazione middleware...
+2025-11-17 08:22:47.443 +01:00 [INF] ========================================
+2025-11-17 08:22:47.445 +01:00 [INF] 🔧 Ambiente: Development
+2025-11-17 08:22:47.475 +01:00 [INF] Configurazione middleware pipeline...
+2025-11-17 08:22:47.479 +01:00 [INF] Configurazione endpoints...
+2025-11-17 08:22:47.568 +01:00 [DBG] Registered model binder providers, in the following order: ["Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BinderTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ServicesModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.HeaderModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FloatingPointTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.EnumTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DateTimeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.TryParseModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CancellationTokenModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ByteArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormFileModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormCollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.KeyValuePairModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DictionaryModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ComplexObjectModelBinderProvider"]
+2025-11-17 08:22:47.754 +01:00 [INF] ✅ Middleware e endpoints configurati
+2025-11-17 08:22:47.755 +01:00 [INF] ========================================
+2025-11-17 08:22:47.756 +01:00 [INF] 🎉 APPLICAZIONE PRONTA!
+2025-11-17 08:22:47.758 +01:00 [INF] 🌐 Avvio del server...
+2025-11-17 08:22:47.759 +01:00 [INF] ========================================
+2025-11-17 08:22:47.762 +01:00 [DBG] Hosting starting
+2025-11-17 08:22:47.839 +01:00 [INF] User profile is available. Using 'C:\Users\User\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-11-17 08:22:47.852 +01:00 [DBG] Reading data from file 'C:\Users\User\AppData\Local\ASP.NET\DataProtection-Keys\key-fe079deb-6c63-43ca-bf9a-2df63a225089.xml'.
+2025-11-17 08:22:47.893 +01:00 [DBG] Found key {fe079deb-6c63-43ca-bf9a-2df63a225089}.
+2025-11-17 08:22:47.908 +01:00 [DBG] Considering key {fe079deb-6c63-43ca-bf9a-2df63a225089} with expiration date 2026-02-07 10:20:24Z as default key.
+2025-11-17 08:22:47.913 +01:00 [DBG] Forwarded activator type request from Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Version=9.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+2025-11-17 08:22:47.916 +01:00 [DBG] Decrypting secret element using Windows DPAPI.
+2025-11-17 08:22:47.918 +01:00 [DBG] Forwarded activator type request from Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=9.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+2025-11-17 08:22:47.925 +01:00 [DBG] Opening CNG algorithm 'AES' from provider 'null' with chaining mode CBC.
+2025-11-17 08:22:47.928 +01:00 [DBG] Opening CNG algorithm 'SHA256' from provider 'null' with HMAC.
+2025-11-17 08:22:47.931 +01:00 [DBG] Using key {fe079deb-6c63-43ca-bf9a-2df63a225089} as the default key.
+2025-11-17 08:22:47.933 +01:00 [DBG] Key ring with default key {fe079deb-6c63-43ca-bf9a-2df63a225089} was loaded during application startup.
+2025-11-17 08:22:48.019 +01:00 [WRN] The WebRootPath was not found: C:\Users\User\Desktop\APP MIA\AccountingSoftware\backend\src\AccountingSystem\wwwroot. Static files may be unavailable.
+2025-11-17 08:22:48.047 +01:00 [DBG] Middleware configuration started with options: {AllowedHosts = *, AllowEmptyHosts = True, IncludeFailureMessage = True}
+2025-11-17 08:22:48.051 +01:00 [DBG] Wildcard detected, all requests with hosts will be allowed.
+2025-11-17 08:22:48.163 +01:00 [INF] Now listening on: https://localhost:52291
+2025-11-17 08:22:48.164 +01:00 [INF] Now listening on: http://localhost:52292
+2025-11-17 08:22:48.166 +01:00 [DBG] Loaded hosting startup assembly AccountingSystem
+2025-11-17 08:22:48.167 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-17 08:22:48.169 +01:00 [INF] Hosting environment: Development
+2025-11-17 08:22:48.170 +01:00 [INF] Content root path: C:\Users\User\Desktop\APP MIA\AccountingSoftware\backend\src\AccountingSystem
+2025-11-17 08:22:48.172 +01:00 [DBG] Hosting started
+2025-11-17 08:23:14.562 +01:00 [INF] Application is shutting down...
+2025-11-17 08:23:14.563 +01:00 [DBG] Hosting stopping
+2025-11-17 08:23:14.581 +01:00 [DBG] Hosting stopped
+2025-11-17 08:23:14.586 +01:00 [INF] 🛑 Chiusura logging...
