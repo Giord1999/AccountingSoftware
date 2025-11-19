@@ -1,0 +1,16 @@
+﻿<Project>
+  <ItemGroup>
+    <StaticWebAssetEndpoint Include="AccountingApp.styles.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\AccountingApp.styles.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-fHah6byush\u002BsRXlVUE\u002BNw3aAFOgLPejawT34xTCUyPM="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"5509"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022fHah6byush\u002BsRXlVUE\u002BNw3aAFOgLPejawT34xTCUyPM=\u0022"},{"Name":"Last-Modified","Value":"Wed, 19 Nov 2025 05:50:48 GMT"},{"Name":"Vary","Value":"Accept-Encoding"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="AccountingApp.w9amcsnnf0.styles.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\AccountingApp.styles.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"w9amcsnnf0"},{"Name":"integrity","Value":"sha256-fHah6byush\u002BsRXlVUE\u002BNw3aAFOgLPejawT34xTCUyPM="},{"Name":"label","Value":"AccountingApp.styles.css"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"5509"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022fHah6byush\u002BsRXlVUE\u002BNw3aAFOgLPejawT34xTCUyPM=\u0022"},{"Name":"Last-Modified","Value":"Wed, 19 Nov 2025 05:50:48 GMT"},{"Name":"Vary","Value":"Accept-Encoding"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+  </ItemGroup>
+</Project>

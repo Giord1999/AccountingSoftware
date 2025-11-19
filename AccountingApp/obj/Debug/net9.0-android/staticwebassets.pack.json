@@ -1,0 +1,45 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\User\\Desktop\\APP MIA\\AccountingSoftware\\AccountingApp\\obj\\Debug\\net9.0-android\\scopedcss\\bundle\\AccountingApp.styles.css",
+      "PackagePath": "staticwebassets\\AccountingApp.styles.css"
+    },
+    {
+      "Id": "C:\\Users\\User\\Desktop\\APP MIA\\AccountingSoftware\\AccountingApp\\wwwroot\\css\\app.css",
+      "PackagePath": "staticwebassets\\css\\app.css"
+    },
+    {
+      "Id": "C:\\Users\\User\\Desktop\\APP MIA\\AccountingSoftware\\AccountingApp\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\User\\Desktop\\APP MIA\\AccountingSoftware\\AccountingApp\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\User\\Desktop\\APP MIA\\AccountingSoftware\\AccountingApp\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0-android\\staticwebassets\\msbuild.AccountingApp.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0-android\\staticwebassets\\msbuild.AccountingApp.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0-android\\staticwebassets\\msbuild.build.AccountingApp.props",
+      "PackagePath": "build\\AccountingApp.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0-android\\staticwebassets\\msbuild.buildMultiTargeting.AccountingApp.props",
+      "PackagePath": "buildMultiTargeting\\AccountingApp.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0-android\\staticwebassets\\msbuild.buildTransitive.AccountingApp.props",
+      "PackagePath": "buildTransitive\\AccountingApp.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
