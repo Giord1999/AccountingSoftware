@@ -1,0 +1,154 @@
+2025-11-20 19:10:03.555 +01:00 [INF] ========================================
+2025-11-20 19:10:03.664 +01:00 [INF] 🚀 Avvio dell'applicazione Accounting System
+2025-11-20 19:10:03.667 +01:00 [INF] ========================================
+2025-11-20 19:10:03.669 +01:00 [INF] 📋 Step 1: Configurazione connection string...
+2025-11-20 19:10:03.672 +01:00 [INF] ✅ Connection string configurato
+2025-11-20 19:10:03.675 +01:00 [INF] 📋 Step 2: Registrazione DbContext...
+2025-11-20 19:10:03.688 +01:00 [INF] ✅ DbContext registrato
+2025-11-20 19:10:03.691 +01:00 [INF] 📋 Step 3: Configurazione Identity...
+2025-11-20 19:10:03.828 +01:00 [INF] ✅ Identity configurato
+2025-11-20 19:10:03.835 +01:00 [INF] 📋 Step 4: Configurazione JWT Authentication...
+2025-11-20 19:10:03.840 +01:00 [INF] ✅ JWT Secret trovato (lunghezza: 72 caratteri)
+2025-11-20 19:10:03.858 +01:00 [INF] ✅ JWT Issuer: AccountingApp, Audience: AccountingAppClient
+2025-11-20 19:10:03.870 +01:00 [INF] ✅ JWT Authentication configurato
+2025-11-20 19:10:03.873 +01:00 [INF] 📋 Step 5: Configurazione CORS...
+2025-11-20 19:10:03.908 +01:00 [INF] ✅ CORS configurato per 2 origins
+2025-11-20 19:10:03.917 +01:00 [INF] ========================================
+2025-11-20 19:10:03.921 +01:00 [INF] 📦 Step 6: Registrazione servizi applicativi...
+2025-11-20 19:10:03.924 +01:00 [INF] ========================================
+2025-11-20 19:10:03.930 +01:00 [DBG] Registering ITokenService → TokenService
+2025-11-20 19:10:03.934 +01:00 [DBG] Registering IAccountingService → AccountingService
+2025-11-20 19:10:03.938 +01:00 [DBG] Registering IAuditService → AuditService
+2025-11-20 19:10:03.942 +01:00 [DBG] Registering IReportService → ReportService
+2025-11-20 19:10:03.949 +01:00 [DBG] Registering IVatService → VatService
+2025-11-20 19:10:03.955 +01:00 [DBG] Registering IBatchService → BatchService
+2025-11-20 19:10:03.958 +01:00 [DBG] Registering IFXService → FXService
+2025-11-20 19:10:03.962 +01:00 [DBG] Registering IReconciliationService → ReconciliationService
+2025-11-20 19:10:03.965 +01:00 [DBG] Registering ICompanyService → CompanyService
+2025-11-20 19:10:03.970 +01:00 [DBG] Registering IAccountService → AccountService
+2025-11-20 19:10:03.975 +01:00 [DBG] Registering IVatRateService → VatRateService
+2025-11-20 19:10:03.979 +01:00 [DBG] Registering IAccountingPeriodService → AccountingPeriodService
+2025-11-20 19:10:03.984 +01:00 [DBG] Registering IInventoryService → InventoryService
+2025-11-20 19:10:03.989 +01:00 [DBG] Registering ISalesService → SalesService
+2025-11-20 19:10:03.993 +01:00 [DBG] Registering IPurchaseService → PurchaseService
+2025-11-20 19:10:03.999 +01:00 [DBG] Registering IInvoiceService → InvoiceService
+2025-11-20 19:10:04.007 +01:00 [DBG] Registering IAnalysisCenterService → AnalysisCenterService
+2025-11-20 19:10:04.018 +01:00 [DBG] Registering IBIService → BIService
+2025-11-20 19:10:04.024 +01:00 [DBG] Registering ICustomerService → CustomerService
+2025-11-20 19:10:04.033 +01:00 [DBG] Registering ISupplierService → SupplierService
+2025-11-20 19:10:04.036 +01:00 [DBG] Registering ILeadService → LeadService
+2025-11-20 19:10:04.038 +01:00 [DBG] Registering IOpportunityService → OpportunityService
+2025-11-20 19:10:04.041 +01:00 [DBG] Registering IActivityService → ActivityService
+2025-11-20 19:10:04.046 +01:00 [INF] ✅ Tutti i 23 servizi applicativi registrati con successo!
+2025-11-20 19:10:04.049 +01:00 [INF] 📋 Step 7: Registrazione Controllers e Swagger...
+2025-11-20 19:10:04.112 +01:00 [INF] ✅ Controllers e Swagger registrati
+2025-11-20 19:10:04.114 +01:00 [INF] 📋 Step 8: Configurazione Authorization policies...
+2025-11-20 19:10:04.117 +01:00 [INF] ✅ Authorization policies configurate
+2025-11-20 19:10:04.119 +01:00 [INF] 📋 Step 9: Configurazione Rate Limiting...
+2025-11-20 19:10:04.122 +01:00 [INF] ✅ Rate Limiting configurato
+2025-11-20 19:10:04.124 +01:00 [INF] 📋 Step 10: Configurazione Health Checks...
+2025-11-20 19:10:04.129 +01:00 [INF] ✅ Health Checks configurati
+2025-11-20 19:10:04.131 +01:00 [INF] ========================================
+2025-11-20 19:10:04.134 +01:00 [INF] 🏗️ Step 11: BUILD dell'applicazione...
+2025-11-20 19:10:04.136 +01:00 [INF] ========================================
+2025-11-20 19:10:04.312 +01:00 [INF] ✅✅✅ BUILD COMPLETATO CON SUCCESSO! ✅✅✅
+2025-11-20 19:10:04.315 +01:00 [INF] ========================================
+2025-11-20 19:10:04.318 +01:00 [INF] ⚙️ Step 12: Configurazione middleware...
+2025-11-20 19:10:04.320 +01:00 [INF] ========================================
+2025-11-20 19:10:04.324 +01:00 [INF] 🔧 Ambiente: Development
+2025-11-20 19:10:04.365 +01:00 [INF] Configurazione middleware pipeline...
+2025-11-20 19:10:04.370 +01:00 [INF] Configurazione endpoints...
+2025-11-20 19:10:04.501 +01:00 [DBG] Registered model binder providers, in the following order: ["Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BinderTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ServicesModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.HeaderModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FloatingPointTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.EnumTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DateTimeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.TryParseModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CancellationTokenModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ByteArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormFileModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormCollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.KeyValuePairModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DictionaryModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ComplexObjectModelBinderProvider"]
+2025-11-20 19:10:04.788 +01:00 [INF] ✅ Middleware e endpoints configurati
+2025-11-20 19:10:04.791 +01:00 [INF] ========================================
+2025-11-20 19:10:04.794 +01:00 [INF] 🎉 APPLICAZIONE PRONTA!
+2025-11-20 19:10:04.797 +01:00 [INF] 🌐 Avvio del server...
+2025-11-20 19:10:04.800 +01:00 [INF] ========================================
+2025-11-20 19:10:04.807 +01:00 [DBG] Hosting starting
+2025-11-20 19:10:04.892 +01:00 [INF] User profile is available. Using 'C:\Users\User\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-11-20 19:10:04.917 +01:00 [DBG] Reading data from file 'C:\Users\User\AppData\Local\ASP.NET\DataProtection-Keys\key-fe079deb-6c63-43ca-bf9a-2df63a225089.xml'.
+2025-11-20 19:10:04.988 +01:00 [DBG] Found key {fe079deb-6c63-43ca-bf9a-2df63a225089}.
+2025-11-20 19:10:05.019 +01:00 [DBG] Considering key {fe079deb-6c63-43ca-bf9a-2df63a225089} with expiration date 2026-02-07 10:20:24Z as default key.
+2025-11-20 19:10:05.029 +01:00 [DBG] Forwarded activator type request from Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Version=9.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+2025-11-20 19:10:05.035 +01:00 [DBG] Decrypting secret element using Windows DPAPI.
+2025-11-20 19:10:05.039 +01:00 [DBG] Forwarded activator type request from Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=9.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+2025-11-20 19:10:05.053 +01:00 [DBG] Opening CNG algorithm 'AES' from provider 'null' with chaining mode CBC.
+2025-11-20 19:10:05.060 +01:00 [DBG] Opening CNG algorithm 'SHA256' from provider 'null' with HMAC.
+2025-11-20 19:10:05.068 +01:00 [DBG] Using key {fe079deb-6c63-43ca-bf9a-2df63a225089} as the default key.
+2025-11-20 19:10:05.073 +01:00 [DBG] Key ring with default key {fe079deb-6c63-43ca-bf9a-2df63a225089} was loaded during application startup.
+2025-11-20 19:10:05.085 +01:00 [DBG] Middleware loaded
+2025-11-20 19:10:05.090 +01:00 [DBG] Middleware loaded. Script /_framework/aspnetcore-browser-refresh.js (16517 B).
+2025-11-20 19:10:05.095 +01:00 [DBG] Middleware loaded. Script /_framework/blazor-hotreload.js (799 B).
+2025-11-20 19:10:05.276 +01:00 [WRN] The WebRootPath was not found: C:\Users\User\Desktop\APP MIA\AccountingSoftware\backend\src\AccountingSystem\wwwroot. Static files may be unavailable.
+2025-11-20 19:10:05.318 +01:00 [DBG] Middleware configuration started with options: {AllowedHosts = *, AllowEmptyHosts = True, IncludeFailureMessage = True}
+2025-11-20 19:10:05.324 +01:00 [DBG] Wildcard detected, all requests with hosts will be allowed.
+2025-11-20 19:10:05.354 +01:00 [DBG] Middleware loaded: DOTNET_MODIFIABLE_ASSEMBLIES=debug, __ASPNETCORE_BROWSER_TOOLS=true
+2025-11-20 19:10:05.648 +01:00 [INF] Now listening on: https://localhost:52291
+2025-11-20 19:10:05.651 +01:00 [INF] Now listening on: http://localhost:52292
+2025-11-20 19:10:05.654 +01:00 [DBG] Loaded hosting startup assembly AccountingSystem
+2025-11-20 19:10:05.657 +01:00 [DBG] Loaded hosting startup assembly Microsoft.AspNetCore.Watch.BrowserRefresh
+2025-11-20 19:10:05.659 +01:00 [DBG] Loaded hosting startup assembly Microsoft.WebTools.ApiEndpointDiscovery
+2025-11-20 19:10:05.662 +01:00 [DBG] Loaded hosting startup assembly Microsoft.WebTools.BrowserLink.Net
+2025-11-20 19:10:05.675 +01:00 [DBG] Executing API description provider 'EndpointMetadataApiDescriptionProvider' from assembly Microsoft.AspNetCore.Mvc.ApiExplorer v9.0.0.0.
+2025-11-20 19:10:05.710 +01:00 [DBG] Executing API description provider 'DefaultApiDescriptionProvider' from assembly Microsoft.AspNetCore.Mvc.ApiExplorer v9.0.0.0.
+2025-11-20 19:10:05.759 +01:00 [DBG] Connection id "0HNH8C047QGA2" received FIN.
+2025-11-20 19:10:05.759 +01:00 [DBG] Connection id "0HNH8C047QGA3" received FIN.
+2025-11-20 19:10:05.763 +01:00 [DBG] Connection id "0HNH8C047QGA3" accepted.
+2025-11-20 19:10:05.763 +01:00 [DBG] Connection id "0HNH8C047QGA2" accepted.
+2025-11-20 19:10:05.768 +01:00 [DBG] Connection id "0HNH8C047QGA3" started.
+2025-11-20 19:10:05.768 +01:00 [DBG] Connection id "0HNH8C047QGA2" started.
+2025-11-20 19:10:05.799 +01:00 [DBG] Failed to authenticate HTTPS connection.
+System.IO.IOException: Received an unexpected EOF or 0 bytes from the transport stream.
+   at System.Net.Security.SslStream.ReceiveHandshakeFrameAsync[TIOAdapter](CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.ForceAuthenticationAsync[TIOAdapter](Boolean receiveFirst, Byte[] reAuthenticationData, CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.ProcessAuthenticationWithTelemetryAsync(Boolean isAsync, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Https.Internal.HttpsConnectionMiddleware.OnConnectionAsync(ConnectionContext context)
+2025-11-20 19:10:05.799 +01:00 [DBG] Failed to authenticate HTTPS connection.
+System.IO.IOException: Received an unexpected EOF or 0 bytes from the transport stream.
+   at System.Net.Security.SslStream.ReceiveHandshakeFrameAsync[TIOAdapter](CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.ForceAuthenticationAsync[TIOAdapter](Boolean receiveFirst, Byte[] reAuthenticationData, CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.ProcessAuthenticationWithTelemetryAsync(Boolean isAsync, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Https.Internal.HttpsConnectionMiddleware.OnConnectionAsync(ConnectionContext context)
+2025-11-20 19:10:05.859 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-20 19:10:05.860 +01:00 [DBG] Connection id "0HNH8C047QGA2" stopped.
+2025-11-20 19:10:05.862 +01:00 [DBG] Connection id "0HNH8C047QGA3" stopped.
+2025-11-20 19:10:05.864 +01:00 [INF] Hosting environment: Development
+2025-11-20 19:10:05.870 +01:00 [DBG] Connection id "0HNH8C047QGA3" sending FIN because: "The Socket transport's send loop completed gracefully."
+2025-11-20 19:10:05.870 +01:00 [DBG] Connection id "0HNH8C047QGA2" sending FIN because: "The Socket transport's send loop completed gracefully."
+2025-11-20 19:10:05.882 +01:00 [INF] Content root path: C:\Users\User\Desktop\APP MIA\AccountingSoftware\backend\src\AccountingSystem
+2025-11-20 19:10:05.892 +01:00 [DBG] Hosting started
+2025-11-20 19:10:06.796 +01:00 [DBG] Connection id "0HNH8C047QGA4" accepted.
+2025-11-20 19:10:06.799 +01:00 [DBG] Connection id "0HNH8C047QGA4" started.
+2025-11-20 19:10:06.932 +01:00 [DBG] Connection 0HNH8C047QGA4 established using the following protocol: "Tls13"
+2025-11-20 19:10:07.153 +01:00 [INF] Request starting HTTP/2 GET https://localhost:52291/ - null null
+2025-11-20 19:10:07.486 +01:00 [DBG] The request path  does not match the path filter
+2025-11-20 19:10:07.493 +01:00 [DBG] The request path / does not match a supported file type
+2025-11-20 19:10:07.564 +01:00 [DBG] No candidates found for the request path '/'
+2025-11-20 19:10:07.569 +01:00 [DBG] Request did not match any endpoints
+2025-11-20 19:10:07.696 +01:00 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2025-11-20 19:10:07.706 +01:00 [INF] HTTP GET / responded 404 in 211.9772 ms
+2025-11-20 19:10:07.725 +01:00 [INF] Request finished HTTP/2 GET https://localhost:52291/ - 404 null null 595.5494ms
+2025-11-20 19:10:07.736 +01:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:52291/, Response status code: 404
+2025-11-20 19:10:10.040 +01:00 [INF] Request starting HTTP/2 GET https://localhost:52291/ - null null
+2025-11-20 19:10:10.054 +01:00 [DBG] The request path  does not match the path filter
+2025-11-20 19:10:10.057 +01:00 [DBG] The request path / does not match a supported file type
+2025-11-20 19:10:10.060 +01:00 [DBG] No candidates found for the request path '/'
+2025-11-20 19:10:10.063 +01:00 [DBG] Request did not match any endpoints
+2025-11-20 19:10:10.066 +01:00 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2025-11-20 19:10:10.069 +01:00 [INF] HTTP GET / responded 404 in 12.5988 ms
+2025-11-20 19:10:10.078 +01:00 [INF] Request finished HTTP/2 GET https://localhost:52291/ - 404 null null 38.6141ms
+2025-11-20 19:10:10.090 +01:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:52291/, Response status code: 404
+2025-11-20 19:10:11.809 +01:00 [INF] Request starting HTTP/2 GET https://localhost:52291/ - null null
+2025-11-20 19:10:11.822 +01:00 [DBG] The request path  does not match the path filter
+2025-11-20 19:10:11.825 +01:00 [DBG] The request path / does not match a supported file type
+2025-11-20 19:10:11.829 +01:00 [DBG] No candidates found for the request path '/'
+2025-11-20 19:10:11.832 +01:00 [DBG] Request did not match any endpoints
+2025-11-20 19:10:11.839 +01:00 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2025-11-20 19:10:11.842 +01:00 [INF] HTTP GET / responded 404 in 16.8885 ms
+2025-11-20 19:10:11.848 +01:00 [INF] Request finished HTTP/2 GET https://localhost:52291/ - 404 null null 39.3153ms
+2025-11-20 19:10:11.857 +01:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:52291/, Response status code: 404
+2025-11-20 19:10:13.981 +01:00 [DBG] Connection id "0HNH8C047QGA4" received FIN.
+2025-11-20 19:10:13.991 +01:00 [DBG] The connection queue processing loop for 0HNH8C047QGA4 completed.
+2025-11-20 19:10:13.993 +01:00 [DBG] Connection id "0HNH8C047QGA4" is closed. The last processed stream ID was 5.
+2025-11-20 19:10:13.998 +01:00 [DBG] Connection id "0HNH8C047QGA4" sending FIN because: "The Socket transport's send loop completed gracefully."
+2025-11-20 19:10:14.009 +01:00 [DBG] Connection id "0HNH8C047QGA4" stopped.

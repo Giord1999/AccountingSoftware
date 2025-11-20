@@ -415,3 +415,5 @@ C:\Users\User\Desktop\APP MIA\AccountingSoftware\backend\src\AccountingSystem\ob
 C:\Users\User\Desktop\APP MIA\AccountingSoftware\backend\src\AccountingSystem\obj\Debug\net9.0\AccountingSystem.pdb
 C:\Users\User\Desktop\APP MIA\AccountingSoftware\backend\src\AccountingSystem\obj\Debug\net9.0\AccountingSystem.genruntimeconfig.cache
 C:\Users\User\Desktop\APP MIA\AccountingSoftware\backend\src\AccountingSystem\obj\Debug\net9.0\ref\AccountingSystem.dll
+C:\Users\User\Desktop\APP MIA\AccountingSoftware\backend\src\AccountingSystem\obj\Debug\net9.0\swae.build.ex.cache
+C:\Users\User\Desktop\APP MIA\AccountingSoftware\backend\src\AccountingSystem\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
