@@ -1,7 +1,7 @@
 ﻿using AccountingApp.Services;
 using AccountingApp.ViewModels;
-using AccountingApp.Views;
-using Android.Net;
+using AccountingApp.Pages;
+using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 
 namespace AccountingApp;
@@ -11,54 +11,71 @@ public static class MauiProgram
     public static MauiApp CreateMauiApp()
     {
         var builder = MauiApp.CreateBuilder();
+
         builder
             .UseMauiApp<App>()
+            .UseMauiCommunityToolkit()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
-#if DEBUG
-        builder.Logging.AddDebug();
-#endif
-
-        // ========== SERVICES ==========
-        builder.Services.AddSingleton<ApiService>(sp =>
+        // ========== SERVIZI HTTP ==========
+        builder.Services.AddSingleton(sp => new HttpClient
         {
-            var logger = sp.GetRequiredService<ILogger<ApiService>>();
-            return new ApiService("https://localhost:7001", logger);
+            BaseAddress = new Uri("https://localhost:7001/api/"),
+            Timeout = TimeSpan.FromSeconds(30)
         });
 
-        builder.Services.AddSingleton<AuthService>();
-        builder.Services.AddSingleton<AccountService>();
-        builder.Services.AddSingleton<SalesService>();
-        builder.Services.AddSingleton<PurchaseService>();
-        builder.Services.AddSingleton<InvoiceService>();
-        builder.Services.AddSingleton<InventoryService>();
-        builder.Services.AddSingleton<CustomerService>();
-        builder.Services.AddSingleton<SupplierService>();
-        builder.Services.AddSingleton<VatRateService>();
+        // Core Services
+        builder.Services.AddSingleton<IAuthService, AuthService>();
+        builder.Services.AddSingleton<INavigationService, NavigationService>();
+        builder.Services.AddSingleton<IAlertService, AlertService>();
 
-        // ========== VIEWMODELS ==========
+        // API Services
+        builder.Services.AddTransient<IAccountService, AccountService>();
+        builder.Services.AddTransient<IAccountingService, AccountingService>();
+        builder.Services.AddTransient<ISalesApiService, SalesApiService>();
+        builder.Services.AddTransient<IPurchaseApiService, PurchaseApiService>();
+        builder.Services.AddTransient<IInventoryApiService, InventoryApiService>();
+        builder.Services.AddTransient<ICustomerApiService, CustomerApiService>();
+        builder.Services.AddTransient<ISupplierApiService, SupplierApiService>();
+        builder.Services.AddTransient<IInvoiceApiService, InvoiceApiService>();
+        builder.Services.AddTransient<ILeadApiService, LeadApiService>();
+        builder.Services.AddTransient<IBIApiService, BIApiService>();
+
+        // ViewModels
         builder.Services.AddTransient<LoginViewModel>();
         builder.Services.AddTransient<DashboardViewModel>();
+        builder.Services.AddTransient<AccountsViewModel>();
+        builder.Services.AddTransient<JournalEntryViewModel>();
         builder.Services.AddTransient<SalesViewModel>();
         builder.Services.AddTransient<PurchasesViewModel>();
-        builder.Services.AddTransient<InvoicesViewModel>();
         builder.Services.AddTransient<InventoryViewModel>();
         builder.Services.AddTransient<CustomersViewModel>();
         builder.Services.AddTransient<SuppliersViewModel>();
+        builder.Services.AddTransient<InvoicesViewModel>();
+        builder.Services.AddTransient<LeadsViewModel>();
+        builder.Services.AddTransient<BIReportsViewModel>();
 
-        // ========== VIEWS ==========
+        // Pages
         builder.Services.AddTransient<LoginPage>();
         builder.Services.AddTransient<DashboardPage>();
+        builder.Services.AddTransient<AccountsPage>();
+        builder.Services.AddTransient<JournalEntryPage>();
         builder.Services.AddTransient<SalesPage>();
         builder.Services.AddTransient<PurchasesPage>();
-        builder.Services.AddTransient<InvoicesPage>();
         builder.Services.AddTransient<InventoryPage>();
         builder.Services.AddTransient<CustomersPage>();
         builder.Services.AddTransient<SuppliersPage>();
+        builder.Services.AddTransient<InvoicesPage>();
+        builder.Services.AddTransient<LeadsPage>();
+        builder.Services.AddTransient<BIReportsPage>();
+
+#if DEBUG
+        builder.Logging.AddDebug();
+#endif
 
         return builder.Build();
     }

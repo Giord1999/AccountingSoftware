@@ -3,12 +3,108 @@
     x:Class="AccountingApp.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:AccountingApp"
-    Title="AccountingApp">
+    xmlns:pages="clr-namespace:AccountingApp.Pages"
+    FlyoutBehavior="Flyout"
+    Shell.FlyoutBackgroundColor="{StaticResource Primary}">
 
+    <!-- FlyoutHeader -->
+    <Shell.FlyoutHeader>
+        <Grid BackgroundColor="{StaticResource Primary}" 
+              Padding="20" 
+              HeightRequest="150">
+            <VerticalStackLayout VerticalOptions="Center" Spacing="10">
+                <Image Source="dotnet_bot.png" 
+                       HeightRequest="60" 
+                       WidthRequest="60"/>
+                <Label Text="Accounting System" 
+                       TextColor="White" 
+                       FontSize="20" 
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center"/>
+            </VerticalStackLayout>
+        </Grid>
+    </Shell.FlyoutHeader>
+
+    <!-- Login (No Flyout) -->
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        Title="Login"
+        Route="login"
+        ContentTemplate="{DataTemplate pages:LoginPage}"
+        FlyoutItemIsVisible="False"/>
+
+    <!-- Dashboard -->
+    <FlyoutItem Title="Dashboard" Icon="home.png">
+        <ShellContent
+            Route="dashboard"
+            ContentTemplate="{DataTemplate pages:DashboardPage}"/>
+    </FlyoutItem>
+
+    <!-- Contabilità -->
+    <FlyoutItem Title="Contabilità" Icon="calculator.png">
+        <ShellContent
+            Title="Piano dei Conti"
+            Route="accounts"
+            ContentTemplate="{DataTemplate pages:AccountsPage}"/>
+        <ShellContent
+            Title="Registrazioni"
+            Route="journal"
+            ContentTemplate="{DataTemplate pages:JournalEntryPage}"/>
+    </FlyoutItem>
+
+    <!-- Vendite -->
+    <FlyoutItem Title="Vendite" Icon="cart.png">
+        <ShellContent
+            Title="Vendite"
+            Route="sales"
+            ContentTemplate="{DataTemplate pages:SalesPage}"/>
+    </FlyoutItem>
+
+    <!-- Acquisti -->
+    <FlyoutItem Title="Acquisti" Icon="shopping.png">
+        <ShellContent
+            Title="Acquisti"
+            Route="purchases"
+            ContentTemplate="{DataTemplate pages:PurchasesPage}"/>
+    </FlyoutItem>
+
+    <!-- Inventario -->
+    <FlyoutItem Title="Inventario" Icon="box.png">
+        <ShellContent
+            Title="Inventario"
+            Route="inventory"
+            ContentTemplate="{DataTemplate pages:InventoryPage}"/>
+    </FlyoutItem>
+
+    <!-- CRM -->
+    <FlyoutItem Title="CRM" Icon="people.png">
+        <ShellContent
+            Title="Clienti"
+            Route="customers"
+            ContentTemplate="{DataTemplate pages:CustomersPage}"/>
+        <ShellContent
+            Title="Fornitori"
+            Route="suppliers"
+            ContentTemplate="{DataTemplate pages:SuppliersPage}"/>
+        <ShellContent
+            Title="Lead"
+            Route="leads"
+            ContentTemplate="{DataTemplate pages:LeadsPage}"/>
+    </FlyoutItem>
+
+    <!-- Fatture -->
+    <FlyoutItem Title="Fatture" Icon="document.png">
+        <ShellContent
+            Title="Fatture"
+            Route="invoices"
+            ContentTemplate="{DataTemplate pages:InvoicesPage}"/>
+    </FlyoutItem>
+
+    <!-- Reporting BI -->
+    <FlyoutItem Title="Report BI" Icon="chart.png">
+        <ShellContent
+            Title="Dashboard BI"
+            Route="bireports"
+            ContentTemplate="{DataTemplate pages:BIReportsPage}"/>
+    </FlyoutItem>
 
 </Shell>

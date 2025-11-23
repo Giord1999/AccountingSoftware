@@ -5,6 +5,22 @@
       "PackagePath": "staticwebassets\\AccountingApp.styles.css"
     },
     {
+      "Id": "C:\\Users\\User\\Desktop\\APP MIA\\AccountingSoftware\\frontend\\AccountingApp\\wwwroot\\css\\app.css",
+      "PackagePath": "staticwebassets\\css\\app.css"
+    },
+    {
+      "Id": "C:\\Users\\User\\Desktop\\APP MIA\\AccountingSoftware\\frontend\\AccountingApp\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\User\\Desktop\\APP MIA\\AccountingSoftware\\frontend\\AccountingApp\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\User\\Desktop\\APP MIA\\AccountingSoftware\\frontend\\AccountingApp\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
       "Id": "obj\\Debug\\net9.0-android\\staticwebassets\\msbuild.AccountingApp.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
     },

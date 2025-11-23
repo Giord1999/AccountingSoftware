@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:AccountingApp.ViewModels"
+             x:Class="AccountingApp.Pages.SalesPage"
+             x:DataType="viewmodels:SalesViewModel"
+             Title="Vendite">
+
+    <Grid RowDefinitions="Auto,Auto,*" Padding="10">
+
+        <!-- Date Filter -->
+        <Grid Grid.Row="0" 
+              ColumnDefinitions="*,*,Auto" 
+              ColumnSpacing="10" 
+              Margin="0,0,0,10">
+
+            <DatePicker Grid.Column="0" 
+                        Date="{Binding FromDate, Mode=TwoWay}"
+                        Format="dd/MM/yyyy"/>
+
+            <DatePicker Grid.Column="1" 
+                        Date="{Binding ToDate, Mode=TwoWay}"
+                        Format="dd/MM/yyyy"/>
+
+            <Button Grid.Column="2" 
+                    Text="Filtra"
+                    Command="{Binding ApplyDateFilterCommand}"/>
+        </Grid>
+
+        <!-- Create Sale Button -->
+        <Button Grid.Row="1"
+                Text="Nuova Vendita"
+                Command="{Binding CreateSaleCommand}"
+                BackgroundColor="{StaticResource Primary}"
+                TextColor="White"
+                Margin="0,0,0,10"/>
+
+        <!-- Sales List -->
+        <RefreshView Grid.Row="2"
+                     IsRefreshing="{Binding IsRefreshing}"
+                     Command="{Binding RefreshSalesCommand}">
+
+            <CollectionView ItemsSource="{Binding Sales}"
+                            SelectionMode="None">
+
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout HorizontalOptions="Center" 
+                                         VerticalOptions="Center"
+                                         Spacing="10">
+                        <Label Text="Nessuna vendita trovata"
+                               FontSize="18"
+                               HorizontalTextAlignment="Center"/>
+                        <Button Text="Carica Vendite"
+                                Command="{Binding LoadSalesCommand}"/>
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Margin="5" Padding="15" CornerRadius="10" HasShadow="True">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:SalesViewModel}}, Path=ViewSaleDetailsCommand}"
+                                    CommandParameter="{Binding .}"/>
+                            </Frame.GestureRecognizers>
+
+                            <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,Auto">
+
+                                <Label Grid.Row="0" Grid.Column="0"
+                                       Text="{Binding CustomerName}" 
+                                       FontAttributes="Bold" 
+                                       FontSize="16"/>
+
+                                <Label Grid.Row="0" Grid.Column="1"
+                                       Text="{Binding TotalAmount, StringFormat='{0:C}'}" 
+                                       FontAttributes="Bold" 
+                                       FontSize="16"
+                                       TextColor="Green"/>
+
+                                <Label Grid.Row="1" Grid.Column="0"
+                                       Text="{Binding SaleDate, StringFormat='{0:dd/MM/yyyy}'}" 
+                                       FontSize="12"
+                                       TextColor="Gray"/>
+
+                                <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                                       Text="{Binding Status}" 
+                                       FontSize="12"
+                                       Margin="0,5,0,0">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" 
+                                                     Binding="{Binding Status}" 
+                                                     Value="Confirmed">
+                                            <Setter Property="TextColor" Value="Green"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" 
+                                                     Binding="{Binding Status}" 
+                                                     Value="Cancelled">
+                                            <Setter Property="TextColor" Value="Red"/>
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+        </RefreshView>
+
+        <!-- Loading Overlay -->
+        <ActivityIndicator Grid.Row="2"
+                           IsRunning="{Binding IsLoading}"
+                           IsVisible="{Binding IsLoading}"
+                           Color="{StaticResource Primary}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
+
+    </Grid>
+</ContentPage>

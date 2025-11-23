@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:AccountingApp.ViewModels"
+             x:Class="AccountingApp.Pages.SuppliersPage"
+             x:DataType="viewmodels:SuppliersViewModel"
+             Title="Fornitori">
+
+    <Grid RowDefinitions="Auto,Auto,*" Padding="10">
+
+        <!-- Search Bar -->
+        <SearchBar Grid.Row="0"
+                   Placeholder="Cerca fornitore..."
+                   Text="{Binding SearchText}"
+                   SearchCommand="{Binding SearchSuppliersCommand}"
+                   Margin="0,0,0,10"/>
+
+        <!-- Add Button -->
+        <Button Grid.Row="1"
+                Text="Aggiungi Fornitore"
+                Command="{Binding AddSupplierCommand}"
+                BackgroundColor="{StaticResource Secondary}"
+                TextColor="White"
+                Margin="0,0,0,10"/>
+
+        <!-- Suppliers List -->
+        <RefreshView Grid.Row="2"
+                     IsRefreshing="{Binding IsRefreshing}"
+                     Command="{Binding RefreshSuppliersCommand}">
+
+            <CollectionView ItemsSource="{Binding Suppliers}"
+                            SelectionMode="None">
+
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout HorizontalOptions="Center" 
+                                         VerticalOptions="Center"
+                                         Spacing="10">
+                        <Label Text="Nessun fornitore trovato"
+                               FontSize="18"
+                               HorizontalTextAlignment="Center"/>
+                        <Button Text="Carica Fornitori"
+                                Command="{Binding LoadSuppliersCommand}"/>
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <SwipeView>
+                            <!-- Swipe Actions -->
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="Modifica"
+                                               BackgroundColor="Orange"
+                                               Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:SuppliersViewModel}}, Path=EditSupplierCommand}"
+                                               CommandParameter="{Binding .}"/>
+                                    <SwipeItem Text="Elimina"
+                                               BackgroundColor="Red"
+                                               Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:SuppliersViewModel}}, Path=DeleteSupplierCommand}"
+                                               CommandParameter="{Binding .}"/>
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+
+                            <Frame Margin="5" Padding="15" CornerRadius="10" HasShadow="True">
+                                <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,Auto">
+
+                                    <Label Grid.Row="0" Grid.Column="0"
+                                           Text="{Binding Name}" 
+                                           FontAttributes="Bold" 
+                                           FontSize="16"/>
+
+                                    <Label Grid.Row="0" Grid.Column="1"
+                                           Text="{Binding Rating}" 
+                                           FontSize="12"
+                                           TextColor="{StaticResource Secondary}"/>
+
+                                    <Label Grid.Row="1" Grid.Column="0"
+                                           Text="{Binding Email}" 
+                                           FontSize="12"
+                                           TextColor="Gray"/>
+
+                                    <HorizontalStackLayout Grid.Row="2" Grid.Column="0" Spacing="10">
+                                        <Label Text="{Binding VatNumber, StringFormat='P.IVA: {0}'}" 
+                                               FontSize="12"
+                                               TextColor="Gray"/>
+                                        <Label Text="{Binding Country}" 
+                                               FontSize="12"
+                                               TextColor="Gray"/>
+                                    </HorizontalStackLayout>
+
+                                </Grid>
+                            </Frame>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+        </RefreshView>
+
+        <!-- Loading Overlay -->
+        <ActivityIndicator Grid.Row="2"
+                           IsRunning="{Binding IsLoading}"
+                           IsVisible="{Binding IsLoading}"
+                           Color="{StaticResource Primary}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
+
+    </Grid>
+</ContentPage>

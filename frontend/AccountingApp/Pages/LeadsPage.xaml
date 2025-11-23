@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:AccountingApp.ViewModels"
+             xmlns:models="clr-namespace:AccountingApp.Models"
+             x:Class="AccountingApp.Pages.LeadsPage"
+             x:DataType="viewmodels:LeadsViewModel"
+             Title="Lead CRM">
+
+    <Grid RowDefinitions="Auto,Auto,*" Padding="10">
+
+        <!-- Status Filter -->
+        <Grid Grid.Row="0" 
+              ColumnDefinitions="*,Auto" 
+              ColumnSpacing="10" 
+              Margin="0,0,0,10">
+
+            <Picker Grid.Column="0" 
+                    Title="Filtra per stato"
+                    SelectedItem="{Binding StatusFilter}">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type models:LeadStatus}">
+                        <models:LeadStatus>New</models:LeadStatus>
+                        <models:LeadStatus>Contacted</models:LeadStatus>
+                        <models:LeadStatus>Qualified</models:LeadStatus>
+                        <models:LeadStatus>Converted</models:LeadStatus>
+                        <models:LeadStatus>Lost</models:LeadStatus>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+
+            <Button Grid.Column="1" 
+                    Text="Applica"
+                    Command="{Binding ApplyStatusFilterCommand}"/>
+        </Grid>
+
+        <!-- Add Button -->
+        <Button Grid.Row="1"
+                Text="Aggiungi Lead"
+                Command="{Binding AddLeadCommand}"
+                BackgroundColor="{StaticResource Tertiary}"
+                TextColor="White"
+                Margin="0,0,0,10"/>
+
+        <!-- Leads List -->
+        <RefreshView Grid.Row="2"
+                     IsRefreshing="{Binding IsRefreshing}"
+                     Command="{Binding RefreshLeadsCommand}">
+
+            <CollectionView ItemsSource="{Binding Leads}"
+                            SelectionMode="None">
+
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout HorizontalOptions="Center" 
+                                         VerticalOptions="Center"
+                                         Spacing="10">
+                        <Label Text="Nessun lead trovato"
+                               FontSize="18"
+                               HorizontalTextAlignment="Center"/>
+                        <Button Text="Carica Lead"
+                                Command="{Binding LoadLeadsCommand}"/>
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Margin="5" Padding="15" CornerRadius="10" HasShadow="True">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:LeadsViewModel}}, Path=EditLeadCommand}"
+                                    CommandParameter="{Binding .}"/>
+                            </Frame.GestureRecognizers>
+
+                            <Grid RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="*,Auto">
+
+                                <!-- Name & Status -->
+                                <Label Grid.Row="0" Grid.Column="0"
+                                       Text="{Binding Name}" 
+                                       FontAttributes="Bold" 
+                                       FontSize="16"/>
+
+                                <Label Grid.Row="0" Grid.Column="1"
+                                       Text="{Binding Status}" 
+                                       FontSize="12"
+                                       Padding="8,4"
+                                       BackgroundColor="LightBlue"
+                                       CornerRadius="5">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" 
+                                                     Binding="{Binding Status}" 
+                                                     Value="New">
+                                            <Setter Property="BackgroundColor" Value="LightBlue"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" 
+                                                     Binding="{Binding Status}" 
+                                                     Value="Contacted">
+                                            <Setter Property="BackgroundColor" Value="LightYellow"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" 
+                                                     Binding="{Binding Status}" 
+                                                     Value="Qualified">
+                                            <Setter Property="BackgroundColor" Value="Orange"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" 
+                                                     Binding="{Binding Status}" 
+                                                     Value="Converted">
+                                            <Setter Property="BackgroundColor" Value="LightGreen"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" 
+                                                     Binding="{Binding Status}" 
+                                                     Value="Lost">
+                                            <Setter Property="BackgroundColor" Value="LightCoral"/>
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+
+                                <!-- Contact Info -->
+                                <HorizontalStackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Spacing="10">
+                                    <Label Text="{Binding Email}" 
+                                           FontSize="12"
+                                           TextColor="Gray"/>
+                                    <Label Text="{Binding Phone}" 
+                                           FontSize="12"
+                                           TextColor="Gray"/>
+                                </HorizontalStackLayout>
+
+                                <!-- Source & Date -->
+                                <Label Grid.Row="2" Grid.Column="0"
+                                       Text="{Binding Source, StringFormat='Origine: {0}'}" 
+                                       FontSize="12"
+                                       TextColor="Gray"/>
+
+                                <Label Grid.Row="2" Grid.Column="1"
+                                       Text="{Binding CreatedAt, StringFormat='{0:dd/MM/yyyy}'}" 
+                                       FontSize="12"
+                                       TextColor="Gray"/>
+
+                                <!-- Action Buttons -->
+                                <HorizontalStackLayout Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" 
+                                                       Spacing="10" 
+                                                       Margin="0,10,0,0">
+                                    <Button Text="Qualifica"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:LeadsViewModel}}, Path=QualifyLeadCommand}"
+                                            CommandParameter="{Binding .}"
+                                            BackgroundColor="Orange"
+                                            TextColor="White"
+                                            FontSize="12"
+                                            Padding="10,5"
+                                            IsVisible="{Binding Status, Converter={StaticResource LeadStatusToQualifyVisibleConverter}}"/>
+
+                                    <Button Text="Converti"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:LeadsViewModel}}, Path=ConvertLeadCommand}"
+                                            CommandParameter="{Binding .}"
+                                            BackgroundColor="Green"
+                                            TextColor="White"
+                                            FontSize="12"
+                                            Padding="10,5"
+                                            IsVisible="{Binding Status, Converter={StaticResource LeadStatusToConvertVisibleConverter}}"/>
+
+                                    <Button Text="Elimina"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:LeadsViewModel}}, Path=DeleteLeadCommand}"
+                                            CommandParameter="{Binding .}"
+                                            BackgroundColor="Red"
+                                            TextColor="White"
+                                            FontSize="12"
+                                            Padding="10,5"/>
+                                </HorizontalStackLayout>
+
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+        </RefreshView>
+
+        <!-- Loading Overlay -->
+        <ActivityIndicator Grid.Row="2"
+                           IsRunning="{Binding IsLoading}"
+                           IsVisible="{Binding IsLoading}"
+                           Color="{StaticResource Primary}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
+
+    </Grid>
+</ContentPage>

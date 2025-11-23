@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:AccountingApp.ViewModels"
+             x:Class="AccountingApp.Pages.DashboardPage"
+             x:DataType="viewmodels:DashboardViewModel"
+             Title="Dashboard">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <!-- Header -->
+            <Frame BackgroundColor="{StaticResource Primary}" 
+                   CornerRadius="15" 
+                   Padding="20">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="{Binding CompanyName}"
+                           FontSize="24"
+                           FontAttributes="Bold"
+                           TextColor="White"/>
+                    <Label Text="Dashboard Aziendale"
+                           FontSize="16"
+                           TextColor="White"
+                           Opacity="0.8"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- KPI Cards -->
+            <Grid RowDefinitions="Auto,Auto" 
+                  ColumnDefinitions="*,*" 
+                  RowSpacing="15" 
+                  ColumnSpacing="15">
+
+                <!-- Total Revenue -->
+                <Frame Grid.Row="0" Grid.Column="0" 
+                       BackgroundColor="LightGreen" 
+                       CornerRadius="10" 
+                       Padding="15">
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Ricavi Totali" FontSize="12" Opacity="0.8"/>
+                        <Label Text="{Binding TotalRevenue, StringFormat='{0:C}'}"
+                               FontSize="20" FontAttributes="Bold"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Total Expenses -->
+                <Frame Grid.Row="0" Grid.Column="1" 
+                       BackgroundColor="LightCoral" 
+                       CornerRadius="10" 
+                       Padding="15">
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Costi Totali" FontSize="12" Opacity="0.8"/>
+                        <Label Text="{Binding TotalExpenses, StringFormat='{0:C}'}"
+                               FontSize="20" FontAttributes="Bold"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Net Profit -->
+                <Frame Grid.Row="1" Grid.Column="0" 
+                       BackgroundColor="LightBlue" 
+                       CornerRadius="10" 
+                       Padding="15">
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Utile Netto" FontSize="12" Opacity="0.8"/>
+                        <Label Text="{Binding NetProfit, StringFormat='{0:C}'}"
+                               FontSize="20" FontAttributes="Bold"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Profit Margin -->
+                <Frame Grid.Row="1" Grid.Column="1" 
+                       BackgroundColor="LightYellow" 
+                       CornerRadius="10" 
+                       Padding="15">
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Margine %" FontSize="12" Opacity="0.8"/>
+                        <Label Text="{Binding ProfitMargin, StringFormat='{0:P2}'}"
+                               FontSize="20" FontAttributes="Bold"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+            </Grid>
+
+            <!-- Quick Actions -->
+            <Label Text="Azioni Rapide" 
+                   FontSize="18" 
+                   FontAttributes="Bold" 
+                   Margin="0,10,0,0"/>
+
+            <Grid RowDefinitions="Auto,Auto,Auto,Auto" 
+                  ColumnDefinitions="*,*" 
+                  RowSpacing="10" 
+                  ColumnSpacing="10">
+
+                <Button Grid.Row="0" Grid.Column="0"
+                        Text="Piano dei Conti"
+                        Command="{Binding NavigateToAccountsCommand}"
+                        BackgroundColor="{StaticResource Primary}"/>
+
+                <Button Grid.Row="0" Grid.Column="1"
+                        Text="Vendite"
+                        Command="{Binding NavigateToSalesCommand}"
+                        BackgroundColor="{StaticResource Secondary}"/>
+
+                <Button Grid.Row="1" Grid.Column="0"
+                        Text="Acquisti"
+                        Command="{Binding NavigateToPurchasesCommand}"
+                        BackgroundColor="{StaticResource Tertiary}"/>
+
+                <Button Grid.Row="1" Grid.Column="1"
+                        Text="Inventario"
+                        Command="{Binding NavigateToInventoryCommand}"
+                        BackgroundColor="{StaticResource Primary}"/>
+
+                <Button Grid.Row="2" Grid.Column="0"
+                        Text="Clienti"
+                        Command="{Binding NavigateToCustomersCommand}"
+                        BackgroundColor="{StaticResource Secondary}"/>
+
+                <Button Grid.Row="2" Grid.Column="1"
+                        Text="Fornitori"
+                        Command="{Binding NavigateToSuppliersCommand}"
+                        BackgroundColor="{StaticResource Tertiary}"/>
+
+                <Button Grid.Row="3" Grid.Column="0"
+                        Text="Lead CRM"
+                        Command="{Binding NavigateToLeadsCommand}"
+                        BackgroundColor="{StaticResource Primary}"/>
+
+                <Button Grid.Row="3" Grid.Column="1"
+                        Text="Logout"
+                        Command="{Binding LogoutCommand}"
+                        BackgroundColor="Red"
+                        TextColor="White"/>
+
+            </Grid>
+
+            <!-- Loading Indicator -->
+            <ActivityIndicator IsRunning="{Binding IsLoading}"
+                               IsVisible="{Binding IsLoading}"
+                               Color="{StaticResource Primary}"
+                               HorizontalOptions="Center"
+                               Margin="0,20,0,0"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

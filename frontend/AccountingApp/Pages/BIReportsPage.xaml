@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:AccountingApp.ViewModels"
+             x:Class="AccountingApp.Pages.BIReportsPage"
+             x:DataType="viewmodels:BIReportsViewModel"
+             Title="Dashboard BI">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <!-- Refresh Button -->
+            <Button Text="Aggiorna Dati"
+                    Command="{Binding LoadDashboardCommand}"
+                    BackgroundColor="{StaticResource Primary}"
+                    TextColor="White"/>
+
+            <!-- Date Range Filter -->
+            <Frame CornerRadius="10" Padding="15" HasShadow="True">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Periodo di Analisi" 
+                           FontSize="16" 
+                           FontAttributes="Bold"/>
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                        <VerticalStackLayout Grid.Column="0">
+                            <Label Text="Da:" FontSize="12"/>
+                            <DatePicker Date="{Binding StartDate}"
+                                        Format="dd/MM/yyyy"/>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Grid.Column="1">
+                            <Label Text="A:" FontSize="12"/>
+                            <DatePicker Date="{Binding EndDate}"
+                                        Format="dd/MM/yyyy"/>
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <Button Text="Applica Filtro"
+                            Command="{Binding ApplyDateRangeCommand}"
+                            BackgroundColor="{StaticResource Secondary}"
+                            TextColor="White"
+                            Margin="0,10,0,0"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- KPI Cards Grid -->
+            <Label Text="Indicatori Principali" 
+                   FontSize="18" 
+                   FontAttributes="Bold"/>
+
+            <Grid RowDefinitions="Auto,Auto,Auto" 
+                  ColumnDefinitions="*,*" 
+                  RowSpacing="15" 
+                  ColumnSpacing="15">
+
+                <!-- Total Revenue -->
+                <Frame Grid.Row="0" Grid.Column="0" 
+                       BackgroundColor="#4CAF50" 
+                       CornerRadius="10" 
+                       Padding="15">
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="💰 Ricavi Totali" 
+                               FontSize="12" 
+                               TextColor="White"
+                               Opacity="0.9"/>
+                        <Label Text="{Binding TotalRevenue, StringFormat='{0:C}'}"
+                               FontSize="20" 
+                               FontAttributes="Bold"
+                               TextColor="White"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Total Expenses -->
+                <Frame Grid.Row="0" Grid.Column="1" 
+                       BackgroundColor="#F44336" 
+                       CornerRadius="10" 
+                       Padding="15">
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="💸 Costi Totali" 
+                               FontSize="12" 
+                               TextColor="White"
+                               Opacity="0.9"/>
+                        <Label Text="{Binding TotalExpenses, StringFormat='{0:C}'}"
+                               FontSize="20" 
+                               FontAttributes="Bold"
+                               TextColor="White"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Net Profit -->
+                <Frame Grid.Row="1" Grid.Column="0" 
+                       BackgroundColor="#2196F3" 
+                       CornerRadius="10" 
+                       Padding="15">
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="📊 Utile Netto" 
+                               FontSize="12" 
+                               TextColor="White"
+                               Opacity="0.9"/>
+                        <Label Text="{Binding NetProfit, StringFormat='{0:C}'}"
+                               FontSize="20" 
+                               FontAttributes="Bold"
+                               TextColor="White"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Profit Margin -->
+                <Frame Grid.Row="1" Grid.Column="1" 
+                       BackgroundColor="#FF9800" 
+                       CornerRadius="10" 
+                       Padding="15">
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="📈 Margine %" 
+                               FontSize="12" 
+                               TextColor="White"
+                               Opacity="0.9"/>
+                        <Label Text="{Binding ProfitMargin, StringFormat='{0:P2}'}"
+                               FontSize="20" 
+                               FontAttributes="Bold"
+                               TextColor="White"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- ROI -->
+                <Frame Grid.Row="2" Grid.Column="0" 
+                       BackgroundColor="#9C27B0" 
+                       CornerRadius="10" 
+                       Padding="15">
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="💎 ROI" 
+                               FontSize="12" 
+                               TextColor="White"
+                               Opacity="0.9"/>
+                        <Label Text="{Binding ROI, StringFormat='{0:P2}'}"
+                               FontSize="20" 
+                               FontAttributes="Bold"
+                               TextColor="White"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Cash Flow Ratio -->
+                <Frame Grid.Row="2" Grid.Column="1" 
+                       BackgroundColor="#00BCD4" 
+                       CornerRadius="10" 
+                       Padding="15">
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="💧 Cash Flow" 
+                               FontSize="12" 
+                               TextColor="White"
+                               Opacity="0.9"/>
+                        <Label Text="{Binding CashFlowRatio, StringFormat='{0:F2}'}"
+                               FontSize="20" 
+                               FontAttributes="Bold"
+                               TextColor="White"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+            </Grid>
+
+            <!-- Revenue Chart Section -->
+            <Frame CornerRadius="10" Padding="15" HasShadow="True" Margin="0,20,0,0">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="📊 Andamento Ricavi" 
+                           FontSize="16" 
+                           FontAttributes="Bold"/>
+
+                    <CollectionView ItemsSource="{Binding RevenueChartData}"
+                                    HeightRequest="200">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="100,*" 
+                                      ColumnSpacing="10" 
+                                      Padding="5">
+                                    <Label Grid.Column="0"
+                                           Text="{Binding Label}" 
+                                           FontSize="12"
+                                           VerticalOptions="Center"/>
+                                    <ProgressBar Grid.Column="1"
+                                                 Progress="{Binding NormalizedValue}"
+                                                 ProgressColor="{StaticResource Primary}"
+                                                 VerticalOptions="Center"/>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Trend Analysis Section -->
+            <Frame CornerRadius="10" Padding="15" HasShadow="True">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="📈 Analisi Trend Mensile" 
+                           FontSize="16" 
+                           FontAttributes="Bold"/>
+
+                    <CollectionView ItemsSource="{Binding RevenueTrendData}"
+                                    MaximumHeightRequest="250">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="100,*,Auto" 
+                                      ColumnSpacing="10" 
+                                      Padding="5"
+                                      Margin="0,5">
+                                    <Label Grid.Column="0"
+                                           Text="{Binding Period, StringFormat='{0:MMM yyyy}'}" 
+                                           FontSize="12"
+                                           VerticalOptions="Center"/>
+                                    <BoxView Grid.Column="1"
+                                             Color="{StaticResource Primary}"
+                                             HeightRequest="20"
+                                             WidthRequest="{Binding BarWidth}"
+                                             HorizontalOptions="Start"
+                                             VerticalOptions="Center"/>
+                                    <Label Grid.Column="2"
+                                           Text="{Binding Value, StringFormat='{0:C0}'}" 
+                                           FontSize="12"
+                                           FontAttributes="Bold"
+                                           VerticalOptions="Center"/>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Transaction Count -->
+            <Frame CornerRadius="10" Padding="15" HasShadow="True">
+                <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                    <Label Text="📋 Transazioni Totali:" 
+                           FontSize="14"
+                           VerticalOptions="Center"/>
+                    <Label Text="{Binding TransactionCount}" 
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource Primary}"
+                           VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+            </Frame>
+
+            <!-- Export Button -->
+            <Button Text="Esporta Report"
+                    Command="{Binding ExportReportCommand}"
+                    BackgroundColor="{StaticResource Tertiary}"
+                    TextColor="White"
+                    Margin="0,10,0,20"/>
+
+            <!-- Loading Indicator -->
+            <ActivityIndicator IsRunning="{Binding IsLoading}"
+                               IsVisible="{Binding IsLoading}"
+                               Color="{StaticResource Primary}"
+                               HorizontalOptions="Center"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

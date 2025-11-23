@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:AccountingApp.ViewModels"
+             x:Class="AccountingApp.Pages.JournalEntryPage"
+             x:DataType="viewmodels:JournalEntryViewModel"
+             Title="Nuova Registrazione Contabile">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <!-- Description -->
+            <Label Text="Descrizione" FontAttributes="Bold"/>
+            <Entry Text="{Binding Description}"
+                   Placeholder="Inserisci descrizione registrazione"/>
+
+            <!-- Date & Reference -->
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                <VerticalStackLayout Grid.Column="0">
+                    <Label Text="Data" FontAttributes="Bold"/>
+                    <DatePicker Date="{Binding Date}"
+                                Format="dd/MM/yyyy"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="1">
+                    <Label Text="Riferimento" FontAttributes="Bold"/>
+                    <Entry Text="{Binding Reference}"
+                           Placeholder="N. documento"/>
+                </VerticalStackLayout>
+            </Grid>
+
+            <!-- Lines Section -->
+            <HorizontalStackLayout Spacing="10" Margin="0,20,0,10">
+                <Label Text="Righe Contabili" 
+                       FontSize="18" 
+                       FontAttributes="Bold"
+                       VerticalOptions="Center"/>
+                <Button Text="Aggiungi Riga"
+                        Command="{Binding AddLineCommand}"
+                        BackgroundColor="{StaticResource Primary}"
+                        TextColor="White"
+                        Padding="10,5"
+                        FontSize="12"/>
+            </HorizontalStackLayout>
+
+            <!-- Journal Lines -->
+            <CollectionView ItemsSource="{Binding Lines}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Margin="0,0,0,10" 
+                               Padding="15" 
+                               CornerRadius="10" 
+                               BorderColor="{StaticResource Gray200}"
+                               HasShadow="True">
+
+                            <Grid RowDefinitions="Auto,Auto,Auto,Auto" 
+                                  ColumnDefinitions="*,*" 
+                                  RowSpacing="10"
+                                  ColumnSpacing="10">
+
+                                <!-- Account Picker -->
+                                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                                       Text="Conto" 
+                                       FontAttributes="Bold"/>
+                                <Picker Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                        ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:JournalEntryViewModel}}, Path=Accounts}"
+                                        ItemDisplayBinding="{Binding Name}"
+                                        SelectedItem="{Binding Account}"
+                                        Title="Seleziona conto"/>
+
+                                <!-- Debit & Credit -->
+                                <VerticalStackLayout Grid.Row="2" Grid.Column="0">
+                                    <Label Text="Dare" FontAttributes="Bold" FontSize="12"/>
+                                    <Entry Text="{Binding Debit}"
+                                           Keyboard="Numeric"
+                                           Placeholder="0.00"/>
+                                </VerticalStackLayout>
+
+                                <VerticalStackLayout Grid.Row="2" Grid.Column="1">
+                                    <Label Text="Avere" FontAttributes="Bold" FontSize="12"/>
+                                    <Entry Text="{Binding Credit}"
+                                           Keyboard="Numeric"
+                                           Placeholder="0.00"/>
+                                </VerticalStackLayout>
+
+                                <!-- Narrative -->
+                                <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
+                                       Text="Causale" 
+                                       FontAttributes="Bold" 
+                                       FontSize="12"/>
+                                <Entry Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
+                                       Text="{Binding Narrative}"
+                                       Placeholder="Descrizione riga"/>
+
+                                <!-- Remove Button -->
+                                <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"
+                                        Text="Rimuovi Riga"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:JournalEntryViewModel}}, Path=RemoveLineCommand}"
+                                        CommandParameter="{Binding .}"
+                                        BackgroundColor="Red"
+                                        TextColor="White"
+                                        Margin="0,10,0,0"/>
+
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- Totals -->
+            <Frame BackgroundColor="LightBlue" 
+                   CornerRadius="10" 
+                   Padding="15"
+                   Margin="0,10,0,0">
+                <Grid RowDefinitions="Auto,Auto,Auto" 
+                      ColumnDefinitions="*,Auto">
+
+                    <Label Grid.Row="0" Grid.Column="0"
+                           Text="Totale Dare:" 
+                           FontAttributes="Bold"/>
+                    <Label Grid.Row="0" Grid.Column="1"
+                           Text="{Binding TotalDebit, StringFormat='{0:C}'}" 
+                           FontAttributes="Bold"/>
+
+                    <Label Grid.Row="1" Grid.Column="0"
+                           Text="Totale Avere:" 
+                           FontAttributes="Bold"/>
+                    <Label Grid.Row="1" Grid.Column="1"
+                           Text="{Binding TotalCredit, StringFormat='{0:C}'}" 
+                           FontAttributes="Bold"/>
+
+                    <BoxView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                             HeightRequest="1"
+                             Color="Gray"
+                             Margin="0,5"/>
+
+                    <Label Grid.Row="3" Grid.Column="0"
+                           Text="Sbilanciamento:" 
+                           FontAttributes="Bold"
+                           TextColor="{Binding IsBalanced, Converter={StaticResource BalancedToColorConverter}}"/>
+                    <Label Grid.Row="3" Grid.Column="1"
+                           Text="{Binding IsBalanced, Converter={StaticResource BalancedToTextConverter}}" 
+                           FontAttributes="Bold"
+                           TextColor="{Binding IsBalanced, Converter={StaticResource BalancedToColorConverter}}"/>
+
+                </Grid>
+            </Frame>
+
+            <!-- Action Buttons -->
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="10" Margin="0,20,0,0">
+                <Button Grid.Column="0"
+                        Text="Annulla"
+                        Command="{Binding CancelCommand}"
+                        BackgroundColor="Gray"
+                        TextColor="White"/>
+
+                <Button Grid.Column="1"
+                        Text="Salva"
+                        Command="{Binding SaveJournalCommand}"
+                        BackgroundColor="{StaticResource Primary}"
+                        TextColor="White"
+                        IsEnabled="{Binding IsBalanced}"/>
+            </Grid>
+
+            <!-- Loading Indicator -->
+            <ActivityIndicator IsRunning="{Binding IsLoading}"
+                               IsVisible="{Binding IsLoading}"
+                               Color="{StaticResource Primary}"
+                               HorizontalOptions="Center"
+                               Margin="0,20,0,0"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
