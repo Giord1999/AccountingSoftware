@@ -79,12 +79,15 @@
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame Margin="5" Padding="15" CornerRadius="10" HasShadow="True">
-                            <Frame.GestureRecognizers>
+                        <Border Margin="5" Padding="15" StrokeShape="RoundRectangle 10">
+                            <Border.Shadow>
+                                <Shadow Brush="Black" Offset="0,1" Opacity="0.3" Radius="5"/>
+                            </Border.Shadow>
+                            <Border.GestureRecognizers>
                                 <TapGestureRecognizer 
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:InvoicesViewModel}}, Path=ViewInvoiceDetailsCommand}"
                                     CommandParameter="{Binding .}"/>
-                            </Frame.GestureRecognizers>
+                            </Border.GestureRecognizers>
 
                             <Grid RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="*,Auto">
 
@@ -94,27 +97,36 @@
                                        FontAttributes="Bold" 
                                        FontSize="16"/>
 
-                                <Label Grid.Row="0" Grid.Column="1"
-                                       Text="{Binding Type}" 
-                                       FontSize="12"
-                                       Padding="8,4"
-                                       BackgroundColor="LightBlue"
-                                       CornerRadius="5">
-                                    <Label.Triggers>
-                                        <DataTrigger TargetType="Label" 
+                                <Border Grid.Row="0" Grid.Column="1"
+                                        StrokeShape="RoundRectangle 5"
+                                        BackgroundColor="LightBlue">
+                                    <Label Text="{Binding Type}" FontSize="12" Padding="8,4">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" 
+                                                         Binding="{Binding Type}" 
+                                                         Value="Sales">
+                                                <Setter Property="Text" Value="Vendita"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" 
+                                                         Binding="{Binding Type}" 
+                                                         Value="Purchase">
+                                                <Setter Property="Text" Value="Acquisto"/>
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                    <Border.Triggers>
+                                        <DataTrigger TargetType="Border" 
                                                      Binding="{Binding Type}" 
                                                      Value="Sales">
                                             <Setter Property="BackgroundColor" Value="LightGreen"/>
-                                            <Setter Property="Text" Value="Vendita"/>
                                         </DataTrigger>
-                                        <DataTrigger TargetType="Label" 
+                                        <DataTrigger TargetType="Border" 
                                                      Binding="{Binding Type}" 
                                                      Value="Purchase">
                                             <Setter Property="BackgroundColor" Value="LightCoral"/>
-                                            <Setter Property="Text" Value="Acquisto"/>
                                         </DataTrigger>
-                                    </Label.Triggers>
-                                </Label>
+                                    </Border.Triggers>
+                                </Border>
 
                                 <!-- Customer Name -->
                                 <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
@@ -173,7 +185,7 @@
                                        Margin="0,5,0,0"/>
 
                             </Grid>
-                        </Frame>
+                        </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
 

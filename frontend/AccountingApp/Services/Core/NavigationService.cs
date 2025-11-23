@@ -1,6 +1,6 @@
 using AccountingApp.Services.Core;
 
-namespace AccountingApp.Services;
+namespace AccountingApp.Services.Core;
 
 public class NavigationService : INavigationService
 {

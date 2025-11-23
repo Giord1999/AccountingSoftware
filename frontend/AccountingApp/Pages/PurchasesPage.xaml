@@ -57,12 +57,15 @@
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame Margin="5" Padding="15" CornerRadius="10" HasShadow="True">
-                            <Frame.GestureRecognizers>
+                        <Border Margin="5" Padding="15" StrokeShape="RoundRectangle 10">
+                            <Border.Shadow>
+                                <Shadow />
+                            </Border.Shadow>
+                            <Border.GestureRecognizers>
                                 <TapGestureRecognizer 
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:PurchasesViewModel}}, Path=ViewPurchaseDetailsCommand}"
                                     CommandParameter="{Binding .}"/>
-                            </Frame.GestureRecognizers>
+                            </Border.GestureRecognizers>
 
                             <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,Auto">
 
@@ -101,7 +104,7 @@
                                 </Label>
 
                             </Grid>
-                        </Frame>
+                        </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
 

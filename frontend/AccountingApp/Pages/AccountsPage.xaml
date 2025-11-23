@@ -60,7 +60,10 @@
                                 </SwipeItems>
                             </SwipeView.RightItems>
 
-                            <Frame Margin="5" Padding="10" CornerRadius="10" HasShadow="True">
+                            <Border Margin="5" Padding="10" StrokeShape="RoundRectangle 10">
+                                <Border.Shadow>
+                                    <Shadow />
+                                </Border.Shadow>
                                 <Grid ColumnDefinitions="*,Auto">
                                     <VerticalStackLayout Grid.Column="0" Spacing="5">
                                         <Label Text="{Binding Code}" 
@@ -78,7 +81,7 @@
                                            FontSize="12"
                                            TextColor="Gray"/>
                                 </Grid>
-                            </Frame>
+                            </Border>
                         </SwipeView>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

@@ -32,10 +32,9 @@
                    Margin="0,0,0,30"/>
 
             <!-- Login Card -->
-            <Frame BackgroundColor="White"
-                   CornerRadius="15"
-                   HasShadow="True"
-                   Padding="20">
+            <Border Background="White"
+                    StrokeShape="RoundRectangle 15"
+                    Padding="20">
 
                 <VerticalStackLayout Spacing="15">
 
@@ -76,7 +75,7 @@
                                        HorizontalOptions="Center"/>
 
                 </VerticalStackLayout>
-            </Frame>
+            </Border>
 
             <!-- Footer -->
             <Label Text="� 2024 Accounting System"

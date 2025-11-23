@@ -47,11 +47,12 @@
             <CollectionView ItemsSource="{Binding Lines}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame Margin="0,0,0,10" 
-                               Padding="15" 
-                               CornerRadius="10" 
-                               BorderColor="{StaticResource Gray200}"
-                               HasShadow="True">
+                        <Border Margin="0,0,0,10" 
+                                Padding="15" 
+                                StrokeShape="RoundRectangle 10" 
+                                Stroke="{StaticResource Gray200}"
+                                StrokeThickness="1"
+                                Shadow="Default">
 
                             <Grid RowDefinitions="Auto,Auto,Auto,Auto" 
                                   ColumnDefinitions="*,*" 
@@ -102,16 +103,16 @@
                                         Margin="0,10,0,0"/>
 
                             </Grid>
-                        </Frame>
+                        </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
             <!-- Totals -->
-            <Frame BackgroundColor="LightBlue" 
-                   CornerRadius="10" 
-                   Padding="15"
-                   Margin="0,10,0,0">
+            <Border BackgroundColor="LightBlue" 
+                    StrokeShape="RoundRectangle 10" 
+                    Padding="15"
+                    Margin="0,10,0,0">
                 <Grid RowDefinitions="Auto,Auto,Auto" 
                       ColumnDefinitions="*,Auto">
 
@@ -144,7 +145,7 @@
                            TextColor="{Binding IsBalanced, Converter={StaticResource BalancedToColorConverter}}"/>
 
                 </Grid>
-            </Frame>
+            </Border>
 
             <!-- Action Buttons -->
             <Grid ColumnDefinitions="*,*" ColumnSpacing="10" Margin="0,20,0,0">

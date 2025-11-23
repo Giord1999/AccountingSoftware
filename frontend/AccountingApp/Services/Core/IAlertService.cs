@@ -1,4 +1,4 @@
-namespace AccountingApp.Services;
+namespace AccountingApp.Services.Core;
 
 public interface IAlertService
 {

@@ -1,6 +1,6 @@
 using AccountingApp.Models;
 
-namespace AccountingApp.Services;
+namespace AccountingApp.Services.Api;
 
 public interface IAccountingService
 {

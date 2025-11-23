@@ -11,7 +11,6 @@ public class AuthService : IAuthService
     private readonly HttpClient _httpClient;
     private const string TokenKey = "auth_token";
     private const string CompanyIdKey = "company_id";
-    private LoginResponse? _currentUser;
 
     public AuthService(HttpClient httpClient)
     {
@@ -32,11 +31,11 @@ public class AuthService : IAuthService
 
             if (response.IsSuccessStatusCode)
             {
-                _currentUser = await response.Content.ReadFromJsonAsync<LoginResponse>();
-                if (_currentUser != null)
+                var currentUser = await response.Content.ReadFromJsonAsync<LoginResponse>();
+                if (currentUser != null)
                 {
-                    Token = _currentUser.Token;
-                    CompanyId = _currentUser.CompanyId;
+                    Token = currentUser.Token;
+                    CompanyId = currentUser.CompanyId;
 
                     await SecureStorage.SetAsync(TokenKey, Token);
                     if (CompanyId.HasValue)
@@ -45,7 +44,7 @@ public class AuthService : IAuthService
                     _httpClient.DefaultRequestHeaders.Authorization =
                         new AuthenticationHeaderValue("Bearer", Token);
 
-                    return _currentUser;
+                    return currentUser;
                 }
             }
 
@@ -62,7 +61,6 @@ public class AuthService : IAuthService
     {
         Token = null;
         CompanyId = null;
-        _currentUser = null;
 
         SecureStorage.Remove(TokenKey);
         SecureStorage.Remove(CompanyIdKey);

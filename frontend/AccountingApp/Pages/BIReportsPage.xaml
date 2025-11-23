@@ -16,7 +16,10 @@
                     TextColor="White"/>
 
             <!-- Date Range Filter -->
-            <Frame CornerRadius="10" Padding="15" HasShadow="True">
+            <Border Padding="15">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10"/>
+                </Border.StrokeShape>
                 <VerticalStackLayout Spacing="10">
                     <Label Text="Periodo di Analisi" 
                            FontSize="16" 
@@ -42,7 +45,7 @@
                             TextColor="White"
                             Margin="0,10,0,0"/>
                 </VerticalStackLayout>
-            </Frame>
+            </Border>
 
             <!-- KPI Cards Grid -->
             <Label Text="Indicatori Principali" 
@@ -55,10 +58,12 @@
                   ColumnSpacing="15">
 
                 <!-- Total Revenue -->
-                <Frame Grid.Row="0" Grid.Column="0" 
-                       BackgroundColor="#4CAF50" 
-                       CornerRadius="10" 
+                <Border Grid.Row="0" Grid.Column="0" 
+                       Background="#4CAF50" 
                        Padding="15">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10"/>
+                    </Border.StrokeShape>
                     <VerticalStackLayout Spacing="5">
                         <Label Text="💰 Ricavi Totali" 
                                FontSize="12" 
@@ -69,13 +74,15 @@
                                FontAttributes="Bold"
                                TextColor="White"/>
                     </VerticalStackLayout>
-                </Frame>
+                </Border>
 
                 <!-- Total Expenses -->
-                <Frame Grid.Row="0" Grid.Column="1" 
-                       BackgroundColor="#F44336" 
-                       CornerRadius="10" 
+                <Border Grid.Row="0" Grid.Column="1" 
+                       Background="#F44336" 
                        Padding="15">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10"/>
+                    </Border.StrokeShape>
                     <VerticalStackLayout Spacing="5">
                         <Label Text="💸 Costi Totali" 
                                FontSize="12" 
@@ -86,13 +93,15 @@
                                FontAttributes="Bold"
                                TextColor="White"/>
                     </VerticalStackLayout>
-                </Frame>
+                </Border>
 
                 <!-- Net Profit -->
-                <Frame Grid.Row="1" Grid.Column="0" 
-                       BackgroundColor="#2196F3" 
-                       CornerRadius="10" 
+                <Border Grid.Row="1" Grid.Column="0" 
+                       Background="#2196F3" 
                        Padding="15">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10"/>
+                    </Border.StrokeShape>
                     <VerticalStackLayout Spacing="5">
                         <Label Text="📊 Utile Netto" 
                                FontSize="12" 
@@ -103,13 +112,15 @@
                                FontAttributes="Bold"
                                TextColor="White"/>
                     </VerticalStackLayout>
-                </Frame>
+                </Border>
 
                 <!-- Profit Margin -->
-                <Frame Grid.Row="1" Grid.Column="1" 
-                       BackgroundColor="#FF9800" 
-                       CornerRadius="10" 
+                <Border Grid.Row="1" Grid.Column="1" 
+                       Background="#FF9800" 
                        Padding="15">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10"/>
+                    </Border.StrokeShape>
                     <VerticalStackLayout Spacing="5">
                         <Label Text="📈 Margine %" 
                                FontSize="12" 
@@ -120,13 +131,15 @@
                                FontAttributes="Bold"
                                TextColor="White"/>
                     </VerticalStackLayout>
-                </Frame>
+                </Border>
 
                 <!-- ROI -->
-                <Frame Grid.Row="2" Grid.Column="0" 
-                       BackgroundColor="#9C27B0" 
-                       CornerRadius="10" 
+                <Border Grid.Row="2" Grid.Column="0" 
+                       Background="#9C27B0" 
                        Padding="15">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10"/>
+                    </Border.StrokeShape>
                     <VerticalStackLayout Spacing="5">
                         <Label Text="💎 ROI" 
                                FontSize="12" 
@@ -137,13 +150,15 @@
                                FontAttributes="Bold"
                                TextColor="White"/>
                     </VerticalStackLayout>
-                </Frame>
+                </Border>
 
                 <!-- Cash Flow Ratio -->
-                <Frame Grid.Row="2" Grid.Column="1" 
-                       BackgroundColor="#00BCD4" 
-                       CornerRadius="10" 
+                <Border Grid.Row="2" Grid.Column="1" 
+                       Background="#00BCD4" 
                        Padding="15">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10"/>
+                    </Border.StrokeShape>
                     <VerticalStackLayout Spacing="5">
                         <Label Text="💧 Cash Flow" 
                                FontSize="12" 
@@ -154,12 +169,15 @@
                                FontAttributes="Bold"
                                TextColor="White"/>
                     </VerticalStackLayout>
-                </Frame>
+                </Border>
 
             </Grid>
 
             <!-- Revenue Chart Section -->
-            <Frame CornerRadius="10" Padding="15" HasShadow="True" Margin="0,20,0,0">
+            <Border Padding="15" Margin="0,20,0,0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10"/>
+                </Border.StrokeShape>
                 <VerticalStackLayout Spacing="10">
                     <Label Text="📊 Andamento Ricavi" 
                            FontSize="16" 
@@ -185,10 +203,13 @@
                         </CollectionView.ItemTemplate>
                     </CollectionView>
                 </VerticalStackLayout>
-            </Frame>
+            </Border>
 
             <!-- Trend Analysis Section -->
-            <Frame CornerRadius="10" Padding="15" HasShadow="True">
+            <Border Padding="15">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10"/>
+                </Border.StrokeShape>
                 <VerticalStackLayout Spacing="10">
                     <Label Text="📈 Analisi Trend Mensile" 
                            FontSize="16" 
@@ -222,10 +243,13 @@
                         </CollectionView.ItemTemplate>
                     </CollectionView>
                 </VerticalStackLayout>
-            </Frame>
+            </Border>
 
             <!-- Transaction Count -->
-            <Frame CornerRadius="10" Padding="15" HasShadow="True">
+            <Border Padding="15">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10"/>
+                </Border.StrokeShape>
                 <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
                     <Label Text="📋 Transazioni Totali:" 
                            FontSize="14"
@@ -236,7 +260,7 @@
                            TextColor="{StaticResource Primary}"
                            VerticalOptions="Center"/>
                 </HorizontalStackLayout>
-            </Frame>
+            </Border>
 
             <!-- Export Button -->
             <Button Text="Esporta Report"

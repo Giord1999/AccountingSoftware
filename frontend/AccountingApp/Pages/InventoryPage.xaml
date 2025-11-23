@@ -60,7 +60,7 @@
                                 </SwipeItems>
                             </SwipeView.RightItems>
 
-                            <Frame Margin="5" Padding="15" CornerRadius="10" HasShadow="True">
+                            <Border Margin="5" Padding="15" StrokeShape="{RoundRectangle CornerRadius=10}" Shadow="{StaticResource DefaultShadow}">
                                 <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,Auto">
 
                                     <Label Grid.Row="0" Grid.Column="0"
@@ -88,7 +88,7 @@
                                     </HorizontalStackLayout>
 
                                 </Grid>
-                            </Frame>
+                            </Border>
                         </SwipeView>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

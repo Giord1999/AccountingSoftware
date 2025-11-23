@@ -10,8 +10,8 @@
         <VerticalStackLayout Padding="20" Spacing="20">
 
             <!-- Header -->
-            <Frame BackgroundColor="{StaticResource Primary}" 
-                   CornerRadius="15" 
+            <Border BackgroundColor="{StaticResource Primary}" 
+                   StrokeShape="RoundRectangle 15" 
                    Padding="20">
                 <VerticalStackLayout Spacing="10">
                     <Label Text="{Binding CompanyName}"
@@ -23,7 +23,7 @@
                            TextColor="White"
                            Opacity="0.8"/>
                 </VerticalStackLayout>
-            </Frame>
+            </Border>
 
             <!-- KPI Cards -->
             <Grid RowDefinitions="Auto,Auto" 
@@ -32,52 +32,52 @@
                   ColumnSpacing="15">
 
                 <!-- Total Revenue -->
-                <Frame Grid.Row="0" Grid.Column="0" 
+                <Border Grid.Row="0" Grid.Column="0" 
                        BackgroundColor="LightGreen" 
-                       CornerRadius="10" 
+                       StrokeShape="RoundRectangle 10" 
                        Padding="15">
                     <VerticalStackLayout Spacing="5">
                         <Label Text="Ricavi Totali" FontSize="12" Opacity="0.8"/>
                         <Label Text="{Binding TotalRevenue, StringFormat='{0:C}'}"
                                FontSize="20" FontAttributes="Bold"/>
                     </VerticalStackLayout>
-                </Frame>
+                </Border>
 
                 <!-- Total Expenses -->
-                <Frame Grid.Row="0" Grid.Column="1" 
+                <Border Grid.Row="0" Grid.Column="1" 
                        BackgroundColor="LightCoral" 
-                       CornerRadius="10" 
+                       StrokeShape="RoundRectangle 10" 
                        Padding="15">
                     <VerticalStackLayout Spacing="5">
                         <Label Text="Costi Totali" FontSize="12" Opacity="0.8"/>
                         <Label Text="{Binding TotalExpenses, StringFormat='{0:C}'}"
                                FontSize="20" FontAttributes="Bold"/>
                     </VerticalStackLayout>
-                </Frame>
+                </Border>
 
                 <!-- Net Profit -->
-                <Frame Grid.Row="1" Grid.Column="0" 
+                <Border Grid.Row="1" Grid.Column="0" 
                        BackgroundColor="LightBlue" 
-                       CornerRadius="10" 
+                       StrokeShape="RoundRectangle 10" 
                        Padding="15">
                     <VerticalStackLayout Spacing="5">
                         <Label Text="Utile Netto" FontSize="12" Opacity="0.8"/>
                         <Label Text="{Binding NetProfit, StringFormat='{0:C}'}"
                                FontSize="20" FontAttributes="Bold"/>
                     </VerticalStackLayout>
-                </Frame>
+                </Border>
 
                 <!-- Profit Margin -->
-                <Frame Grid.Row="1" Grid.Column="1" 
+                <Border Grid.Row="1" Grid.Column="1" 
                        BackgroundColor="LightYellow" 
-                       CornerRadius="10" 
+                       StrokeShape="RoundRectangle 10" 
                        Padding="15">
                     <VerticalStackLayout Spacing="5">
                         <Label Text="Margine %" FontSize="12" Opacity="0.8"/>
                         <Label Text="{Binding ProfitMargin, StringFormat='{0:P2}'}"
                                FontSize="20" FontAttributes="Bold"/>
                     </VerticalStackLayout>
-                </Frame>
+                </Border>
 
             </Grid>
 

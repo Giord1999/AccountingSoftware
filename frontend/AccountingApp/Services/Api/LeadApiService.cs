@@ -1,7 +1,7 @@
 using AccountingApp.Models;
 using System.Net.Http.Json;
 
-namespace AccountingApp.Services;
+namespace AccountingApp.Services.Api;
 
 public class LeadApiService : ILeadApiService
 {

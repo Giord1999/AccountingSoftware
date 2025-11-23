@@ -64,12 +64,12 @@
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame Margin="5" Padding="15" CornerRadius="10" HasShadow="True">
-                            <Frame.GestureRecognizers>
+                        <Border Margin="5" Padding="15" StrokeShape="RoundRectangle 10" Shadow="{StaticResource DefaultShadow}">
+                            <Border.GestureRecognizers>
                                 <TapGestureRecognizer 
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:LeadsViewModel}}, Path=EditLeadCommand}"
                                     CommandParameter="{Binding .}"/>
-                            </Frame.GestureRecognizers>
+                            </Border.GestureRecognizers>
 
                             <Grid RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="*,Auto">
 
@@ -79,40 +79,40 @@
                                        FontAttributes="Bold" 
                                        FontSize="16"/>
 
-                                <Label Grid.Row="0" Grid.Column="1"
-                                       Text="{Binding Status}" 
-                                       FontSize="12"
-                                       Padding="8,4"
-                                       BackgroundColor="LightBlue"
-                                       CornerRadius="5">
-                                    <Label.Triggers>
-                                        <DataTrigger TargetType="Label" 
+                                <Border Grid.Row="0" Grid.Column="1"
+                                        StrokeShape="RoundRectangle 5"
+                                        Padding="8,4"
+                                        BackgroundColor="LightBlue">
+                                    <Label Text="{Binding Status}" 
+                                           FontSize="12"/>
+                                    <Border.Triggers>
+                                        <DataTrigger TargetType="Border" 
                                                      Binding="{Binding Status}" 
                                                      Value="New">
                                             <Setter Property="BackgroundColor" Value="LightBlue"/>
                                         </DataTrigger>
-                                        <DataTrigger TargetType="Label" 
+                                        <DataTrigger TargetType="Border" 
                                                      Binding="{Binding Status}" 
                                                      Value="Contacted">
                                             <Setter Property="BackgroundColor" Value="LightYellow"/>
                                         </DataTrigger>
-                                        <DataTrigger TargetType="Label" 
+                                        <DataTrigger TargetType="Border" 
                                                      Binding="{Binding Status}" 
                                                      Value="Qualified">
                                             <Setter Property="BackgroundColor" Value="Orange"/>
                                         </DataTrigger>
-                                        <DataTrigger TargetType="Label" 
+                                        <DataTrigger TargetType="Border" 
                                                      Binding="{Binding Status}" 
                                                      Value="Converted">
                                             <Setter Property="BackgroundColor" Value="LightGreen"/>
                                         </DataTrigger>
-                                        <DataTrigger TargetType="Label" 
+                                        <DataTrigger TargetType="Border" 
                                                      Binding="{Binding Status}" 
                                                      Value="Lost">
                                             <Setter Property="BackgroundColor" Value="LightCoral"/>
                                         </DataTrigger>
-                                    </Label.Triggers>
-                                </Label>
+                                    </Border.Triggers>
+                                </Border>
 
                                 <!-- Contact Info -->
                                 <HorizontalStackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Spacing="10">
@@ -167,7 +167,7 @@
                                 </HorizontalStackLayout>
 
                             </Grid>
-                        </Frame>
+                        </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
 
