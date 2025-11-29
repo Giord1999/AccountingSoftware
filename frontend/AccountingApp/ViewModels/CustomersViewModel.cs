@@ -1,7 +1,8 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using AccountingApp.Services;
-using AccountingApp.Models;
+using AccountingApp.Services.Api;
+using AccountingApp.Services.Core;
+    using AccountingApp.Models;
 using System.Collections.ObjectModel;
 
 namespace AccountingApp.ViewModels;

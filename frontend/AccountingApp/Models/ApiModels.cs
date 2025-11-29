@@ -309,6 +309,12 @@ public class BIKPIs
     public decimal TotalExpenses { get; set; }
     public decimal NetProfit { get; set; }
     public decimal ProfitMargin { get; set; }
+    public decimal ROI { get; set; }
+    public decimal CashFlowRatio { get; set; }
+    public decimal AverageMonthlyRevenue { get; set; }
+    public decimal AverageMonthlyExpenses { get; set; }
+    public int TransactionCount { get; set; }
+    public decimal RevenueGrowthPercentage { get; set; }
 }
 
 public class ChartData
