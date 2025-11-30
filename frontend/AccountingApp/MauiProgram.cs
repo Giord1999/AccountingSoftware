@@ -1,4 +1,5 @@
-﻿using AccountingApp.Services;
+﻿using AccountingApp.Services.Core;
+using AccountingApp.Services.Api;
 using AccountingApp.ViewModels;
 using AccountingApp.Pages;
 using CommunityToolkit.Maui;
@@ -20,6 +21,14 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
+
+        // ========== BLAZOR WEBVIEW ==========
+        builder.Services.AddMauiBlazorWebView();
+
+#if DEBUG
+        builder.Services.AddBlazorWebViewDeveloperTools();
+        builder.Logging.AddDebug();
+#endif
 
         // ========== SERVIZI HTTP ==========
         builder.Services.AddSingleton(sp => new HttpClient
@@ -60,6 +69,7 @@ public static class MauiProgram
         builder.Services.AddTransient<BIReportsViewModel>();
 
         // Pages
+        builder.Services.AddTransient<MainPage>();
         builder.Services.AddTransient<LoginPage>();
         builder.Services.AddTransient<DashboardPage>();
         builder.Services.AddTransient<AccountsPage>();
@@ -72,10 +82,6 @@ public static class MauiProgram
         builder.Services.AddTransient<InvoicesPage>();
         builder.Services.AddTransient<LeadsPage>();
         builder.Services.AddTransient<BIReportsPage>();
-
-#if DEBUG
-        builder.Logging.AddDebug();
-#endif
 
         return builder.Build();
     }

@@ -39,8 +39,8 @@
             ContentTemplate="{DataTemplate pages:DashboardPage}"/>
     </FlyoutItem>
 
-    <!-- Contabilità -->
-    <FlyoutItem Title="Contabilità" Icon="calculator.png">
+    <!-- Contabilitï¿½ -->
+    <FlyoutItem Title="Contabilitï¿½" Icon="calculator.png">
         <ShellContent
             Title="Piano dei Conti"
             Route="accounts"

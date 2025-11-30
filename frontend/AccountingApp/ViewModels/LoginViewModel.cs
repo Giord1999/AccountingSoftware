@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AccountingApp.ViewModels;
 
-public partial class LoginViewModel : ObservableObject
+public partial class LoginViewModel : ObservableValidator
 {
     private readonly IAuthService _authService;
     private readonly INavigationService _navigationService;
@@ -46,9 +46,10 @@ public partial class LoginViewModel : ObservableObject
             IsLoading = true;
             ErrorMessage = string.Empty;
 
-            if (string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(Password))
+            ValidateAllProperties();
+            if (HasErrors)
             {
-                ErrorMessage = "Inserire email e password";
+                ErrorMessage = string.Join(", ", GetErrors().Select(e => e.ErrorMessage));
                 return;
             }
 

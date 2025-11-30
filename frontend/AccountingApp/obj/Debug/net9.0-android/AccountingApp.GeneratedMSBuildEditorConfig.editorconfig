@@ -19,9 +19,15 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = AccountingApp
+build_property.RootNamespace = AccountingApp
 build_property.ProjectDir = C:\Users\User\Desktop\APP MIA\AccountingSoftware\frontend\AccountingApp\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 9.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\User\Desktop\APP MIA\AccountingSoftware\frontend\AccountingApp
+build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 9.0
 build_property.EnableCodeStyleSeverity = 
 
@@ -30,123 +36,228 @@ build_metadata.AdditionalFiles.GenKind =
 build_metadata.AdditionalFiles.ManifestResourceName = 
 build_metadata.AdditionalFiles.TargetPath = 
 build_metadata.AdditionalFiles.RelativePath = 
+build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/User/Desktop/APP MIA/AccountingSoftware/frontend/AccountingApp/App.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AccountingApp.App.xaml
 build_metadata.AdditionalFiles.TargetPath = App.xaml
 build_metadata.AdditionalFiles.RelativePath = App.xaml
+build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/User/Desktop/APP MIA/AccountingSoftware/frontend/AccountingApp/AppShell.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AccountingApp.AppShell.xaml
 build_metadata.AdditionalFiles.TargetPath = AppShell.xaml
 build_metadata.AdditionalFiles.RelativePath = AppShell.xaml
+build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/User/Desktop/APP MIA/AccountingSoftware/frontend/AccountingApp/MainPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AccountingApp.MainPage.xaml
 build_metadata.AdditionalFiles.TargetPath = MainPage.xaml
 build_metadata.AdditionalFiles.RelativePath = MainPage.xaml
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Desktop/APP MIA/AccountingSoftware/frontend/AccountingApp/Pages/AccountDetailPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = AccountingApp.Pages.AccountDetailPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Pages\AccountDetailPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Pages\AccountDetailPage.xaml
+build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/User/Desktop/APP MIA/AccountingSoftware/frontend/AccountingApp/Pages/AccountsPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AccountingApp.Pages.AccountsPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Pages\AccountsPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Pages\AccountsPage.xaml
+build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/User/Desktop/APP MIA/AccountingSoftware/frontend/AccountingApp/Pages/BIReportsPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AccountingApp.Pages.BIReportsPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Pages\BIReportsPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Pages\BIReportsPage.xaml
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Desktop/APP MIA/AccountingSoftware/frontend/AccountingApp/Pages/CreatePurchasePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = AccountingApp.Pages.CreatePurchasePage.xaml
+build_metadata.AdditionalFiles.TargetPath = Pages\CreatePurchasePage.xaml
+build_metadata.AdditionalFiles.RelativePath = Pages\CreatePurchasePage.xaml
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Desktop/APP MIA/AccountingSoftware/frontend/AccountingApp/Pages/CreatSalePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = AccountingApp.Pages.CreatSalePage.xaml
+build_metadata.AdditionalFiles.TargetPath = Pages\CreatSalePage.xaml
+build_metadata.AdditionalFiles.RelativePath = Pages\CreatSalePage.xaml
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Desktop/APP MIA/AccountingSoftware/frontend/AccountingApp/Pages/CustomerDetailPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = AccountingApp.Pages.CustomerDetailPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Pages\CustomerDetailPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Pages\CustomerDetailPage.xaml
+build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/User/Desktop/APP MIA/AccountingSoftware/frontend/AccountingApp/Pages/CustomersPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AccountingApp.Pages.CustomersPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Pages\CustomersPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Pages\CustomersPage.xaml
+build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/User/Desktop/APP MIA/AccountingSoftware/frontend/AccountingApp/Pages/DashboardPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AccountingApp.Pages.DashboardPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Pages\DashboardPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Pages\DashboardPage.xaml
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Desktop/APP MIA/AccountingSoftware/frontend/AccountingApp/Pages/InventoryDetailPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = AccountingApp.Pages.InventoryDetailPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Pages\InventoryDetailPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Pages\InventoryDetailPage.xaml
+build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/User/Desktop/APP MIA/AccountingSoftware/frontend/AccountingApp/Pages/InventoryPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AccountingApp.Pages.InventoryPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Pages\InventoryPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Pages\InventoryPage.xaml
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Desktop/APP MIA/AccountingSoftware/frontend/AccountingApp/Pages/InvoiceDetailPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = AccountingApp.Pages.InvoiceDetailPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Pages\InvoiceDetailPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Pages\InvoiceDetailPage.xaml
+build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/User/Desktop/APP MIA/AccountingSoftware/frontend/AccountingApp/Pages/InvoicesPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AccountingApp.Pages.InvoicesPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Pages\InvoicesPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Pages\InvoicesPage.xaml
+build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/User/Desktop/APP MIA/AccountingSoftware/frontend/AccountingApp/Pages/JournalEntryPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AccountingApp.Pages.JournalEntryPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Pages\JournalEntryPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Pages\JournalEntryPage.xaml
+build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/User/Desktop/APP MIA/AccountingSoftware/frontend/AccountingApp/Pages/LeadsPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AccountingApp.Pages.LeadsPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Pages\LeadsPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Pages\LeadsPage.xaml
+build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/User/Desktop/APP MIA/AccountingSoftware/frontend/AccountingApp/Pages/LoginPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AccountingApp.Pages.LoginPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Pages\LoginPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Pages\LoginPage.xaml
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Desktop/APP MIA/AccountingSoftware/frontend/AccountingApp/Pages/PurchaseDetailPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = AccountingApp.Pages.PurchaseDetailPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Pages\PurchaseDetailPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Pages\PurchaseDetailPage.xaml
+build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/User/Desktop/APP MIA/AccountingSoftware/frontend/AccountingApp/Pages/PurchasesPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AccountingApp.Pages.PurchasesPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Pages\PurchasesPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Pages\PurchasesPage.xaml
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Desktop/APP MIA/AccountingSoftware/frontend/AccountingApp/Pages/SaleDetailPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = AccountingApp.Pages.SaleDetailPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Pages\SaleDetailPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Pages\SaleDetailPage.xaml
+build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/User/Desktop/APP MIA/AccountingSoftware/frontend/AccountingApp/Pages/SalesPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AccountingApp.Pages.SalesPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Pages\SalesPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Pages\SalesPage.xaml
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Desktop/APP MIA/AccountingSoftware/frontend/AccountingApp/Pages/SupplierDetailPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = AccountingApp.Pages.SupplierDetailPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Pages\SupplierDetailPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Pages\SupplierDetailPage.xaml
+build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/User/Desktop/APP MIA/AccountingSoftware/frontend/AccountingApp/Pages/SuppliersPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AccountingApp.Pages.SuppliersPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Pages\SuppliersPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Pages\SuppliersPage.xaml
+build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/User/Desktop/APP MIA/AccountingSoftware/frontend/AccountingApp/Resources/Styles/Colors.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AccountingApp.Resources.Styles.Colors.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Colors.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Colors.xaml
+build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/APP MIA/AccountingSoftware/frontend/AccountingApp/Components/Layout/MainLayout.razor.css]
-build_metadata.AdditionalFiles.GenKind = Css
-build_metadata.AdditionalFiles.ManifestResourceName = AccountingApp.Components.Layout.MainLayout.razor.css
-build_metadata.AdditionalFiles.TargetPath = Components\Layout\MainLayout.razor.css
-build_metadata.AdditionalFiles.RelativePath = Components\Layout\MainLayout.razor.css
+[C:/Users/User/Desktop/APP MIA/AccountingSoftware/frontend/AccountingApp/Components/Pages/Counter.razor]
+build_metadata.AdditionalFiles.GenKind = 
+build_metadata.AdditionalFiles.ManifestResourceName = 
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDb3VudGVyLnJhem9y
+build_metadata.AdditionalFiles.RelativePath = 
+build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/APP MIA/AccountingSoftware/frontend/AccountingApp/Components/Layout/NavMenu.razor.css]
-build_metadata.AdditionalFiles.GenKind = Css
-build_metadata.AdditionalFiles.ManifestResourceName = AccountingApp.Components.Layout.NavMenu.razor.css
-build_metadata.AdditionalFiles.TargetPath = Components\Layout\NavMenu.razor.css
-build_metadata.AdditionalFiles.RelativePath = Components\Layout\NavMenu.razor.css
+[C:/Users/User/Desktop/APP MIA/AccountingSoftware/frontend/AccountingApp/Components/Pages/Home.razor]
+build_metadata.AdditionalFiles.GenKind = 
+build_metadata.AdditionalFiles.ManifestResourceName = 
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xIb21lLnJhem9y
+build_metadata.AdditionalFiles.RelativePath = 
+build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/APP MIA/AccountingSoftware/frontend/AccountingApp/wwwroot/css/app.css]
-build_metadata.AdditionalFiles.GenKind = Css
-build_metadata.AdditionalFiles.ManifestResourceName = AccountingApp.wwwroot.css.app.css
-build_metadata.AdditionalFiles.TargetPath = wwwroot\css\app.css
-build_metadata.AdditionalFiles.RelativePath = wwwroot\css\app.css
+[C:/Users/User/Desktop/APP MIA/AccountingSoftware/frontend/AccountingApp/Components/Pages/Weather.razor]
+build_metadata.AdditionalFiles.GenKind = 
+build_metadata.AdditionalFiles.ManifestResourceName = 
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xXZWF0aGVyLnJhem9y
+build_metadata.AdditionalFiles.RelativePath = 
+build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/APP MIA/AccountingSoftware/frontend/AccountingApp/wwwroot/css/bootstrap/bootstrap.min.css]
-build_metadata.AdditionalFiles.GenKind = Css
-build_metadata.AdditionalFiles.ManifestResourceName = AccountingApp.wwwroot.css.bootstrap.bootstrap.min.css
-build_metadata.AdditionalFiles.TargetPath = wwwroot\css\bootstrap\bootstrap.min.css
-build_metadata.AdditionalFiles.RelativePath = wwwroot\css\bootstrap\bootstrap.min.css
+[C:/Users/User/Desktop/APP MIA/AccountingSoftware/frontend/AccountingApp/Components/Routes.razor]
+build_metadata.AdditionalFiles.GenKind = 
+build_metadata.AdditionalFiles.ManifestResourceName = 
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xSb3V0ZXMucmF6b3I=
+build_metadata.AdditionalFiles.RelativePath = 
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Desktop/APP MIA/AccountingSoftware/frontend/AccountingApp/Components/_Imports.razor]
+build_metadata.AdditionalFiles.GenKind = 
+build_metadata.AdditionalFiles.ManifestResourceName = 
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xfSW1wb3J0cy5yYXpvcg==
+build_metadata.AdditionalFiles.RelativePath = 
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/Desktop/APP MIA/AccountingSoftware/frontend/AccountingApp/Components/Layout/MainLayout.razor]
+build_metadata.AdditionalFiles.GenKind = 
+build_metadata.AdditionalFiles.ManifestResourceName = 
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTWFpbkxheW91dC5yYXpvcg==
+build_metadata.AdditionalFiles.RelativePath = 
+build_metadata.AdditionalFiles.CssScope = b-dtoyydg4um
+
+[C:/Users/User/Desktop/APP MIA/AccountingSoftware/frontend/AccountingApp/Components/Layout/NavMenu.razor]
+build_metadata.AdditionalFiles.GenKind = 
+build_metadata.AdditionalFiles.ManifestResourceName = 
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTmF2TWVudS5yYXpvcg==
+build_metadata.AdditionalFiles.RelativePath = 
+build_metadata.AdditionalFiles.CssScope = b-h4q87l49o1
