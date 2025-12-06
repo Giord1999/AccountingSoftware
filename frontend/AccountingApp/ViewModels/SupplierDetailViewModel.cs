@@ -66,13 +66,13 @@ public partial class SupplierDetailViewModel : ObservableObject, IQueryAttributa
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        if (query.ContainsKey("id") && Guid.TryParse(query["id"].ToString(), out var id))
+        if (query.TryGetValue("id", out var idValue) && Guid.TryParse(idValue?.ToString(), out var id))
         {
             SupplierId = id;
             IsEditMode = true;
         }
 
-        if (query.ContainsKey("mode") && query["mode"].ToString() == "create")
+        if (query.TryGetValue("mode", out var modeValue) && modeValue?.ToString() == "create")
         {
             IsEditMode = false;
             SupplierId = null;
@@ -168,7 +168,7 @@ public partial class SupplierDetailViewModel : ObservableObject, IQueryAttributa
                 await _alertService.ShowToastAsync("Fornitore creato con successo");
             }
 
-            await _navigationService.GoBackAsync();
+            await _navigationService.NavigateBackAsync();
         }
         catch (Exception ex)
         {
@@ -183,6 +183,6 @@ public partial class SupplierDetailViewModel : ObservableObject, IQueryAttributa
     [RelayCommand]
     private async Task CancelAsync()
     {
-        await _navigationService.GoBackAsync();
+        await _navigationService.NavigateBackAsync();
     }
 }

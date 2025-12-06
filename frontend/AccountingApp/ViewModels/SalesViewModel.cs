@@ -33,18 +33,28 @@ public partial class SalesViewModel : ObservableObject
     }
 
     [ObservableProperty]
-    private bool isLoading;
+    private bool _isLoading;
 
     [ObservableProperty]
-    private bool isRefreshing;
+    private bool _isRefreshing;
 
     [ObservableProperty]
-    private DateTime? fromDate;
+    private DateTime? _fromDate;
 
     [ObservableProperty]
-    private DateTime? toDate;
+    private DateTime? _toDate;
 
-    public ObservableCollection<Sale> Sales { get; } = new();
+    [ObservableProperty]
+    private string? _customerSearchQuery;
+
+    [ObservableProperty]
+    private Customer? _selectedCustomer;
+
+    public ObservableCollection<Sale> Sales { get; } = [];
+
+    public ObservableCollection<Customer> Customers { get; } = [];
+
+    public ObservableCollection<Inventory> InventoryItems { get; } = [];
 
     [RelayCommand]
     private async Task LoadSalesAsync()
@@ -78,6 +88,110 @@ public partial class SalesViewModel : ObservableObject
         {
             IsLoading = false;
             IsRefreshing = false;
+        }
+    }
+
+    [RelayCommand]
+    private async Task LoadCustomersAsync()
+    {
+        if (!_authService.CompanyId.HasValue) return;
+
+        try
+        {
+            var customers = await _customerService.GetCustomersByCompanyAsync(
+                _authService.CompanyId.Value,
+                CustomerSearchQuery);
+
+            Customers.Clear();
+            foreach (var customer in customers)
+            {
+                Customers.Add(customer);
+            }
+        }
+        catch (Exception ex)
+        {
+            await _alertService.ShowAlertAsync("Errore", $"Errore caricamento clienti: {ex.Message}");
+        }
+    }
+
+    [RelayCommand]
+    private async Task LoadInventoryAsync()
+    {
+        if (!_authService.CompanyId.HasValue) return;
+
+        try
+        {
+            var items = await _inventoryService.GetInventoryItemsByCompanyAsync(_authService.CompanyId.Value);
+
+            InventoryItems.Clear();
+            foreach (var item in items)
+            {
+                InventoryItems.Add(item);
+            }
+        }
+        catch (Exception ex)
+        {
+            await _alertService.ShowAlertAsync("Errore", $"Errore caricamento inventario: {ex.Message}");
+        }
+    }
+
+    [RelayCommand]
+    private async Task SearchCustomersAsync(string? query)
+    {
+        if (!_authService.CompanyId.HasValue || string.IsNullOrWhiteSpace(query)) return;
+
+        try
+        {
+            // Usa GetCustomersByCompanyAsync con il parametro search
+            var customers = await _customerService.GetCustomersByCompanyAsync(_authService.CompanyId.Value, query);
+
+            Customers.Clear();
+            foreach (var customer in customers)
+            {
+                Customers.Add(customer);
+            }
+        }
+        catch (Exception ex)
+        {
+            await _alertService.ShowAlertAsync("Errore", $"Errore ricerca clienti: {ex.Message}");
+        }
+    }
+
+    [RelayCommand]
+    private async Task FilterSalesByCustomerAsync()
+    {
+        if (SelectedCustomer == null)
+        {
+            await LoadSalesAsync();
+            return;
+        }
+
+        if (!_authService.CompanyId.HasValue) return;
+
+        try
+        {
+            IsLoading = true;
+
+            var allSales = await _salesService.GetSalesByCompanyAsync(
+                _authService.CompanyId.Value,
+                FromDate,
+                ToDate);
+
+            var filteredSales = allSales.Where(s => s.CustomerId == SelectedCustomer.Id);
+
+            Sales.Clear();
+            foreach (var sale in filteredSales)
+            {
+                Sales.Add(sale);
+            }
+        }
+        catch (Exception ex)
+        {
+            await _alertService.ShowAlertAsync("Errore", $"Errore filtro vendite: {ex.Message}");
+        }
+        finally
+        {
+            IsLoading = false;
         }
     }
 
@@ -117,7 +231,7 @@ public partial class SalesViewModel : ObservableObject
             IsLoading = true;
 
             var result = await _salesService.CancelSaleAsync(sale.Id, "Annullamento da interfaccia utente");
-            
+
             var index = Sales.IndexOf(sale);
             if (index >= 0)
             {
@@ -147,5 +261,12 @@ public partial class SalesViewModel : ObservableObject
     {
         FromDate = null;
         ToDate = null;
+    }
+
+    [RelayCommand]
+    private void ClearCustomerFilter()
+    {
+        SelectedCustomer = null;
+        CustomerSearchQuery = null;
     }
 }

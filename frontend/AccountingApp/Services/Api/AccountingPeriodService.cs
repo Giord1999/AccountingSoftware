@@ -8,16 +8,14 @@ namespace AccountingApp.Services.Api;
 public class AccountingPeriodService : IAccountingPeriodService
 {
     private readonly HttpClient _httpClient;
-    private readonly IAuthService _authService;
 
     public AccountingPeriodService(HttpClient httpClient, IAuthService authService)
     {
         _httpClient = httpClient;
-        _authService = authService;
 
-        if (_authService.IsAuthenticated && !string.IsNullOrEmpty(_authService.Token))
+        if (authService.IsAuthenticated && !string.IsNullOrEmpty(authService.Token))
         {
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _authService.Token);
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authService.Token);
         }
     }
 
@@ -56,9 +54,7 @@ public class AccountingPeriodService : IAccountingPeriodService
         try
         {
             var periods = await GetPeriodsByCompanyAsync(companyId);
-            return periods
-                .Where(p => !p.IsClosed && date >= p.Start && date <= p.End)
-                .FirstOrDefault();
+            return periods.FirstOrDefault(p => !p.IsClosed && date >= p.Start && date <= p.End);
         }
         catch
         {

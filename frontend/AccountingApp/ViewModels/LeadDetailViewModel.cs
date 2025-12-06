@@ -144,7 +144,7 @@ public partial class LeadDetailViewModel : ObservableObject, IQueryAttributable
                 await _alertService.ShowToastAsync("Lead creato con successo");
             }
 
-            await _navigationService.GoBackAsync();
+            await _navigationService.NavigateBackAsync();
         }
         catch (Exception ex)
         {
@@ -201,7 +201,7 @@ public partial class LeadDetailViewModel : ObservableObject, IQueryAttributable
             var result = await _leadService.ConvertLeadToCustomerAsync(LeadId.Value);
             Status = result.Status;
             await _alertService.ShowToastAsync("Lead convertito in cliente con successo");
-            await _navigationService.GoBackAsync();
+            await _navigationService.NavigateBackAsync();
         }
         catch (Exception ex)
         {
@@ -216,6 +216,6 @@ public partial class LeadDetailViewModel : ObservableObject, IQueryAttributable
     [RelayCommand]
     private async Task CancelAsync()
     {
-        await _navigationService.GoBackAsync();
+        await _navigationService.NavigateBackAsync();
     }
 }

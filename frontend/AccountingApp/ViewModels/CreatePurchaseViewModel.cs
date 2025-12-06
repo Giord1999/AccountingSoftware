@@ -9,30 +9,18 @@ namespace AccountingApp.ViewModels;
 
 public partial class CreatePurchaseViewModel : ObservableObject
 {
-    private readonly IPurchaseApiService _purchaseService;
-    private readonly IInventoryApiService _inventoryService;
-    private readonly ISupplierApiService _supplierService;
-    private readonly IAccountingPeriodApiService _periodService;
-    private readonly IVatRateApiService _vatRateService;
+    private readonly PurchaseViewModelServices _apiServices;
     private readonly IAuthService _authService;
     private readonly IAlertService _alertService;
     private readonly INavigationService _navigationService;
 
     public CreatePurchaseViewModel(
-        IPurchaseApiService purchaseService,
-        IInventoryApiService inventoryService,
-        ISupplierApiService supplierService,
-        IAccountingPeriodApiService periodService,
-        IVatRateApiService vatRateService,
+        PurchaseViewModelServices apiServices,
         IAuthService authService,
         IAlertService alertService,
         INavigationService navigationService)
     {
-        _purchaseService = purchaseService;
-        _inventoryService = inventoryService;
-        _supplierService = supplierService;
-        _periodService = periodService;
-        _vatRateService = vatRateService;
+        _apiServices = apiServices;
         _authService = authService;
         _alertService = alertService;
         _navigationService = navigationService;
@@ -97,10 +85,10 @@ public partial class CreatePurchaseViewModel : ObservableObject
         {
             IsLoading = true;
 
-            var inventoryTask = _inventoryService.GetInventoryItemsByCompanyAsync(_authService.CompanyId.Value);
-            var suppliersTask = _supplierService.GetSuppliersByCompanyAsync(_authService.CompanyId.Value);
-            var periodsTask = _periodService.GetPeriodsByCompanyAsync(_authService.CompanyId.Value);
-            var vatRatesTask = _vatRateService.GetAllVatRatesAsync();
+            var inventoryTask = _apiServices.InventoryService.GetInventoryItemsByCompanyAsync(_authService.CompanyId.Value);
+            var suppliersTask = _apiServices.SupplierService.GetSuppliersByCompanyAsync(_authService.CompanyId.Value);
+            var periodsTask = _apiServices.PeriodService.GetPeriodsByCompanyAsync(_authService.CompanyId.Value);
+            var vatRatesTask = _apiServices.VatRateService.GetAllVatRatesAsync();
 
             await Task.WhenAll(inventoryTask, suppliersTask, periodsTask, vatRatesTask);
 
@@ -123,7 +111,6 @@ public partial class CreatePurchaseViewModel : ObservableObject
                 Periods.Add(period);
             }
 
-            // Seleziona automaticamente il periodo corrente (quello che include la data odierna)
             SelectedPeriod = Periods.FirstOrDefault(p =>
                 DateTime.UtcNow >= p.Start && DateTime.UtcNow <= p.End)
                 ?? Periods.FirstOrDefault();
@@ -134,7 +121,6 @@ public partial class CreatePurchaseViewModel : ObservableObject
                 VatRates.Add(vatRate);
             }
 
-            // Seleziona l'aliquota IVA standard al 22% se disponibile
             SelectedVatRate = VatRates.FirstOrDefault(v => v.Rate == 22m)
                 ?? VatRates.FirstOrDefault();
         }
@@ -205,7 +191,7 @@ public partial class CreatePurchaseViewModel : ObservableObject
                 SupplierVatNumber: SupplierVatNumber
             );
 
-            await _purchaseService.CreatePurchaseAsync(request);
+            await _apiServices.PurchaseService.CreatePurchaseAsync(request);
             await _alertService.ShowToastAsync("Acquisto creato con successo");
             await _navigationService.NavigateBackAsync();
         }

@@ -36,7 +36,7 @@ public partial class PurchaseDetailViewModel : ObservableObject, IQueryAttributa
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        if (query.ContainsKey("id") && Guid.TryParse(query["id"].ToString(), out var id))
+        if (query.TryGetValue("id", out var value) && Guid.TryParse(value?.ToString(), out var id))
         {
             PurchaseId = id;
         }
@@ -44,6 +44,8 @@ public partial class PurchaseDetailViewModel : ObservableObject, IQueryAttributa
 
     public async Task InitializeAsync()
     {
+        if (!await EnsureAuthenticatedAsync()) return;
+
         if (PurchaseId.HasValue)
         {
             await LoadPurchaseAsync();
@@ -54,6 +56,7 @@ public partial class PurchaseDetailViewModel : ObservableObject, IQueryAttributa
     private async Task LoadPurchaseAsync()
     {
         if (!PurchaseId.HasValue) return;
+        if (!await EnsureAuthenticatedAsync()) return;
 
         try
         {
@@ -74,6 +77,7 @@ public partial class PurchaseDetailViewModel : ObservableObject, IQueryAttributa
     private async Task CancelPurchaseAsync()
     {
         if (Purchase == null) return;
+        if (!await EnsureAuthenticatedAsync()) return;
 
         var confirm = await _alertService.ShowConfirmAsync(
             "Conferma Annullamento",
@@ -100,6 +104,17 @@ public partial class PurchaseDetailViewModel : ObservableObject, IQueryAttributa
     [RelayCommand]
     private async Task GoBackAsync()
     {
-        await _navigationService.GoBackAsync();
+        await _navigationService.NavigateBackAsync();
+    }
+
+    private async Task<bool> EnsureAuthenticatedAsync()
+    {
+        if (!_authService.IsAuthenticated || !await _authService.ValidateTokenAsync())
+        {
+            await _alertService.ShowAlertAsync("Sessione scaduta", "Effettua nuovamente il login.");
+            await _navigationService.NavigateToLoginAsync();
+            return false;
+        }
+        return true;
     }
 }

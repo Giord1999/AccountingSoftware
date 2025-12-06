@@ -37,12 +37,12 @@ public static class MauiProgram
             Timeout = TimeSpan.FromSeconds(30)
         });
 
-        // Core Services
+        // ========== CORE SERVICES ==========
         builder.Services.AddSingleton<IAuthService, AuthService>();
         builder.Services.AddSingleton<INavigationService, NavigationService>();
         builder.Services.AddSingleton<IAlertService, AlertService>();
 
-        // API Services
+        // ========== API SERVICES ==========
         builder.Services.AddTransient<IAccountService, AccountService>();
         builder.Services.AddTransient<IAccountingService, AccountingService>();
         builder.Services.AddTransient<ISalesApiService, SalesApiService>();
@@ -53,8 +53,36 @@ public static class MauiProgram
         builder.Services.AddTransient<IInvoiceApiService, InvoiceApiService>();
         builder.Services.AddTransient<ILeadApiService, LeadApiService>();
         builder.Services.AddTransient<IBIApiService, BIApiService>();
+        // Servizi mancanti
+        builder.Services.AddTransient<IVatRateApiService, VatRateApiService>();
+        builder.Services.AddTransient<IAccountingPeriodApiService, AccountingPeriodApiService>();
+        builder.Services.AddTransient<IAccountingPeriodService, AccountingPeriodService>();
 
-        // ViewModels
+        // ========== SERVICE AGGREGATORS ==========
+        // PurchaseViewModelServices - aggrega servizi per CreatePurchaseViewModel
+        builder.Services.AddTransient(sp => new PurchaseViewModelServices
+        {
+            PurchaseService = sp.GetRequiredService<IPurchaseApiService>(),
+            InventoryService = sp.GetRequiredService<IInventoryApiService>(),
+            SupplierService = sp.GetRequiredService<ISupplierApiService>(),
+            PeriodService = sp.GetRequiredService<IAccountingPeriodApiService>(),
+            VatRateService = sp.GetRequiredService<IVatRateApiService>()
+        });
+
+        // SaleViewModelServices - aggrega servizi per CreateSaleViewModel
+        builder.Services.AddTransient(sp => new SaleViewModelServices
+        {
+            SalesService = sp.GetRequiredService<ISalesApiService>(),
+            InventoryService = sp.GetRequiredService<IInventoryApiService>(),
+            CustomerService = sp.GetRequiredService<ICustomerApiService>(),
+            PeriodService = sp.GetRequiredService<IAccountingPeriodApiService>(),
+            VatRateService = sp.GetRequiredService<IVatRateApiService>(),
+            AuthService = sp.GetRequiredService<IAuthService>(),
+            AlertService = sp.GetRequiredService<IAlertService>(),
+            NavigationService = sp.GetRequiredService<INavigationService>()
+        });
+
+        // ========== VIEWMODELS ==========
         builder.Services.AddTransient<LoginViewModel>();
         builder.Services.AddTransient<DashboardViewModel>();
         builder.Services.AddTransient<AccountsViewModel>();
@@ -67,8 +95,14 @@ public static class MauiProgram
         builder.Services.AddTransient<InvoicesViewModel>();
         builder.Services.AddTransient<LeadsViewModel>();
         builder.Services.AddTransient<BIReportsViewModel>();
+        // ViewModels mancanti
+        builder.Services.AddTransient<AccountDetailViewModel>();
+        builder.Services.AddTransient<CreatePurchaseViewModel>();
+        builder.Services.AddTransient<CreateSaleViewModel>();
+        builder.Services.AddTransient<PurchaseDetailViewModel>();
+        builder.Services.AddTransient<SaleDetailViewModel>();
 
-        // Pages
+        // ========== PAGES ==========
         builder.Services.AddTransient<MainPage>();
         builder.Services.AddTransient<LoginPage>();
         builder.Services.AddTransient<DashboardPage>();
@@ -82,7 +116,23 @@ public static class MauiProgram
         builder.Services.AddTransient<InvoicesPage>();
         builder.Services.AddTransient<LeadsPage>();
         builder.Services.AddTransient<BIReportsPage>();
+        // Pages mancanti
+        builder.Services.AddTransient<AccountDetailPage>();
+        builder.Services.AddTransient<CreatePurchasePage>();
+        builder.Services.AddTransient<CreateSalePage>();
 
         return builder.Build();
     }
+}
+
+/// <summary>
+/// Raggruppa i servizi API necessari per la creazione di un acquisto.
+/// </summary>
+public class PurchaseViewModelServices
+{
+    public required IPurchaseApiService PurchaseService { get; init; }
+    public required IInventoryApiService InventoryService { get; init; }
+    public required ISupplierApiService SupplierService { get; init; }
+    public required IAccountingPeriodApiService PeriodService { get; init; }
+    public required IVatRateApiService VatRateService { get; init; }
 }
