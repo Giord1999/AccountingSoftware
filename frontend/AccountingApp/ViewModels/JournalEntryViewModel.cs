@@ -11,6 +11,7 @@ public partial class JournalEntryViewModel : ObservableObject
 {
     private readonly IAccountingService _accountingService;
     private readonly IAccountService _accountService;
+    private readonly IAccountingPeriodService _periodService;
     private readonly IAuthService _authService;
     private readonly IAlertService _alertService;
     private readonly INavigationService _navigationService;
@@ -18,12 +19,14 @@ public partial class JournalEntryViewModel : ObservableObject
     public JournalEntryViewModel(
         IAccountingService accountingService,
         IAccountService accountService,
+        IAccountingPeriodService periodService,
         IAuthService authService,
         IAlertService alertService,
         INavigationService navigationService)
     {
         _accountingService = accountingService;
         _accountService = accountService;
+        _periodService = periodService;
         _authService = authService;
         _alertService = alertService;
         _navigationService = navigationService;
@@ -50,8 +53,36 @@ public partial class JournalEntryViewModel : ObservableObject
     [ObservableProperty]
     private bool isBalanced;
 
+    [ObservableProperty]
+    private AccountingPeriod? selectedPeriod;
+
     public ObservableCollection<JournalLine> Lines { get; } = new();
     public ObservableCollection<Account> Accounts { get; } = new();
+    public ObservableCollection<AccountingPeriod> Periods { get; } = new();
+
+    partial void OnDateChanged(DateTime value)
+    {
+        // Auto-seleziona il periodo quando cambia la data
+        AutoSelectPeriodForDate(value);
+    }
+
+    private void AutoSelectPeriodForDate(DateTime date)
+    {
+        var matchingPeriod = Periods
+            .Where(p => !p.IsClosed && date >= p.Start && date <= p.End)
+            .FirstOrDefault();
+
+        if (matchingPeriod != null)
+        {
+            SelectedPeriod = matchingPeriod;
+        }
+    }
+
+    [RelayCommand]
+    private async Task LoadDataAsync()
+    {
+        await Task.WhenAll(LoadAccountsAsync(), LoadPeriodsAsync());
+    }
 
     [RelayCommand]
     private async Task LoadAccountsAsync()
@@ -71,6 +102,30 @@ public partial class JournalEntryViewModel : ObservableObject
         catch (Exception ex)
         {
             await _alertService.ShowAlertAsync("Errore", $"Errore caricamento conti: {ex.Message}");
+        }
+    }
+
+    [RelayCommand]
+    private async Task LoadPeriodsAsync()
+    {
+        if (!_authService.CompanyId.HasValue) return;
+
+        try
+        {
+            var periods = await _periodService.GetPeriodsByCompanyAsync(_authService.CompanyId.Value);
+            
+            Periods.Clear();
+            foreach (var period in periods.Where(p => !p.IsClosed).OrderByDescending(p => p.Start))
+            {
+                Periods.Add(period);
+            }
+
+            // Auto-seleziona il periodo per la data corrente
+            AutoSelectPeriodForDate(Date);
+        }
+        catch (Exception ex)
+        {
+            await _alertService.ShowAlertAsync("Errore", $"Errore caricamento periodi: {ex.Message}");
         }
     }
 
@@ -117,6 +172,25 @@ public partial class JournalEntryViewModel : ObservableObject
             return;
         }
 
+        if (SelectedPeriod == null)
+        {
+            await _alertService.ShowAlertAsync("Errore", "Selezionare un periodo contabile");
+            return;
+        }
+
+        if (SelectedPeriod.IsClosed)
+        {
+            await _alertService.ShowAlertAsync("Errore", "Il periodo selezionato è chiuso");
+            return;
+        }
+
+        if (Date < SelectedPeriod.Start || Date > SelectedPeriod.End)
+        {
+            await _alertService.ShowAlertAsync("Errore", 
+                $"La data deve essere compresa nel periodo selezionato ({SelectedPeriod.Start:dd/MM/yyyy} - {SelectedPeriod.End:dd/MM/yyyy})");
+            return;
+        }
+
         if (!Lines.Any())
         {
             await _alertService.ShowAlertAsync("Errore", "Aggiungere almeno una riga");
@@ -136,7 +210,7 @@ public partial class JournalEntryViewModel : ObservableObject
             var journalEntry = new JournalEntry
             {
                 CompanyId = _authService.CompanyId.Value,
-                PeriodId = Guid.Empty, // TODO: Get from period selector
+                PeriodId = SelectedPeriod.Id,
                 Description = Description,
                 Date = Date,
                 Reference = Reference,

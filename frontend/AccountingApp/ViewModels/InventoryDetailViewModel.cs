@@ -69,13 +69,13 @@ public partial class InventoryDetailViewModel : ObservableObject, IQueryAttribut
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        if (query.ContainsKey("id") && Guid.TryParse(query["id"].ToString(), out var id))
+        if (query.TryGetValue("id", out var idObj) && Guid.TryParse(idObj?.ToString(), out var id))
         {
             InventoryId = id;
             IsEditMode = true;
         }
 
-        if (query.ContainsKey("mode") && query["mode"].ToString() == "create")
+        if (query.TryGetValue("mode", out var modeObj) && modeObj?.ToString() == "create")
         {
             IsEditMode = false;
             InventoryId = null;
@@ -173,7 +173,7 @@ public partial class InventoryDetailViewModel : ObservableObject, IQueryAttribut
                 await _alertService.ShowToastAsync("Articolo creato con successo");
             }
 
-            await _navigationService.GoBackAsync();
+            await _navigationService.NavigateBackAsync();
         }
         catch (Exception ex)
         {
@@ -188,6 +188,6 @@ public partial class InventoryDetailViewModel : ObservableObject, IQueryAttribut
     [RelayCommand]
     private async Task CancelAsync()
     {
-        await _navigationService.GoBackAsync();
+        await _navigationService.NavigateBackAsync();
     }
 }

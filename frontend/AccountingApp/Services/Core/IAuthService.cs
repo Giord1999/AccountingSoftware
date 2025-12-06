@@ -9,5 +9,6 @@ public interface IAuthService
     bool IsAuthenticated { get; }
     string? Token { get; }
     Guid? CompanyId { get; }
+    string? UserId { get; }
     Task<bool> ValidateTokenAsync();
 }

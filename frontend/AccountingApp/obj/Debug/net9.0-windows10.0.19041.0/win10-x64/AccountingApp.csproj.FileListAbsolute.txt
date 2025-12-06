@@ -24,7 +24,6 @@ C:\Users\User\Desktop\APP MIA\AccountingSoftware\frontend\AccountingApp\obj\Debu
 C:\Users\User\Desktop\APP MIA\AccountingSoftware\frontend\AccountingApp\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\staticwebassets\msbuild.buildMultiTargeting.AccountingApp.props
 C:\Users\User\Desktop\APP MIA\AccountingSoftware\frontend\AccountingApp\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\staticwebassets\msbuild.buildTransitive.AccountingApp.props
 C:\Users\User\Desktop\APP MIA\AccountingSoftware\frontend\AccountingApp\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\staticwebassets.pack.json
-C:\Users\User\Desktop\APP MIA\AccountingSoftware\frontend\AccountingApp\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\staticwebassets.upToDateCheck.txt
 C:\Users\User\Desktop\APP MIA\AccountingSoftware\frontend\AccountingApp\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\compressed\publish\qka7bbj0og-{0}-e5tk7yf482-e5tk7yf482.br
 C:\Users\User\Desktop\APP MIA\AccountingSoftware\frontend\AccountingApp\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\compressed\publish\loue8ksc43-{0}-6gzpyzhau4-6gzpyzhau4.br
 C:\Users\User\Desktop\APP MIA\AccountingSoftware\frontend\AccountingApp\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\compressed\publish\v2tpxfe4wa-{0}-8inm30yfxf-8inm30yfxf.br

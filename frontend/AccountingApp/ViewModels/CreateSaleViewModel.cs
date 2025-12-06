@@ -7,35 +7,28 @@ using System.Collections.ObjectModel;
 
 namespace AccountingApp.ViewModels;
 
+/// <summary>
+/// Raggruppa i servizi API necessari per la creazione di una vendita.
+/// </summary>
+public class SaleViewModelServices
+{
+    public required ISalesApiService SalesService { get; init; }
+    public required IInventoryApiService InventoryService { get; init; }
+    public required ICustomerApiService CustomerService { get; init; }
+    public required IAccountingPeriodApiService PeriodService { get; init; }
+    public required IVatRateApiService VatRateService { get; init; }
+    public required IAuthService AuthService { get; init; }
+    public required IAlertService AlertService { get; init; }
+    public required INavigationService NavigationService { get; init; }
+}
+
 public partial class CreateSaleViewModel : ObservableObject
 {
-    private readonly ISalesApiService _salesService;
-    private readonly IInventoryApiService _inventoryService;
-    private readonly ICustomerApiService _customerService;
-    private readonly IAccountingPeriodApiService _periodService;
-    private readonly IVatRateApiService _vatRateService;
-    private readonly IAuthService _authService;
-    private readonly IAlertService _alertService;
-    private readonly INavigationService _navigationService;
+    private readonly SaleViewModelServices _services;
 
-    public CreateSaleViewModel(
-        ISalesApiService salesService,
-        IInventoryApiService inventoryService,
-        ICustomerApiService customerService,
-        IAccountingPeriodApiService periodService,
-        IVatRateApiService vatRateService,
-        IAuthService authService,
-        IAlertService alertService,
-        INavigationService navigationService)
+    public CreateSaleViewModel(SaleViewModelServices services)
     {
-        _salesService = salesService;
-        _inventoryService = inventoryService;
-        _customerService = customerService;
-        _periodService = periodService;
-        _vatRateService = vatRateService;
-        _authService = authService;
-        _alertService = alertService;
-        _navigationService = navigationService;
+        _services = services;
     }
 
     [ObservableProperty]
@@ -46,6 +39,12 @@ public partial class CreateSaleViewModel : ObservableObject
 
     [ObservableProperty]
     private Customer? selectedCustomer;
+
+    [ObservableProperty]
+    private AccountingPeriod? selectedPeriod;
+
+    [ObservableProperty]
+    private VatRate? selectedVatRate;
 
     [ObservableProperty]
     private decimal quantity = 1;
@@ -68,8 +67,10 @@ public partial class CreateSaleViewModel : ObservableObject
     [ObservableProperty]
     private decimal totalAmount;
 
-    public ObservableCollection<Inventory> InventoryItems { get; } = new();
-    public ObservableCollection<Customer> Customers { get; } = new();
+    public ObservableCollection<Inventory> InventoryItems { get; } = [];
+    public ObservableCollection<Customer> Customers { get; } = [];
+    public ObservableCollection<AccountingPeriod> Periods { get; } = [];
+    public ObservableCollection<VatRate> VatRates { get; } = [];
 
     public async Task InitializeAsync()
     {
@@ -79,9 +80,9 @@ public partial class CreateSaleViewModel : ObservableObject
     [RelayCommand]
     private async Task LoadDataAsync()
     {
-        if (!_authService.CompanyId.HasValue)
+        if (!_services.AuthService.CompanyId.HasValue)
         {
-            await _alertService.ShowAlertAsync("Errore", "Nessuna azienda selezionata");
+            await _services.AlertService.ShowAlertAsync("Errore", "Nessuna azienda selezionata");
             return;
         }
 
@@ -89,10 +90,13 @@ public partial class CreateSaleViewModel : ObservableObject
         {
             IsLoading = true;
 
-            var inventoryTask = _inventoryService.GetInventoryItemsByCompanyAsync(_authService.CompanyId.Value);
-            var customersTask = _customerService.GetCustomersByCompanyAsync(_authService.CompanyId.Value);
+            var companyId = _services.AuthService.CompanyId.Value;
+            var inventoryTask = _services.InventoryService.GetInventoryItemsByCompanyAsync(companyId);
+            var customersTask = _services.CustomerService.GetCustomersByCompanyAsync(companyId);
+            var periodsTask = _services.PeriodService.GetPeriodsByCompanyAsync(companyId);
+            var vatRatesTask = _services.VatRateService.GetAllVatRatesAsync();
 
-            await Task.WhenAll(inventoryTask, customersTask);
+            await Task.WhenAll(inventoryTask, customersTask, periodsTask, vatRatesTask);
 
             InventoryItems.Clear();
             foreach (var item in await inventoryTask)
@@ -105,10 +109,30 @@ public partial class CreateSaleViewModel : ObservableObject
             {
                 Customers.Add(customer);
             }
+
+            Periods.Clear();
+            var periods = (await periodsTask).Where(p => !p.IsClosed).OrderByDescending(p => p.Start);
+            foreach (var period in periods)
+            {
+                Periods.Add(period);
+            }
+
+            SelectedPeriod = Periods.FirstOrDefault(p =>
+                DateTime.UtcNow >= p.Start && DateTime.UtcNow <= p.End)
+                ?? Periods.FirstOrDefault();
+
+            VatRates.Clear();
+            foreach (var vatRate in await vatRatesTask)
+            {
+                VatRates.Add(vatRate);
+            }
+
+            SelectedVatRate = VatRates.FirstOrDefault(v => v.Rate == 22m)
+                ?? VatRates.FirstOrDefault();
         }
         catch (Exception ex)
         {
-            await _alertService.ShowAlertAsync("Errore", $"Errore caricamento dati: {ex.Message}");
+            await _services.AlertService.ShowAlertAsync("Errore", $"Errore caricamento dati: {ex.Message}");
         }
         finally
         {
@@ -120,28 +144,41 @@ public partial class CreateSaleViewModel : ObservableObject
     private void CalculateTotals()
     {
         Subtotal = Quantity * UnitPrice;
-        VatAmount = Subtotal * 0.22m; // Default 22% IVA
+        var vatRate = SelectedVatRate?.Rate ?? 22m;
+        VatAmount = Subtotal * (vatRate / 100m);
         TotalAmount = Subtotal + VatAmount;
     }
 
     [RelayCommand]
     private async Task CreateSaleAsync()
     {
-        if (!_authService.CompanyId.HasValue)
+        if (!_services.AuthService.CompanyId.HasValue)
         {
-            await _alertService.ShowAlertAsync("Errore", "Nessuna azienda selezionata");
+            await _services.AlertService.ShowAlertAsync("Errore", "Nessuna azienda selezionata");
             return;
         }
 
         if (SelectedInventoryItem == null)
         {
-            await _alertService.ShowAlertAsync("Errore", "Seleziona un articolo");
+            await _services.AlertService.ShowAlertAsync("Errore", "Seleziona un articolo");
             return;
         }
 
         if (string.IsNullOrWhiteSpace(CustomerName))
         {
-            await _alertService.ShowAlertAsync("Errore", "Inserisci il nome del cliente");
+            await _services.AlertService.ShowAlertAsync("Errore", "Inserisci il nome del cliente");
+            return;
+        }
+
+        if (SelectedPeriod == null)
+        {
+            await _services.AlertService.ShowAlertAsync("Errore", "Seleziona un periodo contabile");
+            return;
+        }
+
+        if (SelectedVatRate == null)
+        {
+            await _services.AlertService.ShowAlertAsync("Errore", "Seleziona un'aliquota IVA");
             return;
         }
 
@@ -149,26 +186,24 @@ public partial class CreateSaleViewModel : ObservableObject
         {
             IsLoading = true;
 
-            // Qui dovresti implementare la logica per ottenere PeriodId e VatRateId
-            // Per ora uso valori di placeholder
             var request = new CreateSaleRequest(
-                CompanyId: _authService.CompanyId.Value,
-                PeriodId: Guid.NewGuid(), // TODO: Recuperare il periodo corrente
+                CompanyId: _services.AuthService.CompanyId.Value,
+                PeriodId: SelectedPeriod.Id,
                 InventoryId: SelectedInventoryItem.Id,
-                VatRateId: Guid.NewGuid(), // TODO: Recuperare l'aliquota IVA
+                VatRateId: SelectedVatRate.Id,
                 Quantity: Quantity,
                 UnitPrice: UnitPrice,
                 CustomerName: CustomerName,
                 CustomerVatNumber: CustomerVatNumber
             );
 
-            await _salesService.CreateSaleAsync(request);
-            await _alertService.ShowToastAsync("Vendita creata con successo");
-            await _navigationService.GoBackAsync();
+            await _services.SalesService.CreateSaleAsync(request);
+            await _services.AlertService.ShowToastAsync("Vendita creata con successo");
+            await _services.NavigationService.NavigateBackAsync();
         }
         catch (Exception ex)
         {
-            await _alertService.ShowAlertAsync("Errore", $"Errore creazione vendita: {ex.Message}");
+            await _services.AlertService.ShowAlertAsync("Errore", $"Errore creazione vendita: {ex.Message}");
         }
         finally
         {
@@ -179,7 +214,7 @@ public partial class CreateSaleViewModel : ObservableObject
     [RelayCommand]
     private async Task CancelAsync()
     {
-        await _navigationService.GoBackAsync();
+        await _services.NavigationService.NavigateBackAsync();
     }
 
     partial void OnSelectedInventoryItemChanged(Inventory? value)
@@ -198,6 +233,11 @@ public partial class CreateSaleViewModel : ObservableObject
             CustomerName = value.Name;
             CustomerVatNumber = value.VatNumber;
         }
+    }
+
+    partial void OnSelectedVatRateChanged(VatRate? value)
+    {
+        CalculateTotals();
     }
 
     partial void OnQuantityChanged(decimal value)

@@ -55,13 +55,13 @@ public partial class AccountDetailViewModel : ObservableObject, IQueryAttributab
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        if (query.ContainsKey("id") && Guid.TryParse(query["id"].ToString(), out var id))
+        if (query.TryGetValue("id", out var idValue) && Guid.TryParse(idValue?.ToString(), out var id))
         {
             AccountId = id;
             IsEditMode = true;
         }
 
-        if (query.ContainsKey("mode") && query["mode"].ToString() == "create")
+        if (query.TryGetValue("mode", out var modeValue) && modeValue?.ToString() == "create")
         {
             IsEditMode = false;
             AccountId = null;
@@ -85,7 +85,7 @@ public partial class AccountDetailViewModel : ObservableObject, IQueryAttributab
         {
             IsLoading = true;
 
-            var account = await _accountService.GetAccountByIdAsync(AccountId.Value, _authService.CompanyId.Value);
+            var account = await _accountService.GetAccountByIdAsync(AccountId.Value);
 
             if (account != null)
             {
@@ -150,7 +150,7 @@ public partial class AccountDetailViewModel : ObservableObject, IQueryAttributab
                 await _alertService.ShowToastAsync("Conto creato con successo");
             }
 
-            await _navigationService.GoBackAsync();
+            await _navigationService.NavigateBackAsync();
         }
         catch (Exception ex)
         {
@@ -165,6 +165,6 @@ public partial class AccountDetailViewModel : ObservableObject, IQueryAttributab
     [RelayCommand]
     private async Task CancelAsync()
     {
-        await _navigationService.GoBackAsync();
+        await _navigationService.NavigateBackAsync();
     }
 }

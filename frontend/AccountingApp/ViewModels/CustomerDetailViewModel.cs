@@ -168,7 +168,7 @@ public partial class CustomerDetailViewModel : ObservableObject, IQueryAttributa
                 await _alertService.ShowToastAsync("Cliente creato con successo");
             }
 
-            await _navigationService.GoBackAsync();
+            await _navigationService.NavigateBackAsync();
         }
         catch (Exception ex)
         {
@@ -183,6 +183,6 @@ public partial class CustomerDetailViewModel : ObservableObject, IQueryAttributa
     [RelayCommand]
     private async Task CancelAsync()
     {
-        await _navigationService.GoBackAsync();
+        await _navigationService.NavigateBackAsync();
     }
 }

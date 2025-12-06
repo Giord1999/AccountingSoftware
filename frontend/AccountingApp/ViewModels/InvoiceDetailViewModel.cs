@@ -36,7 +36,7 @@ public partial class InvoiceDetailViewModel : ObservableObject, IQueryAttributab
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        if (query.ContainsKey("id") && Guid.TryParse(query["id"].ToString(), out var id))
+        if (query.TryGetValue("id", out var value) && Guid.TryParse(value?.ToString(), out var id))
         {
             InvoiceId = id;
         }
@@ -58,6 +58,15 @@ public partial class InvoiceDetailViewModel : ObservableObject, IQueryAttributab
         try
         {
             IsLoading = true;
+
+            // Verifica autenticazione usando le proprietà di IAuthService
+            if (!_authService.IsAuthenticated || !await _authService.ValidateTokenAsync())
+            {
+                await _alertService.ShowAlertAsync("Errore", "Sessione scaduta. Effettua nuovamente l'accesso.");
+                await _navigationService.NavigateToAsync("LoginPage");
+                return;
+            }
+
             Invoice = await _invoiceService.GetInvoiceByIdAsync(InvoiceId.Value);
         }
         catch (Exception ex)
@@ -73,6 +82,6 @@ public partial class InvoiceDetailViewModel : ObservableObject, IQueryAttributab
     [RelayCommand]
     private async Task GoBackAsync()
     {
-        await _navigationService.GoBackAsync();
+        await _navigationService.NavigateBackAsync();
     }
 }

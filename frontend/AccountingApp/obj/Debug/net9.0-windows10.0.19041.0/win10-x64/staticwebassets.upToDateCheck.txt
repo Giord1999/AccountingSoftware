@@ -1,8 +1,8 @@
-wwwroot\css\app.css
-wwwroot\css\bootstrap\bootstrap.min.css
-wwwroot\css\bootstrap\bootstrap.min.css.map
 wwwroot\index.html
-C:\Users\User\Desktop\APP MIA\AccountingSoftware\frontend\AccountingApp\wwwroot\css\app.css
-C:\Users\User\Desktop\APP MIA\AccountingSoftware\frontend\AccountingApp\wwwroot\css\bootstrap\bootstrap.min.css
-C:\Users\User\Desktop\APP MIA\AccountingSoftware\frontend\AccountingApp\wwwroot\css\bootstrap\bootstrap.min.css.map
+wwwroot\css\bootstrap\bootstrap.min.css.map
+wwwroot\css\bootstrap\bootstrap.min.css
+wwwroot\css\app.css
 C:\Users\User\Desktop\APP MIA\AccountingSoftware\frontend\AccountingApp\wwwroot\index.html
+C:\Users\User\Desktop\APP MIA\AccountingSoftware\frontend\AccountingApp\wwwroot\css\bootstrap\bootstrap.min.css.map
+C:\Users\User\Desktop\APP MIA\AccountingSoftware\frontend\AccountingApp\wwwroot\css\bootstrap\bootstrap.min.css
+C:\Users\User\Desktop\APP MIA\AccountingSoftware\frontend\AccountingApp\wwwroot\css\app.css

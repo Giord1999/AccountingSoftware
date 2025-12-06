@@ -1,8 +1,6 @@
 using AccountingApp.Models;
-using AccountingApp.Services.Core;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using System.Text.Json;
 
 namespace AccountingApp.Services.Core;
 
@@ -11,6 +9,7 @@ public class AuthService : IAuthService
     private readonly HttpClient _httpClient;
     private const string TokenKey = "auth_token";
     private const string CompanyIdKey = "company_id";
+    private const string UserIdKey = "user_id";
 
     public AuthService(HttpClient httpClient)
     {
@@ -20,6 +19,7 @@ public class AuthService : IAuthService
 
     public bool IsAuthenticated => !string.IsNullOrEmpty(Token);
     public string? Token { get; private set; }
+    public string? UserId { get; private set; }
     public Guid? CompanyId { get; private set; }
 
     public async Task<LoginResponse?> LoginAsync(string email, string password)
@@ -35,9 +35,11 @@ public class AuthService : IAuthService
                 if (currentUser != null)
                 {
                     Token = currentUser.Token;
+                    UserId = currentUser.UserId;
                     CompanyId = currentUser.CompanyId;
 
                     await SecureStorage.SetAsync(TokenKey, Token);
+                    await SecureStorage.SetAsync(UserIdKey, UserId);
                     if (CompanyId.HasValue)
                         await SecureStorage.SetAsync(CompanyIdKey, CompanyId.Value.ToString());
 
@@ -60,9 +62,11 @@ public class AuthService : IAuthService
     public async Task LogoutAsync()
     {
         Token = null;
+        UserId = null;
         CompanyId = null;
 
         SecureStorage.Remove(TokenKey);
+        SecureStorage.Remove(UserIdKey);
         SecureStorage.Remove(CompanyIdKey);
 
         _httpClient.DefaultRequestHeaders.Authorization = null;
@@ -77,7 +81,6 @@ public class AuthService : IAuthService
 
         try
         {
-            // Implementa chiamata a /api/auth/validate
             var response = await _httpClient.GetAsync("auth/validate");
             return response.IsSuccessStatusCode;
         }
@@ -90,6 +93,7 @@ public class AuthService : IAuthService
     private void LoadSavedCredentials()
     {
         Token = SecureStorage.GetAsync(TokenKey).Result;
+        UserId = SecureStorage.GetAsync(UserIdKey).Result;
         var companyIdStr = SecureStorage.GetAsync(CompanyIdKey).Result;
 
         if (Guid.TryParse(companyIdStr, out var companyId))

@@ -127,6 +127,5 @@ public partial class BIReportsViewModel : ObservableObject
     private async Task ExportReportAsync()
     {
         await _alertService.ShowToastAsync("Funzionalità di export in sviluppo");
-        // TODO: Implement export functionality
     }
 }
